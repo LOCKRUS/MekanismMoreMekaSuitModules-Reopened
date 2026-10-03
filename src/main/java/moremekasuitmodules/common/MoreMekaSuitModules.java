@@ -88,7 +88,8 @@ public class MoreMekaSuitModules implements IModModule {
                 MekaSuitMoreModules.HIGH_SPEED_COOLING_UNIT,
                 MekaSuitMoreModules.QUANTUM_RECONSTRUCTION_UNIT);
         MekanismIMC.addMekaToolModules(
-                MekaSuitMoreModules.LOOTING_AMPLIFICATION_UNIT);
+                MekaSuitMoreModules.LOOTING_AMPLIFICATION_UNIT,
+                MekaSuitMoreModules.MEKA_TOOL_PERFORMANCE_AMPLIFICATION_UNIT);
         //meka护腿
 
         //meka靴子

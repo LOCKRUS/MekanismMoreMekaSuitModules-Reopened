@@ -15,6 +15,7 @@
   "description.moremekasuitmodules.quantum_reconstruction_unit": "By dismantling and reconstructing matter at the quantum level, the tunneling effect allows it to penetrate blocks like a spectator mode.",
   "description.moremekasuitmodules.hp_boots_unit": "Increases the maximum maximum health of the user",
   "description.moremekasuitmodules.looting_amplification_unit": "Increases the effective Looting level of a MekaTool and consumes MekaTool energy",
+  "description.moremekasuitmodules.meka_tool_performance_amplification_unit": "Amplifies the existing MekaTool excavation efficiency and attack damage",
 
   "module.moremekasuitmodules.health_regeneration_unit": "Health Regeneration Unit",
   "module.moremekasuitmodules.emergency_rescue_unit": "Emergency rescue unit",
@@ -34,6 +35,8 @@
   "module.moremekasuitmodules.looting_amplification_unit": "Looting Amplification Unit",
   "module.moremekasuitmodules.looting_level": "Looting level",
   "module.moremekasuitmodules.looting_level_hud": "Looting level: %1$s",
+  "module.moremekasuitmodules.meka_tool_performance_amplification_unit": "MekaTool Performance Amplification Unit",
+  "module.moremekasuitmodules.meka_tool_performance_multiplier_hud": "MekaTool performance multiplier: x%1$s",
 
   "constants.moremekasuitmodules.mod_name": "More MekaSuit Modules",
   "module.moremekasuitmodules.wireless_terminal": "Wireless terminal",

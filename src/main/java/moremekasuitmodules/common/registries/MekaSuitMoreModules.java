@@ -9,6 +9,7 @@ import moremekasuitmodules.common.MoreMekaSuitModules;
 import moremekasuitmodules.common.content.gear.*;
 import moremekasuitmodules.common.content.gear.ModuleAutomaticAttackUnit.Range;
 import moremekasuitmodules.common.content.gear.mekanism.mekatool.ModuleLootingAmplificationUnit;
+import moremekasuitmodules.common.content.gear.mekanism.mekatool.ModuleMekaToolPerformanceAmplificationUnit;
 
 public class MekaSuitMoreModules {
 
@@ -120,6 +121,12 @@ public class MekaSuitMoreModules {
                     installed -> ModuleEnumConfig.codec(ModuleLootingAmplificationUnit.LootingLevel.CODEC, ModuleLootingAmplificationUnit.LootingLevel.class, Math.min(ModuleLootingAmplificationUnit.LootingLevel.values().length, installed + 1)),
                     installed -> ModuleEnumConfig.streamCodec(ModuleLootingAmplificationUnit.LootingLevel.STREAM_CODEC, ModuleLootingAmplificationUnit.LootingLevel.class, Math.min(ModuleLootingAmplificationUnit.LootingLevel.values().length, installed + 1))
             ));
+    // MekaTool生产力强化：放大原版挖掘效率和攻击伤害
+    public static final ModuleRegistryObject<ModuleMekaToolPerformanceAmplificationUnit> MEKA_TOOL_PERFORMANCE_AMPLIFICATION_UNIT = MODULES.registerInstanced(
+            "meka_tool_performance_amplification_unit",
+            ModuleMekaToolPerformanceAmplificationUnit::new,
+            () -> MekaSuitMoreModulesItem.MODULE_MEKA_TOOL_PERFORMANCE_AMPLIFICATION,
+            builder -> builder.maxStackSize(ModuleMekaToolPerformanceAmplificationUnit.MAX_MODULES).disabledByDefault());
 
 
 }

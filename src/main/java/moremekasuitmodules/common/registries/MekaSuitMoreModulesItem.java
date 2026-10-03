@@ -45,4 +45,6 @@ public class MekaSuitMoreModulesItem {
     public static final ItemRegistryObject<ItemModule> MODULE_HP_BOOTS = ITEMS.registerModule(MekaSuitMoreModules.HP_BOOTS_UNIT,Rarity.EPIC);
     //抢夺强化单元
     public static final ItemRegistryObject<ItemModule> MODULE_LOOTING_AMPLIFICATION = ITEMS.registerModule(MekaSuitMoreModules.LOOTING_AMPLIFICATION_UNIT, Rarity.RARE);
+    //MekaTool生产力强化单元
+    public static final ItemRegistryObject<ItemModule> MODULE_MEKA_TOOL_PERFORMANCE_AMPLIFICATION = ITEMS.registerModule(MekaSuitMoreModules.MEKA_TOOL_PERFORMANCE_AMPLIFICATION_UNIT, Rarity.EPIC);
 }
