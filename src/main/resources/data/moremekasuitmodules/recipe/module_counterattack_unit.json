@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    "CBC",
+    "AMA",
+    "SRS"
+  ],
+  "key": {
+    "A": { "item": "mekanism:alloy_reinforced" },
+    "B": { "item": "mekanism:ultimate_control_circuit" },
+    "C": { "item": "minecraft:cactus" },
+    "M": { "item": "mekanism:module_base" },
+    "R": { "item": "minecraft:redstone_block" },
+    "S": { "item": "minecraft:diamond_sword" }
+  },
+  "result": {
+    "count": 1,
+    "id": "moremekasuitmodules:module_counterattack_unit"
+  }
+}

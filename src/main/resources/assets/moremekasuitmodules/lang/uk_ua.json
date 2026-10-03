@@ -73,7 +73,10 @@
   "module.moremekasuitmodules.blaster_fire_mode.heavy": "Важкий",
   "module.moremekasuitmodules.blaster_fire_mode.standard": "Стандартний",
   "module.moremekasuitmodules.blaster_fire_mode.rapid": "Скорострільний",
-  "description.moremekasuitmodules.meka_tool_blaster_unit": "Запускає вибухонебезпечні сфери. Витрачає 1000 мБ лави та енергію за постріл. Налаштуйте важкий, стандартний або скорострільний режим.",
+  "description.moremekasuitmodules.meka_tool_blaster_unit": "Запускає вибухонебезпечні сфери. Витрата лави: важкий — 10 000 мБ, стандартний — 5 000 мБ, скорострільний — 1 000 мБ.",
   "description.moremekasuitmodules.meka_tool_lava_tank_unit": "Додає MekaTool 200 000 мБ місткості для лави. Для заправлення тримайте контейнер із лавою в другій руці. Можна встановити до п’яти модулів.",
-  "module.moremekasuitmodules.meka_tool_lava_tank_unit": "Модуль розширення лавового бака MekaTool"
+  "module.moremekasuitmodules.meka_tool_lava_tank_unit": "Модуль розширення лавового бака MekaTool",
+  "description.moremekasuitmodules.counterattack_unit": "Відбиває частину отриманої шкоди назад атакувальнику. Рівень визначає ефективну кількість встановлених модулів.",
+  "module.moremekasuitmodules.counterattack_unit": "Модуль контратаки",
+  "module.moremekasuitmodules.counter_level_hud": "Рівень контратаки: %1$s"
 }

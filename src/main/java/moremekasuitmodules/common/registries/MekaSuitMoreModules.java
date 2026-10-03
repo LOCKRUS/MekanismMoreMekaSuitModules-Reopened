@@ -12,6 +12,7 @@ import moremekasuitmodules.common.content.gear.mekanism.mekatool.ModuleLootingAm
 import moremekasuitmodules.common.content.gear.mekanism.mekatool.ModuleMekaToolPerformanceAmplificationUnit;
 import moremekasuitmodules.common.content.gear.mekanism.mekatool.ModuleMekaToolBlasterUnit;
 import moremekasuitmodules.common.content.gear.mekanism.mekatool.ModuleMekaToolLavaTankUnit;
+import moremekasuitmodules.common.content.gear.mekanism.mekasuit.ModuleCounterattackUnit;
 
 public class MekaSuitMoreModules {
 
@@ -37,6 +38,17 @@ public class MekaSuitMoreModules {
     public static final ModuleRegistryObject<?> INSULATED_UNIT = MODULES.registerMarker("insulated_unit", () -> MekaSuitMoreModulesItem.MODULE_INSULATED);
     //自动灭火单元（着火时消耗MekaSuit能量自动灭火）
     public static final ModuleRegistryObject<ModuleAutomaticExtinguishUnit> AUTOMATIC_EXTINGUISH_UNIT = MODULES.registerInstanced("automatic_extinguish_unit", ModuleAutomaticExtinguishUnit::new, () -> MekaSuitMoreModulesItem.MODULE_AUTOMATIC_EXTINGUISH, builder -> builder.maxStackSize(1));
+    // Контратака: отражает часть входящего урона атакующему.
+    public static final ModuleRegistryObject<ModuleCounterattackUnit> COUNTERATTACK_UNIT = MODULES.register(
+            "counterattack_unit",
+            ModuleCounterattackUnit::new,
+            () -> MekaSuitMoreModulesItem.MODULE_COUNTERATTACK,
+            builder -> builder.maxStackSize(ModuleCounterattackUnit.MAX_MODULES_PER_ARMOR).disabledByDefault()
+                    .addInstalledCountConfig(
+                            installed -> ModuleEnumConfig.createBounded(ModuleCounterattackUnit.COUNTER_LEVEL, ModuleCounterattackUnit.CounterLevel.LOW, Math.max(1, Math.min(ModuleCounterattackUnit.CounterLevel.values().length, (installed + 1) / 2))),
+                            installed -> ModuleEnumConfig.codec(ModuleCounterattackUnit.CounterLevel.CODEC, ModuleCounterattackUnit.CounterLevel.class, Math.max(1, Math.min(ModuleCounterattackUnit.CounterLevel.values().length, (installed + 1) / 2))),
+                            installed -> ModuleEnumConfig.streamCodec(ModuleCounterattackUnit.CounterLevel.STREAM_CODEC, ModuleCounterattackUnit.CounterLevel.class, Math.max(1, Math.min(ModuleCounterattackUnit.CounterLevel.values().length, (installed + 1) / 2)))
+                    ));
     //防蜂单元 （散发特殊的信息素，让蜜蜂对你视而不见） //TODO
 
     //扭曲清除基础单元 神秘（通过特殊的方法移除身上的临时扭曲值）//神秘未到1.20.1

@@ -21,7 +21,6 @@ import net.neoforged.neoforge.fluids.capability.templates.FluidHandlerItemStack;
 
 public final class MekaToolLavaHandler {
     public static final int CAPACITY_PER_MODULE = 200_000;
-    public static final int COST_PER_SHOT = 1_000;
 
     private MekaToolLavaHandler() {
     }
@@ -89,7 +88,7 @@ public final class MekaToolLavaHandler {
         }
     }
 
-    public static boolean hasLava(IFluidHandlerItem handler) {
-        return handler != null && handler.drain(COST_PER_SHOT, IFluidHandler.FluidAction.SIMULATE).getAmount() >= COST_PER_SHOT;
+    public static boolean hasLava(IFluidHandlerItem handler, int amount) {
+        return handler != null && handler.drain(amount, IFluidHandler.FluidAction.SIMULATE).getAmount() >= amount;
     }
 }

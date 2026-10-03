@@ -72,7 +72,7 @@ public final class MekaToolBlasterHandler {
                 event.setCancellationResult(InteractionResult.FAIL);
                 return;
             }
-            if (!MekaToolLavaHandler.hasLava(lavaTank)) {
+            if (!MekaToolLavaHandler.hasLava(lavaTank, mode.getLavaCost())) {
                 event.setCanceled(true);
                 event.setCancellationResult(InteractionResult.FAIL);
                 return;
@@ -89,7 +89,7 @@ public final class MekaToolBlasterHandler {
         NEXT_SHOT_TICK.put(player.getUUID(), player.level().getGameTime() + mode.getCooldownTicks());
         if (!creative) {
             energyContainer.extract(mode.getEnergyCost(), Action.EXECUTE, AutomationType.MANUAL);
-            lavaTank.drain(MekaToolLavaHandler.COST_PER_SHOT, IFluidHandler.FluidAction.EXECUTE);
+            lavaTank.drain(mode.getLavaCost(), IFluidHandler.FluidAction.EXECUTE);
         }
         Level level = player.level();
         Vec3 direction = player.getViewVector(1.0F).normalize();

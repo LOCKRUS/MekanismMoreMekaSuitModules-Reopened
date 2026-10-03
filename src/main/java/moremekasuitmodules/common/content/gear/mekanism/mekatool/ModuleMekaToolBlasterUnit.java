@@ -43,9 +43,9 @@ public record ModuleMekaToolBlasterUnit(FireMode fireMode) implements ICustomMod
 
     @NothingNullByDefault
     public enum FireMode implements IHasTextComponent, StringRepresentable {
-        HEAVY(4, 20, 5_000_000),
-        STANDARD(2, 8, 3_750_000),
-        RAPID(1, 3, 2_500_000);
+        HEAVY(4, 20, 5_000_000, 10_000),
+        STANDARD(2, 8, 3_750_000, 5_000),
+        RAPID(1, 3, 2_500_000, 1_000);
 
         public static final Codec<FireMode> CODEC = StringRepresentable.fromEnum(FireMode::values);
         public static final IntFunction<FireMode> BY_ID = ByIdMap.continuous(FireMode::ordinal, values(), ByIdMap.OutOfBoundsStrategy.WRAP);
@@ -54,13 +54,15 @@ public record ModuleMekaToolBlasterUnit(FireMode fireMode) implements ICustomMod
         private final int explosionPower;
         private final int cooldownTicks;
         private final long energyCost;
+        private final int lavaCost;
         private final String serializedName;
         private final Component label;
 
-        FireMode(int explosionPower, int cooldownTicks, long energyCost) {
+        FireMode(int explosionPower, int cooldownTicks, long energyCost, int lavaCost) {
             this.explosionPower = explosionPower;
             this.cooldownTicks = cooldownTicks;
             this.energyCost = energyCost;
+            this.lavaCost = lavaCost;
             this.serializedName = name().toLowerCase(Locale.ROOT);
             this.label = TextComponentUtil.getString(serializedName);
         }
@@ -75,6 +77,10 @@ public record ModuleMekaToolBlasterUnit(FireMode fireMode) implements ICustomMod
 
         public long getEnergyCost() {
             return energyCost;
+        }
+
+        public int getLavaCost() {
+            return lavaCost;
         }
 
         @Override

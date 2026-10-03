@@ -12,6 +12,7 @@ import moremekasuitmodules.common.registries.MekaSuitMoreModulesItem;
 import moremekasuitmodules.common.registries.MoreMekaSuitModulesDataComponents;
 import moremekasuitmodules.common.content.gear.mekanism.mekatool.MekaToolBlasterHandler;
 import moremekasuitmodules.common.content.gear.mekanism.mekatool.MekaToolLavaHandler;
+import moremekasuitmodules.common.content.gear.mekanism.mekasuit.CounterattackHandler;
 import net.minecraft.resources.ResourceLocation;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.ModContainer;
@@ -71,6 +72,7 @@ public class MoreMekaSuitModules implements IModModule {
         MekanismIMC.addMekaSuitModules(
                 MekaSuitMoreModules.INSULATED_UNIT,
                 MekaSuitMoreModules.AUTOMATIC_EXTINGUISH_UNIT,
+                MekaSuitMoreModules.COUNTERATTACK_UNIT,
                 MekaSuitMoreModules.ENERGY_SHIELD_UNIT,
                 MekaSuitMoreModules.POWER_ENHANCEMENT_UNIT,
                 MekaSuitMoreModules.HP_BOOTS_UNIT
@@ -104,6 +106,7 @@ public class MoreMekaSuitModules implements IModModule {
         NeoForge.EVENT_BUS.register(new CommonPlayerTickHandler());
         NeoForge.EVENT_BUS.register(new ShieldProviderHandler());
         NeoForge.EVENT_BUS.register(new MekaToolBlasterHandler());
+        NeoForge.EVENT_BUS.register(new CounterattackHandler());
     }
 
     @Override
