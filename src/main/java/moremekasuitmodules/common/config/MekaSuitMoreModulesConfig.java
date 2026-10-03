@@ -44,7 +44,8 @@ public class MekaSuitMoreModulesConfig extends BaseMekanismConfig {
         mekaSuitRecoveryRate = CachedDoubleValue.wrap(this, MekaSuitMoreModulesConfigTranslations.GEAR_MEKA_SUIT_SHIELD_RECOVERY_RATE.applyToBuilder(builder).defineInRange("mekaSuitRecoveryRate", 10.0F, 0.1F, Float.MAX_VALUE));
         mekaSuitShieldRestoresEnergy = CachedIntValue.wrap(this, MekaSuitMoreModulesConfigTranslations.GEAR_MEKA_SUIT_SHIELD_RESTORES.applyToBuilder(builder).defineInRange("mekaSuitShieldRestoresEnergy", 500, 0, Integer.MAX_VALUE));
         lastStandEnergyRequirement = CachedIntValue.wrap(this,MekaSuitMoreModulesConfigTranslations.GEAR_MEKA_SUIT_SHIELD_LAST_STAND.applyToBuilder(builder).define("lastStandEnergyRequirement", 10000000));
-        addALLModueltoMekaSuit = CachedBooleanValue.wrap(this,MekaSuitMoreModulesConfigTranslations.GEAR_MEKA_SUIT_ADD_ALL_MODULE.applyToBuilder(builder).define("addAllModuleToMekaSuit",true));
+        // This option is intended only for creative-tab testing. Do not put modules into armor by default.
+        addALLModueltoMekaSuit = CachedBooleanValue.wrap(this,MekaSuitMoreModulesConfigTranslations.GEAR_MEKA_SUIT_ADD_ALL_MODULE.applyToBuilder(builder).define("addAllModuleToMekaSuit",false));
         builder.pop();
         configSpec = builder.build();
     }
