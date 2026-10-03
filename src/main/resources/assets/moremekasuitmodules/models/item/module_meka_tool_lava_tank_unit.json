@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "moremekasuitmodules:item/module_meka_tool_lava_tank_unit"
+  }
+}

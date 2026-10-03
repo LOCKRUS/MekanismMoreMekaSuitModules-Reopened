@@ -2,6 +2,9 @@ package moremekasuitmodules.common.content.gear.mekanism.mekatool;
 
 import mekanism.common.capabilities.Capabilities;
 import mekanism.common.registries.MekanismItems;
+import mekanism.api.gear.IModule;
+import mekanism.api.gear.IModuleHelper;
+import moremekasuitmodules.common.registries.MekaSuitMoreModules;
 import moremekasuitmodules.common.registries.MoreMekaSuitModulesDataComponents;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.material.Fluids;
@@ -13,7 +16,7 @@ import net.neoforged.neoforge.fluids.capability.templates.FluidHandlerItemStack;
 import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent;
 
 public final class MekaToolLavaHandler {
-    public static final int CAPACITY = 10_000;
+    public static final int CAPACITY_PER_MODULE = 200_000;
     public static final int COST_PER_SHOT = 1_000;
 
     private MekaToolLavaHandler() {
@@ -27,12 +30,13 @@ public final class MekaToolLavaHandler {
     }
 
     public static IFluidHandlerItem create(ItemStack stack) {
-        return new LavaTank(stack);
+        IModule<ModuleMekaToolLavaTankUnit> module = IModuleHelper.INSTANCE.getIfEnabled(stack, MekaSuitMoreModules.MEKA_TOOL_LAVA_TANK_UNIT);
+        return module == null ? null : new LavaTank(stack, Math.min(5, module.getInstalledCount()) * CAPACITY_PER_MODULE);
     }
 
     private static final class LavaTank extends FluidHandlerItemStack {
-        private LavaTank(ItemStack stack) {
-            super(MoreMekaSuitModulesDataComponents.MEKA_TOOL_LAVA, stack, CAPACITY);
+        private LavaTank(ItemStack stack, int capacity) {
+            super(MoreMekaSuitModulesDataComponents.MEKA_TOOL_LAVA, stack, capacity);
         }
 
         @Override
@@ -52,6 +56,6 @@ public final class MekaToolLavaHandler {
     }
 
     public static boolean hasLava(IFluidHandlerItem handler) {
-        return handler.drain(COST_PER_SHOT, IFluidHandler.FluidAction.SIMULATE).getAmount() >= COST_PER_SHOT;
+        return handler != null && handler.drain(COST_PER_SHOT, IFluidHandler.FluidAction.SIMULATE).getAmount() >= COST_PER_SHOT;
     }
 }

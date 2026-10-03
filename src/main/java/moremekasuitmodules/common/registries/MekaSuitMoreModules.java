@@ -11,6 +11,7 @@ import moremekasuitmodules.common.content.gear.ModuleAutomaticAttackUnit.Range;
 import moremekasuitmodules.common.content.gear.mekanism.mekatool.ModuleLootingAmplificationUnit;
 import moremekasuitmodules.common.content.gear.mekanism.mekatool.ModuleMekaToolPerformanceAmplificationUnit;
 import moremekasuitmodules.common.content.gear.mekanism.mekatool.ModuleMekaToolBlasterUnit;
+import moremekasuitmodules.common.content.gear.mekanism.mekatool.ModuleMekaToolLavaTankUnit;
 
 public class MekaSuitMoreModules {
 
@@ -138,6 +139,12 @@ public class MekaSuitMoreModules {
                             ModuleEnumConfig.create(ModuleMekaToolBlasterUnit.FIRE_MODE, ModuleMekaToolBlasterUnit.FireMode.STANDARD),
                             ModuleEnumConfig.codec(ModuleMekaToolBlasterUnit.FireMode.CODEC),
                             ModuleEnumConfig.streamCodec(ModuleMekaToolBlasterUnit.FireMode.STREAM_CODEC)));
+    // MekaTool lava tank expansion: each installed module adds 200,000 mB, up to five modules.
+    public static final ModuleRegistryObject<ModuleMekaToolLavaTankUnit> MEKA_TOOL_LAVA_TANK_UNIT = MODULES.registerInstanced(
+            "meka_tool_lava_tank_unit",
+            ModuleMekaToolLavaTankUnit::new,
+            () -> MekaSuitMoreModulesItem.MODULE_MEKA_TOOL_LAVA_TANK,
+            builder -> builder.maxStackSize(5).disabledByDefault());
 
 
 }

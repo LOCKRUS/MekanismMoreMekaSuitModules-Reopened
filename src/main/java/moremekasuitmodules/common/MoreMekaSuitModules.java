@@ -93,7 +93,8 @@ public class MoreMekaSuitModules implements IModModule {
         MekanismIMC.addMekaToolModules(
                 MekaSuitMoreModules.LOOTING_AMPLIFICATION_UNIT,
                 MekaSuitMoreModules.MEKA_TOOL_PERFORMANCE_AMPLIFICATION_UNIT,
-                MekaSuitMoreModules.MEKA_TOOL_BLASTER_UNIT);
+                MekaSuitMoreModules.MEKA_TOOL_BLASTER_UNIT,
+                MekaSuitMoreModules.MEKA_TOOL_LAVA_TANK_UNIT);
         //meka护腿
 
         //meka靴子

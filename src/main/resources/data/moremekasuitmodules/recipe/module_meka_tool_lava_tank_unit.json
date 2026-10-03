@@ -1,0 +1,30 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    "PSP",
+    "TBT",
+    "PVP"
+  ],
+  "key": {
+    "P": {
+      "item": "mekanism:pellet_antimatter"
+    },
+    "S": {
+      "item": "minecraft:nether_star"
+    },
+    "T": {
+      "item": "mekanism:ultimate_chemical_tank"
+    },
+    "B": {
+      "item": "moremekasuitmodules:module_meka_tool_blaster_unit"
+    },
+    "V": {
+      "item": "mekanism:module_blasting_unit"
+    }
+  },
+  "result": {
+    "count": 1,
+    "id": "moremekasuitmodules:module_meka_tool_lava_tank_unit"
+  }
+}
