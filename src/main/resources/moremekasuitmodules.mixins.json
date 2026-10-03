@@ -5,6 +5,7 @@
   "mixins": [
     "mekanism.MixinItemMekaSuitArmor",
     "mekanism.MixinItemMekaTool",
+    "mekanism.MixinItemEnergized",
     "minecraft.MixinEnchantedCountIncreaseFunction",
     "minecraft.MixinDamageSource",
     "minecraft.MixinLevel",

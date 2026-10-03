@@ -21,4 +21,5 @@ public abstract class MixinItemMekaTool {
         }
         return original * module.getCustomInstance().getMultiplier(module.getInstalledCount());
     }
+
 }

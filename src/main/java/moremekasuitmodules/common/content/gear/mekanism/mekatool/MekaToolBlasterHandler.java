@@ -37,6 +37,12 @@ public final class MekaToolBlasterHandler {
             return;
         }
 
+        if (MekaToolLavaHandler.fillFromOffhand(player, stack)) {
+            event.setCanceled(true);
+            event.setCancellationResult(InteractionResult.CONSUME);
+            return;
+        }
+
         IModule<ModuleMekaToolBlasterUnit> module = IModuleHelper.INSTANCE.getIfEnabled(stack, MekaSuitMoreModules.MEKA_TOOL_BLASTER_UNIT);
         if (module == null) {
             return;

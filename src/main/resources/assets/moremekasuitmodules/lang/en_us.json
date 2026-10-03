@@ -80,6 +80,6 @@
   "module.moremekasuitmodules.blaster_fire_mode.heavy": "Heavy",
   "module.moremekasuitmodules.blaster_fire_mode.standard": "Standard",
   "module.moremekasuitmodules.blaster_fire_mode.rapid": "Rapid",
-  "description.moremekasuitmodules.meka_tool_lava_tank_unit": "Adds 200,000 mB of lava storage to the MekaTool. Up to five modules can be installed.",
+  "description.moremekasuitmodules.meka_tool_lava_tank_unit": "Adds 200,000 mB of lava storage to the MekaTool. Hold a lava container in the off-hand to fill it. Up to five modules can be installed.",
   "module.moremekasuitmodules.meka_tool_lava_tank_unit": "MekaTool Lava Tank Expansion Unit"
 }
