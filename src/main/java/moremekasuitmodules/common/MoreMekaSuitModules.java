@@ -67,6 +67,7 @@ public class MoreMekaSuitModules implements IModModule {
         //meka套全部
         MekanismIMC.addMekaSuitModules(
                 MekaSuitMoreModules.INSULATED_UNIT,
+                MekaSuitMoreModules.AUTOMATIC_EXTINGUISH_UNIT,
                 MekaSuitMoreModules.ENERGY_SHIELD_UNIT,
                 MekaSuitMoreModules.POWER_ENHANCEMENT_UNIT,
                 MekaSuitMoreModules.HP_BOOTS_UNIT

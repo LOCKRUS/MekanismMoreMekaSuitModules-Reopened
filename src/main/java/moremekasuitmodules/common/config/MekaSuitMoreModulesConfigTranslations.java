@@ -9,6 +9,7 @@ import org.jetbrains.annotations.Nullable;
 
 public enum MekaSuitMoreModulesConfigTranslations implements IConfigTranslation {
     GEAR_MEKA_SUIT_ENERGY_USAGE_HEALTH_REGENERATION("gear.meka_suit.moremekasuitmodules.health_regeneration","Health Regeneration","Energy usage (Joules) of MekaSuit per tick of using Health Regeneration."),
+    GEAR_MEKA_SUIT_ENERGY_USAGE_AUTOMATIC_EXTINGUISH("gear.meka_suit.moremekasuitmodules.automatic_extinguish","Automatic Extinguish","Energy usage (Joules) when Automatic Extinguish removes fire."),
     GEAR_MEKA_SUIT_ENERGY_USAGE_ATTACK("gear.meka_suit.moremekasuitmodules.attack","Automated Attack","Energy usage (Joules) of MekaSuit per tick of using Automated Attack."),
     GEAR_MEKA_SUIT_OVERLOAD_PROTECTION("gear.meka_suit.moremekasuitmodules.overload_protection","Overload Protection","Allows MekAsuit to intercept direct setHealth with Emergency Rescue installed"),
     GEAR_MEKA_SUIT_SHIELD_DEFAULT("gear.meka_suit.moremekasuitmodules.shield_default","Shield Default","Enables the default calculation of the full set of shields"),
@@ -68,4 +69,3 @@ public enum MekaSuitMoreModulesConfigTranslations implements IConfigTranslation 
         return button;
     }
 }
-
