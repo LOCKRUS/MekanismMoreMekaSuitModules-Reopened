@@ -11,7 +11,7 @@
   },
   "output": {
     "count": 1,
-    "id": "moremekasuitmodules:meka_tool_performance_amplification_unit"
+    "id": "moremekasuitmodules:module_meka_tool_performance_amplification_unit"
   },
   "per_tick_usage": false
 }
