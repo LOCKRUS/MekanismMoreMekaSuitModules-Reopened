@@ -2,25 +2,22 @@
   "type": "minecraft:crafting_shaped",
   "category": "misc",
   "pattern": [
-    "PSP",
-    "TBT",
-    "PVP"
+    "BAB",
+    "LML",
+    "BAB"
   ],
   "key": {
-    "P": {
-      "item": "mekanism:pellet_antimatter"
+    "B": {
+      "item": "minecraft:bucket"
     },
-    "S": {
-      "item": "minecraft:nether_star"
-    },
-    "T": {
+    "A": {
       "item": "mekanism:ultimate_chemical_tank"
     },
-    "B": {
-      "item": "moremekasuitmodules:module_meka_tool_blaster_unit"
+    "L": {
+      "item": "mekanism:ultimate_fluid_tank"
     },
-    "V": {
-      "item": "mekanism:module_blasting_unit"
+    "M": {
+      "item": "mekanism:module_base"
     }
   },
   "result": {
