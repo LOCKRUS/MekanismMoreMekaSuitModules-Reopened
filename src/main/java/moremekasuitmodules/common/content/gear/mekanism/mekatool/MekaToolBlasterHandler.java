@@ -63,17 +63,20 @@ public final class MekaToolBlasterHandler {
             }
         }
 
+        boolean creative = player.getAbilities().instabuild;
         IEnergyContainer energyContainer = StorageUtils.getEnergyContainer(stack, 0);
-        if (energyContainer == null || energyContainer.extract(mode.getEnergyCost(), Action.SIMULATE, AutomationType.MANUAL) < mode.getEnergyCost()) {
-            event.setCanceled(true);
-            event.setCancellationResult(InteractionResult.FAIL);
-            return;
-        }
         IFluidHandlerItem lavaTank = MekaToolLavaHandler.create(stack);
-        if (!MekaToolLavaHandler.hasLava(lavaTank)) {
-            event.setCanceled(true);
-            event.setCancellationResult(InteractionResult.FAIL);
-            return;
+        if (!creative) {
+            if (energyContainer == null || energyContainer.extract(mode.getEnergyCost(), Action.SIMULATE, AutomationType.MANUAL) < mode.getEnergyCost()) {
+                event.setCanceled(true);
+                event.setCancellationResult(InteractionResult.FAIL);
+                return;
+            }
+            if (!MekaToolLavaHandler.hasLava(lavaTank)) {
+                event.setCanceled(true);
+                event.setCancellationResult(InteractionResult.FAIL);
+                return;
+            }
         }
 
         player.getCooldowns().addCooldown(stack.getItem(), mode.getCooldownTicks());
@@ -84,8 +87,10 @@ public final class MekaToolBlasterHandler {
         }
 
         NEXT_SHOT_TICK.put(player.getUUID(), player.level().getGameTime() + mode.getCooldownTicks());
-        energyContainer.extract(mode.getEnergyCost(), Action.EXECUTE, AutomationType.MANUAL);
-        lavaTank.drain(MekaToolLavaHandler.COST_PER_SHOT, IFluidHandler.FluidAction.EXECUTE);
+        if (!creative) {
+            energyContainer.extract(mode.getEnergyCost(), Action.EXECUTE, AutomationType.MANUAL);
+            lavaTank.drain(MekaToolLavaHandler.COST_PER_SHOT, IFluidHandler.FluidAction.EXECUTE);
+        }
         Level level = player.level();
         Vec3 direction = player.getViewVector(1.0F).normalize();
         MekaToolBlasterFireball fireball = new MekaToolBlasterFireball(level, player, direction, mode.getExplosionPower());

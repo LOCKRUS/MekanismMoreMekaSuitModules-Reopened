@@ -51,6 +51,8 @@ public final class MekaToolLavaHandler {
         if (container.isEmpty()) {
             return false;
         }
+        boolean creative = player.getAbilities().instabuild;
+        ItemStack originalContainer = creative && !player.level().isClientSide() ? container.copy() : ItemStack.EMPTY;
         FluidActionResult result = FluidUtil.tryEmptyContainer(
                 container,
                 lavaTank,
@@ -61,7 +63,7 @@ public final class MekaToolLavaHandler {
             return false;
         }
         if (!player.level().isClientSide()) {
-            player.setItemInHand(InteractionHand.OFF_HAND, result.getResult());
+            player.setItemInHand(InteractionHand.OFF_HAND, creative ? originalContainer : result.getResult());
         }
         return true;
     }

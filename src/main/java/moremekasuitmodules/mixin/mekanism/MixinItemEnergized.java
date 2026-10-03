@@ -35,7 +35,7 @@ public abstract class MixinItemEnergized {
     @Inject(method = "getBarColor", at = @At("HEAD"), cancellable = true)
     private void moreMekaSuitModules$lavaBarColor(ItemStack stack, CallbackInfoReturnable<Integer> cir) {
         if (stack.getItem() instanceof ItemMekaTool && MekaToolLavaHandler.create(stack) != null) {
-            cir.setReturnValue(0x3D9BB5);
+            cir.setReturnValue(0xE67E22);
         }
     }
 }
