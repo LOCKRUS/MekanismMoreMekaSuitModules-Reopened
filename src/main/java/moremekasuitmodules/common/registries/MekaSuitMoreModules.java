@@ -32,7 +32,7 @@ public class MekaSuitMoreModules {
     //绝缘单元 IE 和 GTCEU（将电流导入大地，防止导致受伤）
     public static final ModuleRegistryObject<?> INSULATED_UNIT = MODULES.registerMarker("insulated_unit", () -> MekaSuitMoreModulesItem.MODULE_INSULATED);
     //自动灭火单元（着火时消耗MekaSuit能量自动灭火）
-    public static final ModuleRegistryObject<ModuleAutomaticExtinguishUnit> AUTOMATIC_EXTINGUISH_UNIT = MODULES.registerInstanced("automatic_extinguish_unit", ModuleAutomaticExtinguishUnit::new, () -> MekaSuitMoreModulesItem.MODULE_AUTOMATIC_EXTINGUISH, builder -> builder.maxStackSize(1).disabledByDefault());
+    public static final ModuleRegistryObject<ModuleAutomaticExtinguishUnit> AUTOMATIC_EXTINGUISH_UNIT = MODULES.registerInstanced("automatic_extinguish_unit", ModuleAutomaticExtinguishUnit::new, () -> MekaSuitMoreModulesItem.MODULE_AUTOMATIC_EXTINGUISH, builder -> builder.maxStackSize(1));
     //防蜂单元 （散发特殊的信息素，让蜜蜂对你视而不见） //TODO
 
     //扭曲清除基础单元 神秘（通过特殊的方法移除身上的临时扭曲值）//神秘未到1.20.1
