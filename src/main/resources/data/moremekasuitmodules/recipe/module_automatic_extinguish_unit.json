@@ -7,10 +7,10 @@
   ],
   "key": {
     "A": {
-      "tag": "c:alloys/reinforced"
+      "item": "mekanism:alloy_reinforced"
     },
     "B": {
-      "tag": "c:circuits/elite"
+      "item": "mekanism:elite_control_circuit"
     },
     "C": {
       "item": "minecraft:cauldron"
