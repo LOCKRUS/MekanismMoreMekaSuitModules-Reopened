@@ -68,7 +68,7 @@
   "module.moremekasuitmodules.creative_band_of_aura_unit": "Творческий модуль ауры",
   "description.moremekasuitmodules.smart_shielding_unit": "Автоматически блокирует взгляд противника с помощью анализа чипом",
   "module.moremekasuitmodules.smart_shielding_unit": "Модуль интеллектуальной защиты",
-  "description.moremekasuitmodules.meka_tool_blaster_unit": "Запускает взрывоопасные орбы. Настройте тяжёлый, стандартный или скорострельный режим.",
+  "description.moremekasuitmodules.meka_tool_blaster_unit": "Запускает взрывоопасные орбы. Расходует 1000 мБ лавы и энергию за выстрел. Настройте тяжёлый, стандартный или скорострельный режим.",
   "module.moremekasuitmodules.meka_tool_blaster_unit": "Бластерный модуль MekaTool",
   "module.moremekasuitmodules.meka_tool_blaster_mode_hud": "Режим бластера: %1$s",
   "module.moremekasuitmodules.blaster_fire_mode": "Режим стрельбы бластера",

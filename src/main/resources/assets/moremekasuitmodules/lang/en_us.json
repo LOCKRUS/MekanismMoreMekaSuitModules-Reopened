@@ -73,7 +73,7 @@
 
   "description.moremekasuitmodules.smart_shielding_unit": "Through chip analysis, it automatically blocks the other party's gaze",
   "module.moremekasuitmodules.smart_shielding_unit": "Intelligent shielding unit",
-  "description.moremekasuitmodules.meka_tool_blaster_unit": "Fires explosive orbs. Configure heavy, standard, or rapid fire mode.",
+  "description.moremekasuitmodules.meka_tool_blaster_unit": "Fires explosive orbs. Consumes 1,000 mB of lava and energy per shot. Configure heavy, standard, or rapid fire mode.",
   "module.moremekasuitmodules.meka_tool_blaster_unit": "MekaTool Blaster Unit",
   "module.moremekasuitmodules.meka_tool_blaster_mode_hud": "Blaster mode: %1$s",
   "module.moremekasuitmodules.blaster_fire_mode": "Blaster fire mode",

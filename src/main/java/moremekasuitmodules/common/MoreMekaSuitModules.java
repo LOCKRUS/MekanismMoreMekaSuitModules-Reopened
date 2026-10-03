@@ -11,6 +11,7 @@ import moremekasuitmodules.common.registries.MekaSuitMoreModulesCreativeTabs;
 import moremekasuitmodules.common.registries.MekaSuitMoreModulesItem;
 import moremekasuitmodules.common.registries.MoreMekaSuitModulesDataComponents;
 import moremekasuitmodules.common.content.gear.mekanism.mekatool.MekaToolBlasterHandler;
+import moremekasuitmodules.common.content.gear.mekanism.mekatool.MekaToolLavaHandler;
 import net.minecraft.resources.ResourceLocation;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.ModContainer;
@@ -36,6 +37,7 @@ public class MoreMekaSuitModules implements IModModule {
         MoreModulesConfig.registerConfigs(modContainer);
         hooks = new MoreMekaSuitModulesHooks();
         modEventBus.addListener(this::commonSetup);
+        modEventBus.addListener(MekaToolLavaHandler::register);
         modEventBus.addListener(MoreModulesConfig::onConfigLoad);
         modEventBus.addListener(this::imcQueue);
         MoreMekaSuitModulesDataComponents.DATA_COMPONENTS.register(modEventBus);

@@ -73,5 +73,5 @@
   "module.moremekasuitmodules.blaster_fire_mode.heavy": "Важкий",
   "module.moremekasuitmodules.blaster_fire_mode.standard": "Стандартний",
   "module.moremekasuitmodules.blaster_fire_mode.rapid": "Скорострільний",
-  "description.moremekasuitmodules.meka_tool_blaster_unit": "Запускає вибухонебезпечні сфери. Налаштуйте важкий, стандартний або скорострільний режим."
+  "description.moremekasuitmodules.meka_tool_blaster_unit": "Запускає вибухонебезпечні сфери. Витрачає 1000 мБ лави та енергію за постріл. Налаштуйте важкий, стандартний або скорострільний режим."
 }

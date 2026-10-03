@@ -8,6 +8,8 @@ import mekanism.api.gear.IModuleHelper;
 import mekanism.common.item.gear.ItemMekaTool;
 import mekanism.common.util.StorageUtils;
 import moremekasuitmodules.common.registries.MekaSuitMoreModules;
+import net.neoforged.neoforge.fluids.capability.IFluidHandler;
+import net.neoforged.neoforge.fluids.capability.IFluidHandlerItem;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
@@ -61,6 +63,12 @@ public final class MekaToolBlasterHandler {
             event.setCancellationResult(InteractionResult.FAIL);
             return;
         }
+        IFluidHandlerItem lavaTank = MekaToolLavaHandler.create(stack);
+        if (!MekaToolLavaHandler.hasLava(lavaTank)) {
+            event.setCanceled(true);
+            event.setCancellationResult(InteractionResult.FAIL);
+            return;
+        }
 
         player.getCooldowns().addCooldown(stack.getItem(), mode.getCooldownTicks());
         event.setCanceled(true);
@@ -71,6 +79,7 @@ public final class MekaToolBlasterHandler {
 
         NEXT_SHOT_TICK.put(player.getUUID(), player.level().getGameTime() + mode.getCooldownTicks());
         energyContainer.extract(mode.getEnergyCost(), Action.EXECUTE, AutomationType.MANUAL);
+        lavaTank.drain(MekaToolLavaHandler.COST_PER_SHOT, IFluidHandler.FluidAction.EXECUTE);
         Level level = player.level();
         Vec3 direction = player.getViewVector(1.0F).normalize();
         MekaToolBlasterFireball fireball = new MekaToolBlasterFireball(level, player, direction, mode.getExplosionPower());
