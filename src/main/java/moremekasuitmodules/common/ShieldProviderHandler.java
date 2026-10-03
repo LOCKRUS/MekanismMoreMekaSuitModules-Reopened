@@ -1,7 +1,9 @@
 package moremekasuitmodules.common;
 
+import mekanism.common.content.gear.IModuleContainerItem;
 import moremekasuitmodules.common.config.MoreModulesConfig;
 import moremekasuitmodules.common.item.interfaces.IShieldProvider;
+import moremekasuitmodules.common.registries.MekaSuitMoreModules;
 import moremekasuitmodules.common.registries.MoreMekaSuitModulesDataComponents;
 import moremekasuitmodules.common.util.MoreMekaSuitModulesUtils;
 import net.minecraft.core.NonNullList;
@@ -114,7 +116,7 @@ public class ShieldProviderHandler {
             }
         }
 
-        if (totalCharge < MoreModulesConfig.config.lastStandEnergyRequirement.get()) {
+        if (totalCharge < MoreModulesConfig.config.lastStandEnergyRequirement.get() || !getShieldState(player)) {
             return;
         }
 
@@ -272,7 +274,12 @@ public class ShieldProviderHandler {
             energyAllocation = new long[armorStacks.size()];
             for (int i = 0; i < armorStacks.size(); i++) {
                 ItemStack stack = armorStacks.get(i);
-                if (stack.isEmpty() || !(stack.getItem() instanceof IShieldProvider armor)) continue;
+                if (stack.isEmpty()
+                        || !(stack.getItem() instanceof IShieldProvider armor)
+                        || !(stack.getItem() instanceof IModuleContainerItem moduleContainer)
+                        || !moduleContainer.isModuleEnabled(stack, MekaSuitMoreModules.ENERGY_SHIELD_UNIT)) {
+                    continue;
+                }
                 pieces++;
                 allocation[i] = stack.getOrDefault(MoreMekaSuitModulesDataComponents.PROTECTION_POINTS, 0D); //ItemDataUtils.getDouble(stack, "ProtectionPoints");
                 protectionPoints += allocation[i];
@@ -304,4 +311,3 @@ public class ShieldProviderHandler {
     }
 
 }
-
