@@ -17,7 +17,13 @@ import net.minecraft.world.phys.Vec3;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.neoforge.event.entity.player.PlayerInteractEvent;
 
+import java.util.HashMap;
+import java.util.Map;
+import java.util.UUID;
+
 public final class MekaToolBlasterHandler {
+    private static final Map<UUID, Long> NEXT_SHOT_TICK = new HashMap<>();
+
     @SubscribeEvent
     public void onRightClickItem(PlayerInteractEvent.RightClickItem event) {
         if (event.getHand() != InteractionHand.MAIN_HAND) {
@@ -39,6 +45,15 @@ public final class MekaToolBlasterHandler {
             event.setCancellationResult(InteractionResult.CONSUME);
             return;
         }
+        if (!player.level().isClientSide()) {
+            long currentTick = player.level().getGameTime();
+            long nextShotTick = NEXT_SHOT_TICK.getOrDefault(player.getUUID(), 0L);
+            if (currentTick < nextShotTick) {
+                event.setCanceled(true);
+                event.setCancellationResult(InteractionResult.CONSUME);
+                return;
+            }
+        }
 
         IEnergyContainer energyContainer = StorageUtils.getEnergyContainer(stack, 0);
         if (energyContainer == null || energyContainer.extract(mode.getEnergyCost(), Action.SIMULATE, AutomationType.MANUAL) < mode.getEnergyCost()) {
@@ -54,6 +69,7 @@ public final class MekaToolBlasterHandler {
             return;
         }
 
+        NEXT_SHOT_TICK.put(player.getUUID(), player.level().getGameTime() + mode.getCooldownTicks());
         energyContainer.extract(mode.getEnergyCost(), Action.EXECUTE, AutomationType.MANUAL);
         Level level = player.level();
         Vec3 direction = player.getViewVector(1.0F).normalize();

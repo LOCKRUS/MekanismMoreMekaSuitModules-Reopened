@@ -8,7 +8,7 @@
   ],
   "key": {
     "P": {
-      "item": "mekanism:antimatter_pellet"
+      "item": "mekanism:pellet_antimatter"
     },
     "S": {
       "item": "minecraft:nether_star"
@@ -20,7 +20,7 @@
       "item": "moremekasuitmodules:module_meka_tool_performance_amplification_unit"
     },
     "V": {
-      "item": "mekanism:module_vein_mining_unit"
+      "item": "minecraft:fire_charge"
     }
   },
   "result": {
