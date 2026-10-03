@@ -22,6 +22,8 @@ public class MekaSuitMoreModulesConfig extends BaseMekanismConfig {
 
     //智能范围攻击单元
     public final CachedLongValue mekaSuitEnergyUsageItemAttack;
+    //抢夺强化单元
+    public final CachedLongValue mekaToolEnergyUsageLootingAmplification;
 
     //伤害拦截
     public final CachedBooleanValue mekaSuitOverloadProtection;
@@ -41,6 +43,7 @@ public class MekaSuitMoreModulesConfig extends BaseMekanismConfig {
         mekaEnergyUsageHealthRegeneration = CachedLongValue.definePositive(this, builder, MekaSuitMoreModulesConfigTranslations.GEAR_MEKA_SUIT_ENERGY_USAGE_HEALTH_REGENERATION, "mekaEnergyUsageHealthRegeneration", 100);
         mekaSuitEnergyUsageAutomaticExtinguish = CachedLongValue.definePositive(this, builder, MekaSuitMoreModulesConfigTranslations.GEAR_MEKA_SUIT_ENERGY_USAGE_AUTOMATIC_EXTINGUISH, "mekaSuitEnergyUsageAutomaticExtinguish", 1000);
         mekaSuitEnergyUsageItemAttack = CachedLongValue.definePositive(this, builder, MekaSuitMoreModulesConfigTranslations.GEAR_MEKA_SUIT_ENERGY_USAGE_ATTACK, "energyUsageItemattack", 200);
+        mekaToolEnergyUsageLootingAmplification = CachedLongValue.definePositive(this, builder, MekaSuitMoreModulesConfigTranslations.GEAR_MEKA_TOOL_ENERGY_USAGE_LOOTING_AMPLIFICATION, "energyUsageLootingAmplification", 500);
         mekaSuitOverloadProtection = CachedBooleanValue.wrap(this, MekaSuitMoreModulesConfigTranslations.GEAR_MEKA_SUIT_OVERLOAD_PROTECTION.applyToBuilder(builder).define("mekaSuitOverloadProtection", true));
         mekaSuitShield = CachedBooleanValue.wrap(this, MekaSuitMoreModulesConfigTranslations.GEAR_MEKA_SUIT_SHIELD_DEFAULT.applyToBuilder(builder).define("mekaSuitShield", true));
         mekaSuitShieldCapacity = CachedDoubleValue.wrap(this, MekaSuitMoreModulesConfigTranslations.GEAR_MEKA_SUIT_SHIELD_CAPACITY.applyToBuilder(builder).defineInRange("mekaSuitShieldCapacity", 1000F, 1F, Float.MAX_VALUE));

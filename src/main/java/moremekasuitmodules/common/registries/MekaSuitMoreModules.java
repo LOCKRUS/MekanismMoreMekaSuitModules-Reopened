@@ -8,6 +8,7 @@ import mekanism.common.registration.impl.ModuleRegistryObject;
 import moremekasuitmodules.common.MoreMekaSuitModules;
 import moremekasuitmodules.common.content.gear.*;
 import moremekasuitmodules.common.content.gear.ModuleAutomaticAttackUnit.Range;
+import moremekasuitmodules.common.content.gear.mekanism.mekatool.ModuleLootingAmplificationUnit;
 
 public class MekaSuitMoreModules {
 
@@ -112,6 +113,13 @@ public class MekaSuitMoreModules {
     public static final ModuleRegistryObject<ModuleQuantumReconstructionUnit> QUANTUM_RECONSTRUCTION_UNIT = MODULES.registerInstanced("quantum_reconstruction_unit", ModuleQuantumReconstructionUnit::new, () -> MekaSuitMoreModulesItem.MODULE_QUANTUM_RECONSTRUCTION, builder -> builder.handlesModeChange().modeChangeDisabledByDefault().disabledByDefault());
     //生命提升单元
     public static final ModuleRegistryObject<ModuleHPBootsUnit> HP_BOOTS_UNIT = MODULES.registerInstanced("hp_boots_unit", ModuleHPBootsUnit::new, () -> MekaSuitMoreModulesItem.MODULE_HP_BOOTS, builder -> builder.maxStackSize(64).noDisable());
+    //抢夺强化单元（提高MekaTool的抢夺效果）
+    public static final ModuleRegistryObject<ModuleLootingAmplificationUnit> LOOTING_AMPLIFICATION_UNIT = MODULES.register("looting_amplification_unit", ModuleLootingAmplificationUnit::new, () -> MekaSuitMoreModulesItem.MODULE_LOOTING_AMPLIFICATION, builder -> builder.maxStackSize(ModuleLootingAmplificationUnit.MAX_MODULES).disabledByDefault()
+            .addInstalledCountConfig(
+                    installed -> ModuleEnumConfig.createBounded(ModuleLootingAmplificationUnit.LOOTING_LEVEL, ModuleLootingAmplificationUnit.LootingLevel.LOW, installed + 1),
+                    installed -> ModuleEnumConfig.codec(ModuleLootingAmplificationUnit.LootingLevel.CODEC, ModuleLootingAmplificationUnit.LootingLevel.class, installed + 1),
+                    installed -> ModuleEnumConfig.streamCodec(ModuleLootingAmplificationUnit.LootingLevel.STREAM_CODEC, ModuleLootingAmplificationUnit.LootingLevel.class, installed + 1)
+            ));
 
 
 }

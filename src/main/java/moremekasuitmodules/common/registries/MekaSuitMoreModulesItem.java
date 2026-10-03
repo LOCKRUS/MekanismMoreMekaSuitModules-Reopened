@@ -43,4 +43,6 @@ public class MekaSuitMoreModulesItem {
     public static final ItemRegistryObject<ItemModule> MODULE_QUANTUM_RECONSTRUCTION = ITEMS.registerModule(MekaSuitMoreModules.QUANTUM_RECONSTRUCTION_UNIT,Rarity.EPIC);
     //生命提升单元
     public static final ItemRegistryObject<ItemModule> MODULE_HP_BOOTS = ITEMS.registerModule(MekaSuitMoreModules.HP_BOOTS_UNIT,Rarity.EPIC);
+    //抢夺强化单元
+    public static final ItemRegistryObject<ItemModule> MODULE_LOOTING_AMPLIFICATION = ITEMS.registerModule(MekaSuitMoreModules.LOOTING_AMPLIFICATION_UNIT, Rarity.RARE);
 }
