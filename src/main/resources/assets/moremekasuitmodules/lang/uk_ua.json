@@ -78,5 +78,6 @@
   "module.moremekasuitmodules.meka_tool_lava_tank_unit": "Модуль розширення лавового бака MekaTool",
   "description.moremekasuitmodules.counterattack_unit": "Відбиває частину отриманої шкоди назад атакувальнику. Рівень визначає ефективну кількість встановлених модулів.",
   "module.moremekasuitmodules.counterattack_unit": "Модуль контратаки",
-  "module.moremekasuitmodules.counter_level_hud": "Рівень контратаки: %1$s"
+  "module.moremekasuitmodules.counter_level_hud": "Рівень контратаки: %1$s",
+  "module.moremekasuitmodules.counter_level": "Сила контратаки"
 }

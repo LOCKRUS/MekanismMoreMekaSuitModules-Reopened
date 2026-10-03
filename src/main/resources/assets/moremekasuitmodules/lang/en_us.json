@@ -79,5 +79,6 @@
   "module.moremekasuitmodules.meka_tool_lava_tank_unit": "MekaTool Lava Tank Expansion Unit",
   "description.moremekasuitmodules.counterattack_unit": "Reflects incoming damage back to the attacker. The level controls the effective installed-module count.",
   "module.moremekasuitmodules.counterattack_unit": "Counterattack Unit",
-  "module.moremekasuitmodules.counter_level_hud": "Counterattack level: %1$s"
+  "module.moremekasuitmodules.counter_level_hud": "Counterattack level: %1$s",
+  "module.moremekasuitmodules.counter_level": "Counterattack strength"
 }
