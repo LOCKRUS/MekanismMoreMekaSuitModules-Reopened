@@ -10,6 +10,7 @@ import moremekasuitmodules.common.content.gear.*;
 import moremekasuitmodules.common.content.gear.ModuleAutomaticAttackUnit.Range;
 import moremekasuitmodules.common.content.gear.mekanism.mekatool.ModuleLootingAmplificationUnit;
 import moremekasuitmodules.common.content.gear.mekanism.mekatool.ModuleMekaToolPerformanceAmplificationUnit;
+import moremekasuitmodules.common.content.gear.mekanism.mekatool.ModuleMekaToolBlasterUnit;
 
 public class MekaSuitMoreModules {
 
@@ -127,6 +128,16 @@ public class MekaSuitMoreModules {
             ModuleMekaToolPerformanceAmplificationUnit::new,
             () -> MekaSuitMoreModulesItem.MODULE_MEKA_TOOL_PERFORMANCE_AMPLIFICATION,
             builder -> builder.maxStackSize(ModuleMekaToolPerformanceAmplificationUnit.MAX_MODULES).disabledByDefault());
+    // MekaTool爆炸球发射器：可在重型、标准、速射三种模式间选择
+    public static final ModuleRegistryObject<ModuleMekaToolBlasterUnit> MEKA_TOOL_BLASTER_UNIT = MODULES.register(
+            "meka_tool_blaster_unit",
+            ModuleMekaToolBlasterUnit::new,
+            () -> MekaSuitMoreModulesItem.MODULE_MEKA_TOOL_BLASTER,
+            builder -> builder.maxStackSize(1).disabledByDefault().handlesModeChange()
+                    .addConfig(
+                            ModuleEnumConfig.create(ModuleMekaToolBlasterUnit.FIRE_MODE, ModuleMekaToolBlasterUnit.FireMode.STANDARD),
+                            ModuleEnumConfig.codec(ModuleMekaToolBlasterUnit.FireMode.CODEC),
+                            ModuleEnumConfig.streamCodec(ModuleMekaToolBlasterUnit.FireMode.STREAM_CODEC)));
 
 
 }

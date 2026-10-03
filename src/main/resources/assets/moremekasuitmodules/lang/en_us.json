@@ -72,5 +72,12 @@
   "module.moremekasuitmodules.creative_band_of_aura_unit":"Creative Aura unit",
 
   "description.moremekasuitmodules.smart_shielding_unit": "Through chip analysis, it automatically blocks the other party's gaze",
-  "module.moremekasuitmodules.smart_shielding_unit": "Intelligent shielding unit"
+  "module.moremekasuitmodules.smart_shielding_unit": "Intelligent shielding unit",
+  "description.moremekasuitmodules.meka_tool_blaster_unit": "Fires explosive orbs. Configure heavy, standard, or rapid fire mode.",
+  "module.moremekasuitmodules.meka_tool_blaster_unit": "MekaTool Blaster Unit",
+  "module.moremekasuitmodules.meka_tool_blaster_mode_hud": "Blaster mode: %1$s",
+  "module.moremekasuitmodules.blaster_fire_mode": "Blaster fire mode",
+  "module.moremekasuitmodules.blaster_fire_mode.heavy": "Heavy",
+  "module.moremekasuitmodules.blaster_fire_mode.standard": "Standard",
+  "module.moremekasuitmodules.blaster_fire_mode.rapid": "Rapid"
 }

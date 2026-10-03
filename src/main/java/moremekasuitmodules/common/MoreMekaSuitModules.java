@@ -10,6 +10,7 @@ import moremekasuitmodules.common.registries.MekaSuitMoreModules;
 import moremekasuitmodules.common.registries.MekaSuitMoreModulesCreativeTabs;
 import moremekasuitmodules.common.registries.MekaSuitMoreModulesItem;
 import moremekasuitmodules.common.registries.MoreMekaSuitModulesDataComponents;
+import moremekasuitmodules.common.content.gear.mekanism.mekatool.MekaToolBlasterHandler;
 import net.minecraft.resources.ResourceLocation;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.ModContainer;
@@ -89,7 +90,8 @@ public class MoreMekaSuitModules implements IModModule {
                 MekaSuitMoreModules.QUANTUM_RECONSTRUCTION_UNIT);
         MekanismIMC.addMekaToolModules(
                 MekaSuitMoreModules.LOOTING_AMPLIFICATION_UNIT,
-                MekaSuitMoreModules.MEKA_TOOL_PERFORMANCE_AMPLIFICATION_UNIT);
+                MekaSuitMoreModules.MEKA_TOOL_PERFORMANCE_AMPLIFICATION_UNIT,
+                MekaSuitMoreModules.MEKA_TOOL_BLASTER_UNIT);
         //meka护腿
 
         //meka靴子
@@ -98,6 +100,7 @@ public class MoreMekaSuitModules implements IModModule {
     private void commonSetup(FMLCommonSetupEvent event) {
         NeoForge.EVENT_BUS.register(new CommonPlayerTickHandler());
         NeoForge.EVENT_BUS.register(new ShieldProviderHandler());
+        NeoForge.EVENT_BUS.register(new MekaToolBlasterHandler());
     }
 
     @Override

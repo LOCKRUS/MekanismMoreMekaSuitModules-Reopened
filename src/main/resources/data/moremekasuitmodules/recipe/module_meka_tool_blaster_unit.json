@@ -1,0 +1,30 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    "PSP",
+    "TAT",
+    "PVP"
+  ],
+  "key": {
+    "P": {
+      "item": "mekanism:antimatter_pellet"
+    },
+    "S": {
+      "item": "minecraft:nether_star"
+    },
+    "T": {
+      "item": "mekanism:ultimate_chemical_tank"
+    },
+    "A": {
+      "item": "moremekasuitmodules:module_meka_tool_performance_amplification_unit"
+    },
+    "V": {
+      "item": "mekanism:module_vein_mining_unit"
+    }
+  },
+  "result": {
+    "count": 1,
+    "id": "moremekasuitmodules:module_meka_tool_blaster_unit"
+  }
+}

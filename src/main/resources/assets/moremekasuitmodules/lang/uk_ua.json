@@ -67,5 +67,11 @@
   "module.moremekasuitmodules.ultimate_band_of_aura_unit": "Граничний модуль аури",
   "module.moremekasuitmodules.creative_band_of_aura_unit": "Творчий модуль аури",
   "description.moremekasuitmodules.smart_shielding_unit": "Автоматично блокує погляд супротивника за допомогою аналізу чипом",
-  "module.moremekasuitmodules.smart_shielding_unit": "Модуль інтелектуального захисту"
+  "module.moremekasuitmodules.smart_shielding_unit": "Бластерний модуль MekaTool",
+  "module.moremekasuitmodules.meka_tool_blaster_mode_hud": "Режим бластера: %1$s",
+  "module.moremekasuitmodules.blaster_fire_mode": "Режим стрільби бластера",
+  "module.moremekasuitmodules.blaster_fire_mode.heavy": "Важкий",
+  "module.moremekasuitmodules.blaster_fire_mode.standard": "Стандартний",
+  "module.moremekasuitmodules.blaster_fire_mode.rapid": "Скорострільний",
+  "description.moremekasuitmodules.meka_tool_blaster_unit": "Запускає вибухонебезпечні сфери. Налаштуйте важкий, стандартний або скорострільний режим."
 }
