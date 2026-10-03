@@ -116,9 +116,9 @@ public class MekaSuitMoreModules {
     //抢夺强化单元（提高MekaTool的抢夺效果）
     public static final ModuleRegistryObject<ModuleLootingAmplificationUnit> LOOTING_AMPLIFICATION_UNIT = MODULES.register("looting_amplification_unit", ModuleLootingAmplificationUnit::new, () -> MekaSuitMoreModulesItem.MODULE_LOOTING_AMPLIFICATION, builder -> builder.maxStackSize(ModuleLootingAmplificationUnit.MAX_MODULES).disabledByDefault()
             .addInstalledCountConfig(
-                    installed -> ModuleEnumConfig.createBounded(ModuleLootingAmplificationUnit.LOOTING_LEVEL, ModuleLootingAmplificationUnit.LootingLevel.LOW, installed + 1),
-                    installed -> ModuleEnumConfig.codec(ModuleLootingAmplificationUnit.LootingLevel.CODEC, ModuleLootingAmplificationUnit.LootingLevel.class, installed + 1),
-                    installed -> ModuleEnumConfig.streamCodec(ModuleLootingAmplificationUnit.LootingLevel.STREAM_CODEC, ModuleLootingAmplificationUnit.LootingLevel.class, installed + 1)
+                    installed -> ModuleEnumConfig.createBounded(ModuleLootingAmplificationUnit.LOOTING_LEVEL, ModuleLootingAmplificationUnit.LootingLevel.LOW, Math.min(ModuleLootingAmplificationUnit.LootingLevel.values().length, installed + 1)),
+                    installed -> ModuleEnumConfig.codec(ModuleLootingAmplificationUnit.LootingLevel.CODEC, ModuleLootingAmplificationUnit.LootingLevel.class, Math.min(ModuleLootingAmplificationUnit.LootingLevel.values().length, installed + 1)),
+                    installed -> ModuleEnumConfig.streamCodec(ModuleLootingAmplificationUnit.LootingLevel.STREAM_CODEC, ModuleLootingAmplificationUnit.LootingLevel.class, Math.min(ModuleLootingAmplificationUnit.LootingLevel.values().length, installed + 1))
             ));
 
 
