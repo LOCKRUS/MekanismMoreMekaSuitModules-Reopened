@@ -87,5 +87,6 @@
   "description.moremekasuitmodules.wall_cling_unit": "Дозволяє чіплятися за стіни й підніматися вгору під час утримання стрибка. Присідання утримує позицію. Використовує енергію MekaSuit.",
   "module.moremekasuitmodules.impact_wave_unit": "Модуль ударної хвилі",
   "description.moremekasuitmodules.impact_wave_unit": "Створює радіальну ударну хвилю під час падіння з обраної висоти. Пошкоджує та відкидає найближчих істот.",
-  "module.moremekasuitmodules.climb_speed_hud": "Швидкість підйому: %s"
+  "module.moremekasuitmodules.climb_speed_hud": "Швидкість підйому: %s",
+  "tooltip.moremekasuitmodules.lava_storage": "Лава: %s / %s мБ"
 }

@@ -166,7 +166,7 @@ public class MekaSuitMoreModules {
             "meka_tool_blaster_unit",
             ModuleMekaToolBlasterUnit::new,
             () -> MekaSuitMoreModulesItem.MODULE_MEKA_TOOL_BLASTER,
-            builder -> builder.maxStackSize(1).disabledByDefault().handlesModeChange()
+            builder -> builder.maxStackSize(1).disabledByDefault().handlesModeChange().exclusive(1)
                     .addConfig(
                             ModuleEnumConfig.create(ModuleMekaToolBlasterUnit.FIRE_MODE, ModuleMekaToolBlasterUnit.FireMode.STANDARD),
                             ModuleEnumConfig.codec(ModuleMekaToolBlasterUnit.FireMode.CODEC),
@@ -176,7 +176,7 @@ public class MekaSuitMoreModules {
             "meka_tool_antimatter_strike_unit",
             ModuleMekaToolAntimatterStrikeUnit::new,
             () -> MekaSuitMoreModulesItem.MODULE_MEKA_TOOL_ANTIMATTER_STRIKE,
-            builder -> builder.maxStackSize(1).disabledByDefault());
+            builder -> builder.maxStackSize(1).disabledByDefault().exclusive(1));
     // MekaTool lava tank expansion: each installed module adds 200,000 mB, up to five modules.
     public static final ModuleRegistryObject<ModuleMekaToolLavaTankUnit> MEKA_TOOL_LAVA_TANK_UNIT = MODULES.registerInstanced(
             "meka_tool_lava_tank_unit",
