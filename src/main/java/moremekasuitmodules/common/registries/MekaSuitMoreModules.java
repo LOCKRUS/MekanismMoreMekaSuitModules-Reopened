@@ -14,6 +14,8 @@ import moremekasuitmodules.common.content.gear.mekanism.mekatool.ModuleMekaToolB
 import moremekasuitmodules.common.content.gear.mekanism.mekatool.ModuleMekaToolAntimatterStrikeUnit;
 import moremekasuitmodules.common.content.gear.mekanism.mekatool.ModuleMekaToolLavaTankUnit;
 import moremekasuitmodules.common.content.gear.mekanism.mekasuit.ModuleCounterattackUnit;
+import moremekasuitmodules.common.content.gear.mekanism.mekasuit.ModuleWallClingUnit;
+import moremekasuitmodules.common.content.gear.mekanism.mekasuit.ModuleImpactWaveUnit;
 
 public class MekaSuitMoreModules {
 
@@ -50,6 +52,23 @@ public class MekaSuitMoreModules {
                             installed -> ModuleEnumConfig.codec(ModuleCounterattackUnit.CounterLevel.CODEC, ModuleCounterattackUnit.CounterLevel.class, Math.max(1, Math.min(ModuleCounterattackUnit.CounterLevel.values().length, (installed + 1) / 2))),
                             installed -> ModuleEnumConfig.streamCodec(ModuleCounterattackUnit.CounterLevel.STREAM_CODEC, ModuleCounterattackUnit.CounterLevel.class, Math.max(1, Math.min(ModuleCounterattackUnit.CounterLevel.values().length, (installed + 1) / 2)))
                     ));
+    // Wall climbing and impact-wave modules are installed on MekaSuit boots.
+    public static final ModuleRegistryObject<ModuleWallClingUnit> WALL_CLING_UNIT = MODULES.register(
+            "wall_cling_unit", ModuleWallClingUnit::new, () -> MekaSuitMoreModulesItem.MODULE_WALL_CLING,
+            builder -> builder.maxStackSize(ModuleWallClingUnit.MAX_MODULES).disabledByDefault()
+                    .addInstalledCountConfig(
+                            installed -> ModuleEnumConfig.createBounded(ModuleWallClingUnit.CLIMB_SPEED, ModuleWallClingUnit.ClimbSpeed.LOW, Math.min(ModuleWallClingUnit.ClimbSpeed.values().length, installed)),
+                            installed -> ModuleEnumConfig.codec(ModuleWallClingUnit.ClimbSpeed.CODEC, ModuleWallClingUnit.ClimbSpeed.class, Math.min(ModuleWallClingUnit.ClimbSpeed.values().length, installed)),
+                            installed -> ModuleEnumConfig.streamCodec(ModuleWallClingUnit.ClimbSpeed.STREAM_CODEC, ModuleWallClingUnit.ClimbSpeed.class, Math.min(ModuleWallClingUnit.ClimbSpeed.values().length, installed))));
+    public static final ModuleRegistryObject<ModuleImpactWaveUnit> IMPACT_WAVE_UNIT = MODULES.register(
+            "impact_wave_unit", ModuleImpactWaveUnit::new, () -> MekaSuitMoreModulesItem.MODULE_IMPACT_WAVE,
+            builder -> builder.maxStackSize(ModuleImpactWaveUnit.MAX_MODULES).disabledByDefault()
+                    .addInstalledCountConfig(
+                            installed -> ModuleEnumConfig.createBounded(ModuleImpactWaveUnit.TRIGGER_HEIGHT, ModuleImpactWaveUnit.TriggerHeight.LOW, Math.min(ModuleImpactWaveUnit.TriggerHeight.values().length, installed)),
+                            installed -> ModuleEnumConfig.codec(ModuleImpactWaveUnit.TriggerHeight.CODEC, ModuleImpactWaveUnit.TriggerHeight.class, Math.min(ModuleImpactWaveUnit.TriggerHeight.values().length, installed)),
+                            installed -> ModuleEnumConfig.streamCodec(ModuleImpactWaveUnit.TriggerHeight.STREAM_CODEC, ModuleImpactWaveUnit.TriggerHeight.class, Math.min(ModuleImpactWaveUnit.TriggerHeight.values().length, installed)))
+                    .addConfig(ModuleEnumConfig.create(ModuleImpactWaveUnit.RADIUS, ModuleImpactWaveUnit.ImpactRadius.LOW), ModuleEnumConfig.codec(ModuleImpactWaveUnit.ImpactRadius.CODEC), ModuleEnumConfig.streamCodec(ModuleImpactWaveUnit.ImpactRadius.STREAM_CODEC))
+                    .addConfig(ModuleEnumConfig.create(ModuleImpactWaveUnit.DAMAGE, ModuleImpactWaveUnit.DamageScale.LOW), ModuleEnumConfig.codec(ModuleImpactWaveUnit.DamageScale.CODEC), ModuleEnumConfig.streamCodec(ModuleImpactWaveUnit.DamageScale.STREAM_CODEC)));
     //防蜂单元 （散发特殊的信息素，让蜜蜂对你视而不见） //TODO
 
     //扭曲清除基础单元 神秘（通过特殊的方法移除身上的临时扭曲值）//神秘未到1.20.1

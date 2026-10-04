@@ -82,5 +82,10 @@
   "module.moremekasuitmodules.counter_level_hud": "Counterattack level: %1$s",
   "module.moremekasuitmodules.counter_level": "Counterattack strength",
   "description.moremekasuitmodules.meka_tool_antimatter_strike_unit": "Launches a hypersonic antimatter orb. One mode, 30-second cooldown, 500,000,000 FE per shot. Does not consume lava.",
-  "module.moremekasuitmodules.meka_tool_antimatter_strike_unit": "MekaTool Antimatter Strike Unit"
+  "module.moremekasuitmodules.meka_tool_antimatter_strike_unit": "MekaTool Antimatter Strike Unit",
+  "module.moremekasuitmodules.wall_cling_unit": "Wall Cling Unit",
+  "description.moremekasuitmodules.wall_cling_unit": "Clings to walls and climbs while holding jump. Sneak to hold position. Uses MekaSuit energy.",
+  "module.moremekasuitmodules.impact_wave_unit": "Impact Wave Unit",
+  "description.moremekasuitmodules.impact_wave_unit": "Creates a radial shockwave when landing from a configurable height. Damages and knocks back nearby entities.",
+  "module.moremekasuitmodules.climb_speed_hud": "Climb speed: %s"
 }

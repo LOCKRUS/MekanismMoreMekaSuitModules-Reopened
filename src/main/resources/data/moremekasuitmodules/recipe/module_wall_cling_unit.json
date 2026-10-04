@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": ["SPS", "CMC", "AEA"],
+  "key": {
+    "S": {"item": "minecraft:slime_ball"},
+    "P": {"item": "minecraft:sticky_piston"},
+    "C": {"tag": "c:circuits/elite"},
+    "M": {"item": "mekanism:module_base"},
+    "A": {"tag": "c:alloys/elite"},
+    "E": {"item": "mekanism:module_hydraulic_propulsion"}
+  },
+  "result": {"count": 1, "id": "moremekasuitmodules:module_wall_cling_unit"}
+}

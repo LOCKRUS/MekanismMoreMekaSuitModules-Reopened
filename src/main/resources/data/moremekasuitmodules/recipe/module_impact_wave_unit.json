@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": ["AEA", "CMC", "PDP"],
+  "key": {
+    "A": {"tag": "c:alloys/elite"},
+    "E": {"item": "mekanism:energy_tablet"},
+    "C": {"tag": "c:circuits/elite"},
+    "M": {"item": "mekanism:module_base"},
+    "P": {"item": "minecraft:piston"},
+    "D": {"item": "minecraft:diamond_boots"}
+  },
+  "result": {"count": 1, "id": "moremekasuitmodules:module_impact_wave_unit"}
+}

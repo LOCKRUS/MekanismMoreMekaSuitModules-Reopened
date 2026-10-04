@@ -82,5 +82,10 @@
   "module.moremekasuitmodules.counter_level_hud": "Рівень контратаки: %1$s",
   "module.moremekasuitmodules.counter_level": "Сила контратаки",
   "description.moremekasuitmodules.meka_tool_antimatter_strike_unit": "Запускає надшвидку антиматеріальну сферу. Один режим, перезаряджання 30 секунд, 500 000 000 FE за постріл. Не витрачає лаву.",
-  "module.moremekasuitmodules.meka_tool_antimatter_strike_unit": "Модуль антиматеріального удару MekaTool"
+  "module.moremekasuitmodules.meka_tool_antimatter_strike_unit": "Модуль антиматеріального удару MekaTool",
+  "module.moremekasuitmodules.wall_cling_unit": "Модуль прилипання до стін",
+  "description.moremekasuitmodules.wall_cling_unit": "Дозволяє чіплятися за стіни й підніматися вгору під час утримання стрибка. Присідання утримує позицію. Використовує енергію MekaSuit.",
+  "module.moremekasuitmodules.impact_wave_unit": "Модуль ударної хвилі",
+  "description.moremekasuitmodules.impact_wave_unit": "Створює радіальну ударну хвилю під час падіння з обраної висоти. Пошкоджує та відкидає найближчих істот.",
+  "module.moremekasuitmodules.climb_speed_hud": "Швидкість підйому: %s"
 }

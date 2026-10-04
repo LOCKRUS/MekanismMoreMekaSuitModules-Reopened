@@ -25,6 +25,10 @@ public class MekaSuitMoreModulesItem {
     public static final ItemRegistryObject<ItemModule> MODULE_AUTOMATIC_EXTINGUISH = ITEMS.registerModule(MekaSuitMoreModules.AUTOMATIC_EXTINGUISH_UNIT, Rarity.UNCOMMON);
     // Контратака
     public static final ItemRegistryObject<ItemModule> MODULE_COUNTERATTACK = ITEMS.registerModule(MekaSuitMoreModules.COUNTERATTACK_UNIT, Rarity.RARE);
+    // Wall Cling Unit
+    public static final ItemRegistryObject<ItemModule> MODULE_WALL_CLING = ITEMS.registerModule(MekaSuitMoreModules.WALL_CLING_UNIT, Rarity.RARE);
+    // Impact Wave Unit
+    public static final ItemRegistryObject<ItemModule> MODULE_IMPACT_WAVE = ITEMS.registerModule(MekaSuitMoreModules.IMPACT_WAVE_UNIT, Rarity.EPIC);
     //能量护盾单元 龙研 （给meka套提供能量护盾）[最大10个](需要mixin)[因为DR3的盾无法实现，所以是按照DR2的盾来实现]
     public static final ItemRegistryObject<ItemModule> MODULE_ENERGY_SHIELD = ITEMS.registerModule(MekaSuitMoreModules.ENERGY_SHIELD_UNIT, Rarity.RARE);
     //能量护盾控制器单元 龙研 （给meka套提供能量护盾）
