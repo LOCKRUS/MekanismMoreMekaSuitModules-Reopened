@@ -37,7 +37,6 @@ public record ModuleWallClingUnit(ClimbSpeed climbSpeed) implements ICustomModul
         if (!module.isEnabled() || !canFunction(player) || !isTouchingWall(player)) {
             return;
         }
-        boolean climbing = player.getAbilities().flying || player.isCrouching();
         double usage;
         if (player.getDeltaMovement().y > 0.0D && !player.isCrouching()) {
             usage = 250.0D * climbSpeed.energyMultiplier;
@@ -59,10 +58,11 @@ public record ModuleWallClingUnit(ClimbSpeed climbSpeed) implements ICustomModul
     }
 
     private static boolean canFunction(Player player) {
-        return player.isAlive() && !player.onGround() && !player.isSpectator()
+        return player.isAlive() && !player.isSpectator()
                 && !player.getAbilities().flying && !player.isFallFlying()
                 && !player.isPassenger() && !player.onClimbable()
-                && !player.isInWater() && !player.isInLava();
+                && !player.isInWater() && !player.isInLava()
+                && (!player.onGround() || player.getDeltaMovement().y > 0.0D || player.isCrouching());
     }
 
     private static boolean isTouchingWall(Player player) {
@@ -70,7 +70,7 @@ public record ModuleWallClingUnit(ClimbSpeed climbSpeed) implements ICustomModul
             return true;
         }
         var box = player.getBoundingBox();
-        return player.level().getBlockCollisions(player, box.inflate(0.04D, 0.0D, 0.0D)).iterator().hasNext();
+        return player.level().getBlockCollisions(player, box.inflate(0.04D, 0.0D, 0.04D)).iterator().hasNext();
     }
 
     @Override

@@ -5,6 +5,7 @@ import mekanism.api.gear.IModuleHelper;
 import mekanism.common.content.gear.IModuleContainerItem;
 import moremekasuitmodules.common.registries.MekaSuitMoreModules;
 import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.core.particles.DustParticleOptions;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
@@ -14,11 +15,14 @@ import net.minecraft.world.phys.AABB;
 import net.neoforged.bus.api.EventPriority;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.neoforge.event.entity.living.LivingFallEvent;
+import org.joml.Vector3f;
 
 import java.util.List;
 
 public final class ImpactWaveHandler {
     private static final float ENERGY_PER_RADIUS = 1_500.0F;
+    private static final DustParticleOptions SHOCKWAVE_PARTICLE =
+            new DustParticleOptions(new Vector3f(0.20F, 0.85F, 1.0F), 1.5F);
 
     @SubscribeEvent(priority = EventPriority.HIGHEST)
     public void onLivingFall(LivingFallEvent event) {
@@ -57,9 +61,16 @@ public final class ImpactWaveHandler {
         double x = player.getX();
         double y = player.getY() + 0.1D;
         double z = player.getZ();
-        level.sendParticles(ParticleTypes.EXPLOSION_EMITTER, x, y, z, 2, 0, 0, 0, 0);
-        level.sendParticles(ParticleTypes.CLOUD, x, y, z, 100, radius * 0.4D, 0.6D, radius * 0.4D, 0.2D);
-        level.sendParticles(ParticleTypes.ELECTRIC_SPARK, x, y, z, 80, radius * 0.5D, 0.5D, radius * 0.5D, 0.25D);
+        level.sendParticles(ParticleTypes.EXPLOSION_EMITTER, x, y, z, 3, 0, 0, 0, 0);
+        level.sendParticles(ParticleTypes.SONIC_BOOM, x, y, z, 1, 0, 0, 0, 0);
+        level.sendParticles(ParticleTypes.CLOUD, x, y, z, 140, radius * 0.45D, 0.6D, radius * 0.45D, 0.25D);
+        level.sendParticles(ParticleTypes.ELECTRIC_SPARK, x, y, z, 120, radius * 0.55D, 0.5D, radius * 0.55D, 0.3D);
+        for (int i = 0; i < 96; i++) {
+            double angle = Math.PI * 2.0D * i / 96.0D;
+            double ringRadius = radius * (0.35D + 0.65D * i / 96.0D);
+            level.sendParticles(SHOCKWAVE_PARTICLE, x + Math.cos(angle) * ringRadius, y + 0.15D,
+                    z + Math.sin(angle) * ringRadius, 1, 0, 0, 0, 0);
+        }
         AABB area = new AABB(x - radius, y - 2.0D, z - radius, x + radius, y + 3.0D, z + radius);
         List<LivingEntity> targets = level.getEntitiesOfClass(LivingEntity.class, area,
                 target -> target != player && target.isAlive());
