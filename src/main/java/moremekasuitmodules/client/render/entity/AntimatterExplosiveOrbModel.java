@@ -35,8 +35,9 @@ public class AntimatterExplosiveOrbModel extends EntityModel<AntimatterExplosive
     @Override
     public void setupAnim(AntimatterExplosiveOrbEntity entity, float limbSwing, float limbSwingAmount,
                           float ageInTicks, float netHeadYaw, float headPitch) {
-        bone.yRot = ageInTicks * 0.18F;
-        bone.xRot = ageInTicks * 0.11F;
+        bone.yRot = ageInTicks * 0.65F;
+        bone.xRot = ageInTicks * 0.43F;
+        bone.zRot = ageInTicks * 0.29F;
     }
 
     @Override

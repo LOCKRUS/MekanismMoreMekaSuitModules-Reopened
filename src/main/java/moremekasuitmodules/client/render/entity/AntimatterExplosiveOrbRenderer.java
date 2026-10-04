@@ -8,6 +8,7 @@ import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.entity.EntityRenderer;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
+import net.minecraft.util.Mth;
 import net.minecraft.resources.ResourceLocation;
 
 public class AntimatterExplosiveOrbRenderer extends EntityRenderer<AntimatterExplosiveOrbEntity> {
@@ -24,7 +25,8 @@ public class AntimatterExplosiveOrbRenderer extends EntityRenderer<AntimatterExp
     public void render(AntimatterExplosiveOrbEntity entity, float entityYaw, float partialTick,
                        PoseStack poseStack, MultiBufferSource buffer, int packedLight) {
         poseStack.pushPose();
-        poseStack.scale(1.35F, 1.35F, 1.35F);
+        float pulse = 1.35F + Mth.sin((entity.tickCount + partialTick) * 0.55F) * 0.12F;
+        poseStack.scale(pulse, pulse, pulse);
         this.model.setupAnim(entity, 0, 0, entity.tickCount + partialTick, 0, 0);
         VertexConsumer consumer = buffer.getBuffer(RenderType.entityTranslucent(TEXTURE));
         this.model.renderToBuffer(poseStack, consumer, packedLight,

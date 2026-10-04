@@ -108,7 +108,7 @@ public final class MekaToolBlasterHandler {
     }
 
     private void fireAntimatterStrike(PlayerInteractEvent.RightClickItem event, Player player, ItemStack stack) {
-        final int cooldownTicks = 1_800;
+        final int cooldownTicks = 600;
         final long energyCost = 100_000_000L;
         if (player.getCooldowns().isOnCooldown(stack.getItem())) {
             event.setCanceled(true);
