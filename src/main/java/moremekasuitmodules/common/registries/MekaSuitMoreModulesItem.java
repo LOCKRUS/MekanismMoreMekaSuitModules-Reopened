@@ -51,6 +51,8 @@ public class MekaSuitMoreModulesItem {
     public static final ItemRegistryObject<ItemModule> MODULE_MEKA_TOOL_PERFORMANCE_AMPLIFICATION = ITEMS.registerModule(MekaSuitMoreModules.MEKA_TOOL_PERFORMANCE_AMPLIFICATION_UNIT, Rarity.EPIC);
     //MekaTool爆炸球发射单元
     public static final ItemRegistryObject<ItemModule> MODULE_MEKA_TOOL_BLASTER = ITEMS.registerModule(MekaSuitMoreModules.MEKA_TOOL_BLASTER_UNIT, Rarity.EPIC);
+    //MekaTool终极反物质轨道发射单元
+    public static final ItemRegistryObject<ItemModule> MODULE_MEKA_TOOL_ANTIMATTER_STRIKE = ITEMS.registerModule(MekaSuitMoreModules.MEKA_TOOL_ANTIMATTER_STRIKE_UNIT, Rarity.EPIC);
     //MekaTool液体储罐扩展单元
     public static final ItemRegistryObject<ItemModule> MODULE_MEKA_TOOL_LAVA_TANK = ITEMS.registerModule(MekaSuitMoreModules.MEKA_TOOL_LAVA_TANK_UNIT, Rarity.UNCOMMON);
 }

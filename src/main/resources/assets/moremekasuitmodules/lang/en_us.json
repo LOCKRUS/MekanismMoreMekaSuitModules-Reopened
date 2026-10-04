@@ -80,5 +80,7 @@
   "description.moremekasuitmodules.counterattack_unit": "Reflects incoming damage back to the attacker. The level controls the effective installed-module count.",
   "module.moremekasuitmodules.counterattack_unit": "Counterattack Unit",
   "module.moremekasuitmodules.counter_level_hud": "Counterattack level: %1$s",
-  "module.moremekasuitmodules.counter_level": "Counterattack strength"
+  "module.moremekasuitmodules.counter_level": "Counterattack strength",
+  "description.moremekasuitmodules.meka_tool_antimatter_strike_unit": "Launches a hypersonic antimatter orb. One mode, 90-second cooldown, 100,000,000 FE per shot. Does not consume lava.",
+  "module.moremekasuitmodules.meka_tool_antimatter_strike_unit": "MekaTool Antimatter Strike Unit"
 }

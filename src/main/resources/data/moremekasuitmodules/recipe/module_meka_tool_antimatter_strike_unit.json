@@ -1,0 +1,30 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    "PLP",
+    "IAI",
+    "PSP"
+  ],
+  "key": {
+    "P": {
+      "item": "mekanism:pellet_antimatter"
+    },
+    "L": {
+      "item": "mekanism:laser"
+    },
+    "I": {
+      "item": "mekanism:ultimate_induction_provider"
+    },
+    "A": {
+      "item": "moremekasuitmodules:module_meka_tool_blaster_unit"
+    },
+    "S": {
+      "item": "minecraft:nether_star"
+    }
+  },
+  "result": {
+    "count": 1,
+    "id": "moremekasuitmodules:module_meka_tool_antimatter_strike_unit"
+  }
+}

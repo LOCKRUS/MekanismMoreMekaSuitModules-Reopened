@@ -80,5 +80,7 @@
   "description.moremekasuitmodules.counterattack_unit": "Отражает часть входящего урона обратно атакующему. Уровень определяет эффективное количество установленных модулей.",
   "module.moremekasuitmodules.counterattack_unit": "Модуль контратаки",
   "module.moremekasuitmodules.counter_level_hud": "Уровень контратаки: %1$s",
-  "module.moremekasuitmodules.counter_level": "Сила контратаки"
+  "module.moremekasuitmodules.counter_level": "Сила контратаки",
+  "description.moremekasuitmodules.meka_tool_antimatter_strike_unit": "Запускает сверхбыстрый антиматериальный орб. Один режим, перезарядка 90 секунд, 100 000 000 FE за выстрел. Лаву не расходует.",
+  "module.moremekasuitmodules.meka_tool_antimatter_strike_unit": "Модуль антиматериального удара MekaTool"
 }

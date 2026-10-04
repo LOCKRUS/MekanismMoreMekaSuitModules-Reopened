@@ -9,6 +9,7 @@ import moremekasuitmodules.common.integration.MoreMekaSuitModulesHooks;
 import moremekasuitmodules.common.registries.MekaSuitMoreModules;
 import moremekasuitmodules.common.registries.MekaSuitMoreModulesCreativeTabs;
 import moremekasuitmodules.common.registries.MekaSuitMoreModulesItem;
+import moremekasuitmodules.common.registries.MoreMekaSuitModulesEntities;
 import moremekasuitmodules.common.registries.MoreMekaSuitModulesDataComponents;
 import moremekasuitmodules.common.content.gear.mekanism.mekatool.MekaToolBlasterHandler;
 import moremekasuitmodules.common.content.gear.mekanism.mekatool.MekaToolLavaHandler;
@@ -58,6 +59,7 @@ public class MoreMekaSuitModules implements IModModule {
             //    botaniaModules.MODULES.register(modEventBus);
         }
         MekaSuitMoreModulesCreativeTabs.CREATIVE_TABS.register(modEventBus);
+        MoreMekaSuitModulesEntities.ENTITY_TYPES.register(modEventBus);
     }
 
     public static ResourceLocation rl(String path) {
@@ -96,6 +98,7 @@ public class MoreMekaSuitModules implements IModModule {
                 MekaSuitMoreModules.LOOTING_AMPLIFICATION_UNIT,
                 MekaSuitMoreModules.MEKA_TOOL_PERFORMANCE_AMPLIFICATION_UNIT,
                 MekaSuitMoreModules.MEKA_TOOL_BLASTER_UNIT,
+                MekaSuitMoreModules.MEKA_TOOL_ANTIMATTER_STRIKE_UNIT,
                 MekaSuitMoreModules.MEKA_TOOL_LAVA_TANK_UNIT);
         //meka护腿
 

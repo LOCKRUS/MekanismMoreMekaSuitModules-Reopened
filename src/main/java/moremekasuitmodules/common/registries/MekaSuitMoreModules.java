@@ -11,6 +11,7 @@ import moremekasuitmodules.common.content.gear.ModuleAutomaticAttackUnit.Range;
 import moremekasuitmodules.common.content.gear.mekanism.mekatool.ModuleLootingAmplificationUnit;
 import moremekasuitmodules.common.content.gear.mekanism.mekatool.ModuleMekaToolPerformanceAmplificationUnit;
 import moremekasuitmodules.common.content.gear.mekanism.mekatool.ModuleMekaToolBlasterUnit;
+import moremekasuitmodules.common.content.gear.mekanism.mekatool.ModuleMekaToolAntimatterStrikeUnit;
 import moremekasuitmodules.common.content.gear.mekanism.mekatool.ModuleMekaToolLavaTankUnit;
 import moremekasuitmodules.common.content.gear.mekanism.mekasuit.ModuleCounterattackUnit;
 
@@ -151,6 +152,12 @@ public class MekaSuitMoreModules {
                             ModuleEnumConfig.create(ModuleMekaToolBlasterUnit.FIRE_MODE, ModuleMekaToolBlasterUnit.FireMode.STANDARD),
                             ModuleEnumConfig.codec(ModuleMekaToolBlasterUnit.FireMode.CODEC),
                             ModuleEnumConfig.streamCodec(ModuleMekaToolBlasterUnit.FireMode.STREAM_CODEC)));
+    // MekaTool antimatter orb launcher: one fixed, nuclear-scale strike mode.
+    public static final ModuleRegistryObject<ModuleMekaToolAntimatterStrikeUnit> MEKA_TOOL_ANTIMATTER_STRIKE_UNIT = MODULES.registerInstanced(
+            "meka_tool_antimatter_strike_unit",
+            ModuleMekaToolAntimatterStrikeUnit::new,
+            () -> MekaSuitMoreModulesItem.MODULE_MEKA_TOOL_ANTIMATTER_STRIKE,
+            builder -> builder.maxStackSize(1).disabledByDefault());
     // MekaTool lava tank expansion: each installed module adds 200,000 mB, up to five modules.
     public static final ModuleRegistryObject<ModuleMekaToolLavaTankUnit> MEKA_TOOL_LAVA_TANK_UNIT = MODULES.registerInstanced(
             "meka_tool_lava_tank_unit",
