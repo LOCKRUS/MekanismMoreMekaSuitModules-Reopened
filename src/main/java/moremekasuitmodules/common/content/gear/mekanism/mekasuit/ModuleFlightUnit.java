@@ -90,10 +90,13 @@ public record ModuleFlightUnit(FlightLevel level) implements ICustomModule<Modul
 
     @NothingNullByDefault
     public enum FlightLevel implements IHasTextComponent, StringRepresentable {
-        ONE(1.0F, 0.05F, 1.0D),
-        TWO(1.333F, 0.0667F, 1.333D),
-        THREE(1.667F, 0.08335F, 1.667D),
-        FOUR(2.0F, 0.10F, 2.0D);
+        // Deliberately starts above vanilla/Mekanism's default 0.05 flying speed.
+        // This makes the module a powered flight upgrade rather than a duplicate of
+        // the Gravitational Modulating Unit at level one.
+        ONE(1.0F, 0.06F, 1.0D),
+        TWO(1.333F, 0.08F, 1.333D),
+        THREE(1.667F, 0.10F, 1.667D),
+        FOUR(2.0F, 0.12F, 2.0D);
 
         public static final Codec<FlightLevel> CODEC = StringRepresentable.fromEnum(FlightLevel::values);
         public static final IntFunction<FlightLevel> BY_ID = ByIdMap.continuous(FlightLevel::ordinal, values(), ByIdMap.OutOfBoundsStrategy.WRAP);
