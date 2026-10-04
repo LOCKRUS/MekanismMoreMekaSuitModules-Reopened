@@ -25,6 +25,8 @@ public class MekaSuitMoreModulesItem {
     public static final ItemRegistryObject<ItemModule> MODULE_AUTOMATIC_EXTINGUISH = ITEMS.registerModule(MekaSuitMoreModules.AUTOMATIC_EXTINGUISH_UNIT, Rarity.UNCOMMON);
     // Контратака
     public static final ItemRegistryObject<ItemModule> MODULE_COUNTERATTACK = ITEMS.registerModule(MekaSuitMoreModules.COUNTERATTACK_UNIT, Rarity.RARE);
+    // Энергетический модуль полёта для кирасы
+    public static final ItemRegistryObject<ItemModule> MODULE_FLIGHT = ITEMS.registerModule(MekaSuitMoreModules.FLIGHT_UNIT, Rarity.EPIC);
     // Wall Cling Unit
     public static final ItemRegistryObject<ItemModule> MODULE_WALL_CLING = ITEMS.registerModule(MekaSuitMoreModules.WALL_CLING_UNIT, Rarity.RARE);
     // Impact Wave Unit

@@ -16,6 +16,7 @@ import moremekasuitmodules.common.content.gear.mekanism.mekatool.ModuleMekaToolL
 import moremekasuitmodules.common.content.gear.mekanism.mekasuit.ModuleCounterattackUnit;
 import moremekasuitmodules.common.content.gear.mekanism.mekasuit.ModuleWallClingUnit;
 import moremekasuitmodules.common.content.gear.mekanism.mekasuit.ModuleImpactWaveUnit;
+import moremekasuitmodules.common.content.gear.mekanism.mekasuit.ModuleFlightUnit;
 
 public class MekaSuitMoreModules {
 
@@ -69,6 +70,14 @@ public class MekaSuitMoreModules {
                             installed -> ModuleEnumConfig.streamCodec(ModuleImpactWaveUnit.TriggerHeight.STREAM_CODEC, ModuleImpactWaveUnit.TriggerHeight.class, Math.min(ModuleImpactWaveUnit.TriggerHeight.values().length, installed)))
                     .addConfig(ModuleEnumConfig.create(ModuleImpactWaveUnit.RADIUS, ModuleImpactWaveUnit.ImpactRadius.LOW), ModuleEnumConfig.codec(ModuleImpactWaveUnit.ImpactRadius.CODEC), ModuleEnumConfig.streamCodec(ModuleImpactWaveUnit.ImpactRadius.STREAM_CODEC))
                     .addConfig(ModuleEnumConfig.create(ModuleImpactWaveUnit.DAMAGE, ModuleImpactWaveUnit.DamageScale.LOW), ModuleEnumConfig.codec(ModuleImpactWaveUnit.DamageScale.CODEC), ModuleEnumConfig.streamCodec(ModuleImpactWaveUnit.DamageScale.STREAM_CODEC)));
+    // Энергетический полёт: до четырёх модулей, каждый уровень повышает скорость до x2.
+    public static final ModuleRegistryObject<ModuleFlightUnit> FLIGHT_UNIT = MODULES.register(
+            "flight_unit", ModuleFlightUnit::new, () -> MekaSuitMoreModulesItem.MODULE_FLIGHT,
+            builder -> builder.maxStackSize(ModuleFlightUnit.MAX_MODULES).disabledByDefault().exclusive(ExclusiveFlag.OVERRIDE_JUMP)
+                    .addInstalledCountConfig(
+                            installed -> ModuleEnumConfig.createBounded(ModuleFlightUnit.FLIGHT_LEVEL, ModuleFlightUnit.FlightLevel.ONE, Math.min(ModuleFlightUnit.FlightLevel.values().length, installed)),
+                            installed -> ModuleEnumConfig.codec(ModuleFlightUnit.FlightLevel.CODEC, ModuleFlightUnit.FlightLevel.class, Math.min(ModuleFlightUnit.FlightLevel.values().length, installed)),
+                            installed -> ModuleEnumConfig.streamCodec(ModuleFlightUnit.FlightLevel.STREAM_CODEC, ModuleFlightUnit.FlightLevel.class, Math.min(ModuleFlightUnit.FlightLevel.values().length, installed))));
     //防蜂单元 （散发特殊的信息素，让蜜蜂对你视而不见） //TODO
 
     //扭曲清除基础单元 神秘（通过特殊的方法移除身上的临时扭曲值）//神秘未到1.20.1

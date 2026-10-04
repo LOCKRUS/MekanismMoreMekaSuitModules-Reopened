@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": ["NJN", "FEF", "WAW"],
+  "key": {
+    "N": {"item": "minecraft:netherite_ingot"},
+    "J": {"item": "mekanism:jetpack_armored"},
+    "F": {"item": "minecraft:firework_rocket"},
+    "E": {"item": "mekanism:module_elytra_unit"},
+    "W": {"item": "minecraft:wind_charge"},
+    "A": {"item": "mekanism:pellet_antimatter"}
+  },
+  "result": {"count": 1, "id": "moremekasuitmodules:module_flight_unit"}
+}

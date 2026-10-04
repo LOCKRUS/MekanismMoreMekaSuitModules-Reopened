@@ -88,5 +88,8 @@
   "module.moremekasuitmodules.impact_wave_unit": "Impact Wave Unit",
   "description.moremekasuitmodules.impact_wave_unit": "Creates a radial shockwave when landing from a configurable height. Damages and knocks back nearby entities.",
   "module.moremekasuitmodules.climb_speed_hud": "Climb speed: %s",
-  "tooltip.moremekasuitmodules.lava_storage": "Lava: %s / %s mB"
+  "tooltip.moremekasuitmodules.lava_storage": "Lava: %s / %s mB",
+  "module.moremekasuitmodules.flight_unit": "Energy Flight Unit",
+  "description.moremekasuitmodules.flight_unit": "Provides direct suit flight without Elytra physics or a visual armor change. Hold the flight controls to fly. Uses a large amount of MekaSuit energy. Up to four modules; speed increases to 2x.",
+  "module.moremekasuitmodules.flight_level": "Flight speed"
 }

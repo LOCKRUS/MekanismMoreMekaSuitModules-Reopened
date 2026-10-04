@@ -6,6 +6,7 @@ import mekanism.common.content.gear.ModuleContainer;
 import mekanism.common.content.gear.ModuleHelper;
 import moremekasuitmodules.common.config.MoreModulesConfig;
 import moremekasuitmodules.common.integration.ie.event.ieElectricDamage;
+import moremekasuitmodules.common.content.gear.mekanism.mekasuit.ModuleFlightUnit;
 import moremekasuitmodules.common.registries.MekaSuitMoreModules;
 import moremekasuitmodules.common.util.MoreMekaSuitModulesUtils;
 import net.minecraft.core.Holder;
@@ -67,10 +68,17 @@ public class CommonPlayerTickHandler {
 
     @SubscribeEvent
     public void onLivingUpdate(PlayerTickEvent.Pre event) {
+        Player player = event.getEntity();
+        ItemStack chest = player.getItemBySlot(EquipmentSlot.CHEST);
+        if (!(chest.getItem() instanceof IModuleContainerItem item)
+                || !item.isModuleEnabled(chest, MekaSuitMoreModules.FLIGHT_UNIT)) {
+            if (player instanceof ServerPlayer serverPlayer) {
+                ModuleFlightUnit.cleanup(serverPlayer);
+            }
+        }
         if (MoreModulesConfig.config.isLoaded() && MoreModulesConfig.config.mekaSuitOverloadProtection.get()) {
             //If the player is affected by setHealth
             //What? Why do you want to go straight to setHealth?
-            Player player = event.getEntity();
             if (player == null) {
                 return;
             }

@@ -88,5 +88,8 @@
   "module.moremekasuitmodules.impact_wave_unit": "Модуль ударной волны",
   "description.moremekasuitmodules.impact_wave_unit": "Создаёт радиальную ударную волну при падении с выбранной высоты. Повреждает и отбрасывает ближайших существ.",
   "module.moremekasuitmodules.climb_speed_hud": "Скорость подъёма: %s",
-  "tooltip.moremekasuitmodules.lava_storage": "Лава: %s / %s мБ"
+  "tooltip.moremekasuitmodules.lava_storage": "Лава: %s / %s мБ",
+  "module.moremekasuitmodules.flight_unit": "Модуль энергетического полёта",
+  "description.moremekasuitmodules.flight_unit": "Даёт прямой полёт костюма без физики элитр и визуальных изменений брони. Используйте управление полётом. Потребляет много энергии MekaSuit. До четырёх модулей; скорость увеличивается до x2.",
+  "module.moremekasuitmodules.flight_level": "Скорость полёта"
 }
