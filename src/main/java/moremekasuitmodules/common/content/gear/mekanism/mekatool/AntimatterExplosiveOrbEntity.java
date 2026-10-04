@@ -18,8 +18,8 @@ import org.joml.Vector3f;
 public class AntimatterExplosiveOrbEntity extends AbstractHurtingProjectile {
     public static final float SPEED = 2.75F;
     public static final float EXPLOSION_POWER = 32.0F;
-    private static final double DAMAGE_RADIUS = 30.0D;
-    private static final float ENTITY_DAMAGE = 160.0F;
+    private static final double DAMAGE_RADIUS = 40.0D;
+    private static final float ENTITY_DAMAGE = 240.0F;
     private static final DustParticleOptions ANTIMATTER_PURPLE =
             new DustParticleOptions(new Vector3f(0.48F, 0.04F, 0.95F), 2.8F);
     private static final DustParticleOptions ANTIMATTER_WHITE =
@@ -49,6 +49,7 @@ public class AntimatterExplosiveOrbEntity extends AbstractHurtingProjectile {
         // The vanilla blast supplies the block-breaking shockwave; the extra radial pulse
         // makes this behave like an antimatter detonation rather than an ordinary fireball.
         level().explode(this, center.x, center.y, center.z, EXPLOSION_POWER, canGrief, Level.ExplosionInteraction.BLOCK);
+        createSecondaryBlastCores(center, canGrief);
         DamageSource source = level().damageSources().explosion(this, getOwner());
         for (Entity entity : level().getEntities(this, getBoundingBox().inflate(DAMAGE_RADIUS),
                 entity -> entity instanceof LivingEntity && entity != getOwner())) {
@@ -76,6 +77,28 @@ public class AntimatterExplosiveOrbEntity extends AbstractHurtingProjectile {
             serverLevel.sendParticles(ParticleTypes.CLOUD, center.x, center.y + 1.0D, center.z, 160, 12, 2, 12, 0.25);
         }
         discard();
+    }
+
+    /**
+     * HBM-style staged detonation: the central antimatter collapse is followed by
+     * several offset shock cores. This gives the blast a deep, irregular profile
+     * instead of one ordinary spherical Minecraft explosion.
+     */
+    private void createSecondaryBlastCores(Vec3 center, boolean canGrief) {
+        double ring = 7.0D;
+        double[][] offsets = {
+                {ring, 0.0D}, {-ring, 0.0D}, {0.0D, ring}, {0.0D, -ring},
+                {ring * 0.7D, ring * 0.7D}, {-ring * 0.7D, ring * 0.7D},
+                {ring * 0.7D, -ring * 0.7D}, {-ring * 0.7D, -ring * 0.7D}
+        };
+        for (double[] offset : offsets) {
+            level().explode(this, center.x + offset[0], center.y + 1.0D, center.z + offset[1],
+                    8.0F, canGrief, Level.ExplosionInteraction.BLOCK);
+        }
+        level().explode(this, center.x, center.y + 9.0D, center.z, 7.0F,
+                canGrief, Level.ExplosionInteraction.BLOCK);
+        level().explode(this, center.x, center.y - 6.0D, center.z, 7.0F,
+                canGrief, Level.ExplosionInteraction.BLOCK);
     }
 
     private static void sendShockwaveRing(net.minecraft.server.level.ServerLevel level, Vec3 center,
