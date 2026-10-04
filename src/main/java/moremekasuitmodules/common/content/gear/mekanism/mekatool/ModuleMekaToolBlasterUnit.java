@@ -43,9 +43,9 @@ public record ModuleMekaToolBlasterUnit(FireMode fireMode) implements ICustomMod
 
     @NothingNullByDefault
     public enum FireMode implements IHasTextComponent, StringRepresentable {
-        HEAVY(4, 20, 5_000_000, 10_000),
-        STANDARD(2, 8, 3_750_000, 5_000),
-        RAPID(1, 3, 2_500_000, 1_000);
+        HEAVY(4, 20, 10_000_000, 20_000),
+        STANDARD(2, 8, 7_500_000, 10_000),
+        RAPID(1, 3, 5_000_000, 2_000);
 
         public static final Codec<FireMode> CODEC = StringRepresentable.fromEnum(FireMode::values);
         public static final IntFunction<FireMode> BY_ID = ByIdMap.continuous(FireMode::ordinal, values(), ByIdMap.OutOfBoundsStrategy.WRAP);

@@ -2,13 +2,16 @@
   "type": "minecraft:crafting_shaped",
   "category": "misc",
   "pattern": [
-    "PSP",
+    "BSB",
     "TAT",
     "PVP"
   ],
   "key": {
     "P": {
-      "item": "mekanism:pellet_antimatter"
+      "item": "mekanism:pellet_plutonium"
+    },
+    "B": {
+      "item": "minecraft:blaze_rod"
     },
     "S": {
       "item": "minecraft:nether_star"
