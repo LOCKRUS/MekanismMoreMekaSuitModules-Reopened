@@ -20,7 +20,7 @@ public class ModuleQuantumReconstructionUnit implements ICustomModule<ModuleQuan
 
     @Override
     public void tickClient(IModule<ModuleQuantumReconstructionUnit> module, IModuleContainer moduleContainer, ItemStack stack, Player player) {
-        this.tickServer(module, moduleContainer, stack, player);
+        // Collision/no-physics state must be controlled by the server only.
     }
 
     @Override

@@ -16,7 +16,7 @@ public class ModuleInfiniteEnergySupplyUnit implements ICustomModule<ModuleInfin
 
     @Override
     public void tickClient(IModule<ModuleInfiniteEnergySupplyUnit> module, IModuleContainer moduleContainer, ItemStack stack, Player player) {
-        tickServer(module, moduleContainer, stack, player);
+        // Energy storage is authoritative on the server; do not mutate it locally.
     }
 
     @Override

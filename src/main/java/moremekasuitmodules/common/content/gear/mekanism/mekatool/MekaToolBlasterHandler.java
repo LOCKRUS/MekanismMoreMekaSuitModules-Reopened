@@ -20,15 +20,14 @@ import net.minecraft.world.phys.Vec3;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.neoforge.event.entity.player.PlayerInteractEvent;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.UUID;
-
 public final class MekaToolBlasterHandler {
-    private static final Map<UUID, Long> NEXT_SHOT_TICK = new HashMap<>();
-
     @SubscribeEvent
     public void onRightClickItem(PlayerInteractEvent.RightClickItem event) {
+        // Teleport, farming, and other right-click modules may claim the same item
+        // interaction. Never overwrite a handler that already consumed it.
+        if (event.isCanceled()) {
+            return;
+        }
         if (event.getHand() != InteractionHand.MAIN_HAND) {
             return;
         }
@@ -61,15 +60,6 @@ public final class MekaToolBlasterHandler {
             event.setCancellationResult(InteractionResult.CONSUME);
             return;
         }
-        if (!player.level().isClientSide()) {
-            long currentTick = player.level().getGameTime();
-            long nextShotTick = NEXT_SHOT_TICK.getOrDefault(player.getUUID(), 0L);
-            if (currentTick < nextShotTick) {
-                event.setCanceled(true);
-                event.setCancellationResult(InteractionResult.CONSUME);
-                return;
-            }
-        }
 
         boolean creative = player.getAbilities().instabuild;
         IEnergyContainer energyContainer = StorageUtils.getEnergyContainer(stack, 0);
@@ -94,7 +84,6 @@ public final class MekaToolBlasterHandler {
             return;
         }
 
-        NEXT_SHOT_TICK.put(player.getUUID(), player.level().getGameTime() + mode.getCooldownTicks());
         if (!creative) {
             energyContainer.extract(mode.getEnergyCost(), Action.EXECUTE, AutomationType.MANUAL);
             lavaTank.drain(mode.getLavaCost(), IFluidHandler.FluidAction.EXECUTE);
@@ -115,16 +104,6 @@ public final class MekaToolBlasterHandler {
             event.setCancellationResult(InteractionResult.CONSUME);
             return;
         }
-        if (!player.level().isClientSide()) {
-            long currentTick = player.level().getGameTime();
-            long nextShotTick = NEXT_SHOT_TICK.getOrDefault(player.getUUID(), 0L);
-            if (currentTick < nextShotTick) {
-                event.setCanceled(true);
-                event.setCancellationResult(InteractionResult.CONSUME);
-                return;
-            }
-        }
-
         boolean creative = player.getAbilities().instabuild;
         IEnergyContainer energyContainer = StorageUtils.getEnergyContainer(stack, 0);
         if (!creative && (energyContainer == null
@@ -141,7 +120,6 @@ public final class MekaToolBlasterHandler {
             return;
         }
 
-        NEXT_SHOT_TICK.put(player.getUUID(), player.level().getGameTime() + cooldownTicks);
         if (!creative) {
             energyContainer.extract(energyCost, Action.EXECUTE, AutomationType.MANUAL);
         }

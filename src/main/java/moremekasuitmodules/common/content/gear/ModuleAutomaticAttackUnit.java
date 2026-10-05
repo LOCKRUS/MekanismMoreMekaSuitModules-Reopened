@@ -52,7 +52,8 @@ public record ModuleAutomaticAttackUnit(boolean attackPlayer, boolean attackHost
 
     @Override
     public void tickClient(IModule<ModuleAutomaticAttackUnit> module, IModuleContainer moduleContainer, ItemStack stack, Player player) {
-        tickServer(module, moduleContainer, stack, player);
+        // Damage and energy extraction are server-authoritative. Running the same
+        // logic on the client causes duplicate attacks and desync after transfers.
     }
 
     @Override
@@ -156,4 +157,3 @@ public record ModuleAutomaticAttackUnit(boolean attackPlayer, boolean attackHost
         }
     }
 }
-

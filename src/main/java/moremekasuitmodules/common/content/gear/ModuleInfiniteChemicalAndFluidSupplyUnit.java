@@ -31,7 +31,7 @@ public record ModuleInfiniteChemicalAndFluidSupplyUnit(boolean isArmor, boolean 
 
     @Override
     public void tickClient(IModule<ModuleInfiniteChemicalAndFluidSupplyUnit> module, IModuleContainer moduleContainer, ItemStack stack, Player player) {
-        this.tickServer(module, moduleContainer, stack, player);
+        // Inventory fluid/chemical data is server-authoritative.
     }
 
     @Override
