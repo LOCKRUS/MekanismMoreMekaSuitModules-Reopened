@@ -21,6 +21,7 @@ import net.minecraft.world.item.ItemStack;
 
 import java.util.Locale;
 import java.util.Set;
+import java.util.UUID;
 import java.util.function.IntFunction;
 
 @ParametersAreNotNullByDefault
