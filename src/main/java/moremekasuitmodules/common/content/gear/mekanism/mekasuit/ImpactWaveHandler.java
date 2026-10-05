@@ -26,9 +26,11 @@ public final class ImpactWaveHandler {
 
     @SubscribeEvent(priority = EventPriority.HIGHEST)
     public void onLivingFall(LivingFallEvent event) {
+        // Do not reject fall-flying here: custom flight modules may use the same
+        // entity flag while the boots still need to process a landing.
         if (!(event.getEntity() instanceof Player player) || player.level().isClientSide()
                 || player.isSpectator() || event.getDistance() <= 0.0F
-                || player.isInWater() || player.isInLava() || player.isFallFlying()) {
+                || player.isInWater() || player.isInLava()) {
             return;
         }
         ItemStack boots = player.getItemBySlot(EquipmentSlot.FEET);
