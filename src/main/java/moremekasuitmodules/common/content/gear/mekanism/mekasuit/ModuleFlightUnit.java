@@ -21,7 +21,6 @@ import net.minecraft.world.item.ItemStack;
 
 import java.util.Locale;
 import java.util.Set;
-import java.util.UUID;
 import java.util.function.IntFunction;
 
 @ParametersAreNotNullByDefault
@@ -29,7 +28,6 @@ public record ModuleFlightUnit(FlightLevel level) implements ICustomModule<Modul
     public static final int MAX_MODULES = 4;
     public static final ResourceLocation FLIGHT_LEVEL = ResourceLocation.fromNamespaceAndPath("moremekasuitmodules", "flight_level");
     private static final long BASE_ENERGY_PER_TICK = 7_500L;
-    private static final Set<UUID> TEMPORARY_FLIGHT = java.util.concurrent.ConcurrentHashMap.newKeySet();
     private static final Set<UUID> ACTIVE_GLIDE = java.util.concurrent.ConcurrentHashMap.newKeySet();
 
     public ModuleFlightUnit(IModule<ModuleFlightUnit> module) {
@@ -41,13 +39,10 @@ public record ModuleFlightUnit(FlightLevel level) implements ICustomModule<Modul
         if (!(player instanceof ServerPlayer serverPlayer) || !module.isEnabled() || player.isSpectator()) {
             return;
         }
-        if (player.isCreative()) {
-            enableFlight(serverPlayer);
-            if (player.getAbilities().flying) {
-                propel(serverPlayer);
-            } else {
-                stopGlide(serverPlayer);
-            }
+        // This is deliberately not mayfly: takeoff happens from a normal jump or
+        // fall, just like an Elytra, but propulsion has no fireworks requirement.
+        if (player.onGround() || player.isCrouching()) {
+            stopGlide(serverPlayer);
             return;
         }
         long usage = Math.round(BASE_ENERGY_PER_TICK * level.energyMultiplier);
@@ -55,13 +50,8 @@ public record ModuleFlightUnit(FlightLevel level) implements ICustomModule<Modul
             disableFlight(serverPlayer);
             return;
         }
-        enableFlight(serverPlayer);
-        if (player.getAbilities().flying) {
-            module.useEnergy(player, stack, usage);
-            propel(serverPlayer);
-        } else {
-            stopGlide(serverPlayer);
-        }
+        module.useEnergy(player, stack, usage);
+        propel(serverPlayer);
     }
 
     @Override
@@ -69,16 +59,6 @@ public record ModuleFlightUnit(FlightLevel level) implements ICustomModule<Modul
         // The next player tick also calls cleanup when the chest item is gone.
         // Keeping this callback side-effect free avoids changing the module container
         // while Mekanism is removing an installed module.
-    }
-
-    private void enableFlight(ServerPlayer player) {
-        TEMPORARY_FLIGHT.add(player.getUUID());
-        // mayfly is used only as the familiar jump-toggle permission. Movement itself
-        // is handled below as an Elytra-style, look-direction propulsion stream.
-        if (!player.getAbilities().mayfly) {
-            player.getAbilities().mayfly = true;
-            player.onUpdateAbilities();
-        }
     }
 
     private void propel(ServerPlayer player) {
@@ -104,26 +84,11 @@ public record ModuleFlightUnit(FlightLevel level) implements ICustomModule<Modul
     }
 
     private void disableFlight(ServerPlayer player) {
-        TEMPORARY_FLIGHT.remove(player.getUUID());
         stopGlide(player);
-        if (!player.isCreative()) {
-            player.getAbilities().flying = false;
-            player.getAbilities().mayfly = false;
-            player.getAbilities().setFlyingSpeed(0.05F);
-            player.onUpdateAbilities();
-        }
     }
 
     public static void cleanup(ServerPlayer player) {
-        boolean hadFlight = TEMPORARY_FLIGHT.remove(player.getUUID());
         stopGlide(player);
-        if (hadFlight && !player.isCreative()) {
-            player.getAbilities().flying = false;
-            player.getAbilities().mayfly = false;
-            // Also repair the speed left behind by versions 1.0.31-1.0.33.
-            player.getAbilities().setFlyingSpeed(0.05F);
-            player.onUpdateAbilities();
-        }
     }
 
     @NothingNullByDefault
