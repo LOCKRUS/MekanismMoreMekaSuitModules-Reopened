@@ -2,6 +2,7 @@ package moremekasuitmodules.common.registries;
 
 import mekanism.api.gear.ModuleData.ExclusiveFlag;
 import mekanism.api.gear.config.ModuleBooleanConfig;
+import mekanism.api.gear.config.ModuleColorConfig;
 import mekanism.api.gear.config.ModuleEnumConfig;
 import mekanism.common.registration.impl.ModuleDeferredRegister;
 import mekanism.common.registration.impl.ModuleRegistryObject;
@@ -17,6 +18,7 @@ import moremekasuitmodules.common.content.gear.mekanism.mekasuit.ModuleCounterat
 import moremekasuitmodules.common.content.gear.mekanism.mekasuit.ModuleWallClingUnit;
 import moremekasuitmodules.common.content.gear.mekanism.mekasuit.ModuleImpactWaveUnit;
 import moremekasuitmodules.common.content.gear.mekanism.mekasuit.ModuleFlightUnit;
+import moremekasuitmodules.common.content.gear.mekanism.mekasuit.ModuleEntityDisplayBoxUnit;
 
 public class MekaSuitMoreModules {
 
@@ -78,6 +80,22 @@ public class MekaSuitMoreModules {
                             installed -> ModuleEnumConfig.createBounded(ModuleFlightUnit.FLIGHT_LEVEL, ModuleFlightUnit.FlightLevel.ONE, Math.min(ModuleFlightUnit.FlightLevel.values().length, installed)),
                             installed -> ModuleEnumConfig.codec(ModuleFlightUnit.FlightLevel.CODEC, ModuleFlightUnit.FlightLevel.class, Math.min(ModuleFlightUnit.FlightLevel.values().length, installed)),
                             installed -> ModuleEnumConfig.streamCodec(ModuleFlightUnit.FlightLevel.STREAM_CODEC, ModuleFlightUnit.FlightLevel.class, Math.min(ModuleFlightUnit.FlightLevel.values().length, installed))));
+    // Показывает рамки, имена, дистанцию и здоровье живых существ на экране.
+    public static final ModuleRegistryObject<ModuleEntityDisplayBoxUnit> ENTITY_DISPLAY_BOX_UNIT = MODULES.register(
+            "entity_display_box_unit", ModuleEntityDisplayBoxUnit::new, () -> MekaSuitMoreModulesItem.MODULE_ENTITY_DISPLAY_BOX,
+            builder -> builder.maxStackSize(1).disabledByDefault()
+                    .addConfig(ModuleEnumConfig.create(ModuleEntityDisplayBoxUnit.RANGE, ModuleEntityDisplayBoxUnit.Range.MEDIUM),
+                            ModuleEnumConfig.codec(ModuleEntityDisplayBoxUnit.Range.CODEC), ModuleEnumConfig.streamCodec(ModuleEntityDisplayBoxUnit.Range.STREAM_CODEC))
+                    .addConfig(ModuleEnumConfig.create(ModuleEntityDisplayBoxUnit.MAX_BOXES, ModuleEntityDisplayBoxUnit.MaxBoxes.MEDIUM),
+                            ModuleEnumConfig.codec(ModuleEntityDisplayBoxUnit.MaxBoxes.CODEC), ModuleEnumConfig.streamCodec(ModuleEntityDisplayBoxUnit.MaxBoxes.STREAM_CODEC))
+                    .addConfig(ModuleEnumConfig.create(ModuleEntityDisplayBoxUnit.HEALTH_DISPLAY, ModuleEntityDisplayBoxUnit.HealthDisplay.OFF),
+                            ModuleEnumConfig.codec(ModuleEntityDisplayBoxUnit.HealthDisplay.CODEC), ModuleEnumConfig.streamCodec(ModuleEntityDisplayBoxUnit.HealthDisplay.STREAM_CODEC))
+                    .addConfig(ModuleColorConfig.argb(ModuleEntityDisplayBoxUnit.BOX_COLOR, ModuleEntityDisplayBoxUnit.DEFAULT_BOX_COLOR),
+                            ModuleColorConfig.ARGB_CODEC, ModuleColorConfig.ARGB_STREAM_CODEC)
+                    .addConfig(ModuleColorConfig.argb(ModuleEntityDisplayBoxUnit.NAME_COLOR, ModuleEntityDisplayBoxUnit.DEFAULT_NAME_COLOR),
+                            ModuleColorConfig.ARGB_CODEC, ModuleColorConfig.ARGB_STREAM_CODEC)
+                    .addConfig(ModuleColorConfig.argb(ModuleEntityDisplayBoxUnit.DISTANCE_COLOR, ModuleEntityDisplayBoxUnit.DEFAULT_DISTANCE_COLOR),
+                            ModuleColorConfig.ARGB_CODEC, ModuleColorConfig.ARGB_STREAM_CODEC));
     //防蜂单元 （散发特殊的信息素，让蜜蜂对你视而不见） //TODO
 
     //扭曲清除基础单元 神秘（通过特殊的方法移除身上的临时扭曲值）//神秘未到1.20.1

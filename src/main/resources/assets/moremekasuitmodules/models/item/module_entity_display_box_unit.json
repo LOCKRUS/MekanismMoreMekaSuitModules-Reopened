@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "moremekasuitmodules:item/module_entity_display_box_unit"
+  }
+}

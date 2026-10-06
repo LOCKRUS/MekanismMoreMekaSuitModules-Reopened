@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": ["EGE", "CMC", "HHH"],
+  "key": {
+    "E": {"item": "minecraft:ender_eye"},
+    "G": {"tag": "c:circuits/ultimate"},
+    "C": {"tag": "c:glass_panes"},
+    "M": {"item": "mekanism:module_base"},
+    "H": {"item": "mekanism:hdpe_sheet"}
+  },
+  "result": {"count": 1, "id": "moremekasuitmodules:module_entity_display_box_unit"}
+}

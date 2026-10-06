@@ -7,7 +7,7 @@
     "C": {"tag": "c:circuits/elite"},
     "M": {"item": "mekanism:module_base"},
     "A": {"tag": "c:alloys/elite"},
-    "E": {"item": "mekanism:module_hydraulic_propulsion"}
+    "E": {"item": "mekanism:module_hydraulic_propulsion_unit"}
   },
   "result": {"count": 1, "id": "moremekasuitmodules:module_wall_cling_unit"}
 }

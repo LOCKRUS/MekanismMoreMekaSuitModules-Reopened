@@ -99,7 +99,8 @@ public class MoreMekaSuitModules implements IModModule {
                 MekaSuitMoreModules.ADVANCED_INTERCEPTION_SYSTEM_UNIT,
                 MekaSuitMoreModules.INFINITE_INTERCEPTION_AND_RESCUE_SYSTEM_UNIT,
                 MekaSuitMoreModules.ENERGY_SHIELD_CONTROLLER_UNIT,
-                MekaSuitMoreModules.AUTOMATIC_ATTACK_UNIT);
+                MekaSuitMoreModules.AUTOMATIC_ATTACK_UNIT,
+                MekaSuitMoreModules.ENTITY_DISPLAY_BOX_UNIT);
 
 
         //meka护甲
