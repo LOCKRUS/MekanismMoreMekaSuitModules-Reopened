@@ -198,12 +198,16 @@ public class MekaSuitMoreModules {
                             ModuleEnumConfig.create(ModuleMekaToolBlasterUnit.FIRE_MODE, ModuleMekaToolBlasterUnit.FireMode.STANDARD),
                             ModuleEnumConfig.codec(ModuleMekaToolBlasterUnit.FireMode.CODEC),
                             ModuleEnumConfig.streamCodec(ModuleMekaToolBlasterUnit.FireMode.STREAM_CODEC)));
-    // MekaTool antimatter orb launcher: one fixed, nuclear-scale strike mode.
-    public static final ModuleRegistryObject<ModuleMekaToolAntimatterStrikeUnit> MEKA_TOOL_ANTIMATTER_STRIKE_UNIT = MODULES.registerInstanced(
+    // MekaTool antimatter orb launcher: Standard or charged Ultra strike mode.
+    public static final ModuleRegistryObject<ModuleMekaToolAntimatterStrikeUnit> MEKA_TOOL_ANTIMATTER_STRIKE_UNIT = MODULES.register(
             "meka_tool_antimatter_strike_unit",
             ModuleMekaToolAntimatterStrikeUnit::new,
             () -> MekaSuitMoreModulesItem.MODULE_MEKA_TOOL_ANTIMATTER_STRIKE,
-            builder -> builder.maxStackSize(1).disabledByDefault().exclusive(1));
+            builder -> builder.maxStackSize(1).disabledByDefault().exclusive(1)
+                    .addConfig(ModuleEnumConfig.create(ModuleMekaToolAntimatterStrikeUnit.STRIKE_MODE,
+                                    ModuleMekaToolAntimatterStrikeUnit.StrikeMode.STANDARD),
+                            ModuleEnumConfig.codec(ModuleMekaToolAntimatterStrikeUnit.StrikeMode.CODEC),
+                            ModuleEnumConfig.streamCodec(ModuleMekaToolAntimatterStrikeUnit.StrikeMode.STREAM_CODEC)));
     // MekaTool lava tank expansion: each installed module adds 200,000 mB, up to five modules.
     public static final ModuleRegistryObject<ModuleMekaToolLavaTankUnit> MEKA_TOOL_LAVA_TANK_UNIT = MODULES.registerInstanced(
             "meka_tool_lava_tank_unit",

@@ -2,8 +2,14 @@ package moremekasuitmodules.common.content.gear.mekanism.mekatool;
 
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.core.particles.DustParticleOptions;
+import net.minecraft.core.BlockPos;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.syncher.EntityDataAccessor;
+import net.minecraft.network.syncher.EntityDataSerializers;
+import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
@@ -26,14 +32,48 @@ public class AntimatterExplosiveOrbEntity extends AbstractHurtingProjectile {
             new DustParticleOptions(new Vector3f(0.48F, 0.04F, 0.95F), 2.8F);
     private static final DustParticleOptions ANTIMATTER_WHITE =
             new DustParticleOptions(new Vector3f(0.92F, 0.82F, 1.0F), 2.0F);
+    private static final EntityDataAccessor<Boolean> ULTRA_MODE = SynchedEntityData.defineId(
+            AntimatterExplosiveOrbEntity.class, EntityDataSerializers.BOOLEAN);
 
     public AntimatterExplosiveOrbEntity(EntityType<AntimatterExplosiveOrbEntity> type, Level level) {
         super(type, level);
     }
 
     public AntimatterExplosiveOrbEntity(EntityType<? extends AntimatterExplosiveOrbEntity> type, LivingEntity owner, Vec3 direction, Level level) {
+        this(type, owner, direction, level, false);
+    }
+
+    public AntimatterExplosiveOrbEntity(EntityType<? extends AntimatterExplosiveOrbEntity> type, LivingEntity owner,
+                                        Vec3 direction, Level level, boolean ultra) {
         super(type, owner, direction, level);
+        setUltraMode(ultra);
         setDeltaMovement(direction.normalize().scale(SPEED));
+    }
+
+    @Override
+    protected void defineSynchedData(SynchedEntityData.Builder builder) {
+        super.defineSynchedData(builder);
+        builder.define(ULTRA_MODE, false);
+    }
+
+    public boolean isUltraMode() {
+        return entityData.get(ULTRA_MODE);
+    }
+
+    private void setUltraMode(boolean ultra) {
+        entityData.set(ULTRA_MODE, ultra);
+    }
+
+    @Override
+    public void addAdditionalSaveData(CompoundTag tag) {
+        super.addAdditionalSaveData(tag);
+        tag.putBoolean("UltraMode", isUltraMode());
+    }
+
+    @Override
+    public void readAdditionalSaveData(CompoundTag tag) {
+        super.readAdditionalSaveData(tag);
+        setUltraMode(tag.getBoolean("UltraMode"));
     }
 
     @Override
@@ -52,23 +92,31 @@ public class AntimatterExplosiveOrbEntity extends AbstractHurtingProjectile {
     protected void onHit(HitResult result) {
         super.onHit(result);
         if (!level().isClientSide()) {
-            detonate();
+            detonate(isUltraMode());
         }
     }
 
-    private void detonate() {
+    private void detonate(boolean ultra) {
         boolean canGrief = EventHooks.canEntityGrief(level(), this);
         Vec3 center = position();
 
-        // The vanilla blast supplies the block-breaking shockwave; the extra radial pulse
-        // makes this behave like an antimatter detonation rather than an ordinary fireball.
-        level().explode(this, center.x, center.y, center.z, EXPLOSION_POWER, canGrief, Level.ExplosionInteraction.BLOCK);
-        createSecondaryBlastCores(center, canGrief);
+        if (ultra) {
+            // Keep vanilla explosion visuals, while the custom pass below creates the exact
+            // 100 x 100 hemispherical crater and can spare bedrock deterministically.
+            level().explode(this, center.x, center.y, center.z, 8.0F, false, Level.ExplosionInteraction.NONE);
+            createUltraCrater(center, canGrief);
+        } else {
+            // Standard mode preserves the existing nuclear-scale blast.
+            level().explode(this, center.x, center.y, center.z, EXPLOSION_POWER, canGrief, Level.ExplosionInteraction.BLOCK);
+            createSecondaryBlastCores(center, canGrief);
+        }
+        double damageRadius = ultra ? 75.0D : DAMAGE_RADIUS;
+        float maxDamage = ultra ? ENTITY_DAMAGE * 2.0F : ENTITY_DAMAGE;
         DamageSource source = level().damageSources().explosion(this, getOwner());
-        for (Entity entity : level().getEntities(this, getBoundingBox().inflate(DAMAGE_RADIUS),
+        for (Entity entity : level().getEntities(this, getBoundingBox().inflate(damageRadius),
                 entity -> entity instanceof LivingEntity && entity != getOwner())) {
             double distance = Math.max(1.0D, distanceTo(entity));
-            float damage = (float) (ENTITY_DAMAGE * Math.max(0.15D, 1.0D - distance / DAMAGE_RADIUS));
+            float damage = (float) (maxDamage * Math.max(0.15D, 1.0D - distance / damageRadius));
             entity.hurt(source, damage);
             if (entity instanceof LivingEntity living) {
                 // The pressure/sonic wave stuns nearby living targets for 10 seconds.
@@ -103,9 +151,40 @@ public class AntimatterExplosiveOrbEntity extends AbstractHurtingProjectile {
             sendShockwaveRing(serverLevel, center, 16.0D, ANTIMATTER_PURPLE, 288);
             sendShockwaveSphere(serverLevel, center, 22.0D, ANTIMATTER_PURPLE, 420);
             serverLevel.sendParticles(ParticleTypes.CLOUD, center.x, center.y + 1.0D, center.z, 260, 14, 3, 14, 0.35);
-            moremekasuitmodules.common.network.AntimatterShockwaveNetwork.sendNear(serverLevel, center, 64.0D);
+            moremekasuitmodules.common.network.AntimatterShockwaveNetwork.sendNear(serverLevel, center, ultra ? 96.0D : 64.0D);
         }
         discard();
+    }
+
+    /**
+     * Removes the lower half of a radius-50 sphere: a 100x100 bowl-shaped crater.
+     * The pass intentionally destroys without drops so an endgame shot cannot create
+     * hundreds of thousands of item entities. Bedrock is the one absolute exception.
+     */
+    private void createUltraCrater(Vec3 center, boolean canGrief) {
+        if (!canGrief || !(level() instanceof net.minecraft.server.level.ServerLevel)) {
+            return;
+        }
+        final int radius = 50;
+        final int centerX = (int) Math.floor(center.x);
+        final int centerY = (int) Math.floor(center.y);
+        final int centerZ = (int) Math.floor(center.z);
+        for (int dx = -radius; dx <= radius; dx++) {
+            for (int dz = -radius; dz <= radius; dz++) {
+                int horizontalSquared = dx * dx + dz * dz;
+                if (horizontalSquared > radius * radius) {
+                    continue;
+                }
+                int depth = (int) Math.floor(Math.sqrt(radius * radius - horizontalSquared));
+                for (int dy = -depth; dy <= 0; dy++) {
+                    BlockPos pos = new BlockPos(centerX + dx, centerY + dy, centerZ + dz);
+                    if (level().getBlockState(pos).is(Blocks.BEDROCK)) {
+                        continue;
+                    }
+                    level().destroyBlock(pos, false, this);
+                }
+            }
+        }
     }
 
     /**

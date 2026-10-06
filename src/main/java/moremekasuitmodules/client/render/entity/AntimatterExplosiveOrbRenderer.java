@@ -25,7 +25,8 @@ public class AntimatterExplosiveOrbRenderer extends EntityRenderer<AntimatterExp
     public void render(AntimatterExplosiveOrbEntity entity, float entityYaw, float partialTick,
                        PoseStack poseStack, MultiBufferSource buffer, int packedLight) {
         poseStack.pushPose();
-        float pulse = 1.35F + Mth.sin((entity.tickCount + partialTick) * 0.55F) * 0.12F;
+        float base = entity.isUltraMode() ? 2.5F : 1.0F;
+        float pulse = base * (1.35F + Mth.sin((entity.tickCount + partialTick) * 0.55F) * 0.12F);
         poseStack.scale(pulse, pulse, pulse);
         this.model.setupAnim(entity, 0, 0, entity.tickCount + partialTick, 0, 0);
         VertexConsumer consumer = buffer.getBuffer(RenderType.entityTranslucent(TEXTURE));

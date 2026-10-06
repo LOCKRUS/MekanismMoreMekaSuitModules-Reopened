@@ -81,7 +81,7 @@
   "module.moremekasuitmodules.counterattack_unit": "Module: Counterattack Unit",
   "module.moremekasuitmodules.counter_level_hud": "Counterattack level: %1$s",
   "module.moremekasuitmodules.counter_level": "Counterattack strength",
-  "description.moremekasuitmodules.meka_tool_antimatter_strike_unit": "Launches a hypersonic antimatter orb. One mode, 30-second cooldown, 500,000,000 FE per shot. Does not consume lava.",
+  "description.moremekasuitmodules.meka_tool_antimatter_strike_unit": "Charges while holding right click. Standard fires on release with a 15-second cooldown; Ultra requires 15 seconds of charging, costs 10x FE, creates a 100x100 hemispherical crater, and has a 35-second cooldown.",
   "module.moremekasuitmodules.meka_tool_antimatter_strike_unit": "Module: MekaTool Antimatter Strike Unit",
   "module.moremekasuitmodules.wall_cling_unit": "Module: Wall Cling Unit",
   "description.moremekasuitmodules.wall_cling_unit": "Clings to walls and climbs while holding jump. Sneak to hold position. Uses MekaSuit energy.",
@@ -103,5 +103,8 @@
   "module.moremekasuitmodules.entity_display_health": "Health display",
   "module.moremekasuitmodules.entity_display_box_color": "Box color",
   "module.moremekasuitmodules.entity_display_name_color": "Name color",
-  "module.moremekasuitmodules.entity_display_distance_color": "Distance color"
+  "module.moremekasuitmodules.entity_display_distance_color": "Distance color",
+  "module.moremekasuitmodules.antimatter_strike_mode": "Antimatter strike mode",
+  "module.moremekasuitmodules.antimatter_strike_mode.standard": "Standard",
+  "module.moremekasuitmodules.antimatter_strike_mode.ultra": "Ultra"
 }
