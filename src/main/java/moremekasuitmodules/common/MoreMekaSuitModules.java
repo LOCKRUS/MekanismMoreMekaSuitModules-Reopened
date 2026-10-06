@@ -15,6 +15,7 @@ import moremekasuitmodules.common.content.gear.mekanism.mekatool.MekaToolBlaster
 import moremekasuitmodules.common.content.gear.mekanism.mekatool.MekaToolLavaHandler;
 import moremekasuitmodules.common.content.gear.mekanism.mekasuit.CounterattackHandler;
 import moremekasuitmodules.common.content.gear.mekanism.mekasuit.ImpactWaveHandler;
+import moremekasuitmodules.common.network.AntimatterShockwavePayload;
 import net.minecraft.resources.ResourceLocation;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.ModContainer;
@@ -22,6 +23,7 @@ import net.neoforged.fml.common.Mod;
 import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.neoforged.fml.event.lifecycle.InterModEnqueueEvent;
 import net.neoforged.neoforge.common.NeoForge;
+import net.neoforged.neoforge.network.event.RegisterPayloadHandlersEvent;
 
 @Mod(MoreMekaSuitModules.MODID)
 public class MoreMekaSuitModules implements IModModule {
@@ -40,6 +42,7 @@ public class MoreMekaSuitModules implements IModModule {
         MoreModulesConfig.registerConfigs(modContainer);
         hooks = new MoreMekaSuitModulesHooks();
         modEventBus.addListener(this::commonSetup);
+        modEventBus.addListener(this::registerPayloads);
         modEventBus.addListener(MekaToolLavaHandler::register);
         modEventBus.addListener(MoreModulesConfig::onConfigLoad);
         modEventBus.addListener(this::imcQueue);
@@ -65,6 +68,13 @@ public class MoreMekaSuitModules implements IModModule {
 
     public static ResourceLocation rl(String path) {
         return ResourceLocation.fromNamespaceAndPath(MoreMekaSuitModules.MODID, path);
+    }
+
+    private void registerPayloads(RegisterPayloadHandlersEvent event) {
+        event.registrar("1").playToClient(
+                AntimatterShockwavePayload.TYPE,
+                AntimatterShockwavePayload.STREAM_CODEC,
+                AntimatterShockwavePayload::handle);
     }
 
     private void imcQueue(InterModEnqueueEvent event) {

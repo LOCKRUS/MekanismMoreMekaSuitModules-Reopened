@@ -9,6 +9,8 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.projectile.AbstractHurtingProjectile;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
@@ -35,6 +37,18 @@ public class AntimatterExplosiveOrbEntity extends AbstractHurtingProjectile {
     }
 
     @Override
+    public void tick() {
+        clearFire();
+        super.tick();
+        clearFire();
+        if (level() instanceof net.minecraft.server.level.ServerLevel serverLevel) {
+            // Visible but restrained: four small purple motes per tick.
+            serverLevel.sendParticles(ANTIMATTER_PURPLE, getX(), getY(), getZ(), 4,
+                    0.08D, 0.08D, 0.08D, 0.015D);
+        }
+    }
+
+    @Override
     protected void onHit(HitResult result) {
         super.onHit(result);
         if (!level().isClientSide()) {
@@ -56,12 +70,20 @@ public class AntimatterExplosiveOrbEntity extends AbstractHurtingProjectile {
             double distance = Math.max(1.0D, distanceTo(entity));
             float damage = (float) (ENTITY_DAMAGE * Math.max(0.15D, 1.0D - distance / DAMAGE_RADIUS));
             entity.hurt(source, damage);
+            if (entity instanceof LivingEntity living) {
+                // The pressure/sonic wave stuns nearby living targets for 10 seconds.
+                living.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 200, 10));
+                living.addEffect(new MobEffectInstance(MobEffects.DIG_SLOWDOWN, 200, 4));
+                living.addEffect(new MobEffectInstance(MobEffects.BLINDNESS, 80, 0));
+            }
         }
 
         if (level() instanceof net.minecraft.server.level.ServerLevel serverLevel) {
             // Inspired by HBM NTM's staged nuclear visual language: flash, core, rings, plume.
             serverLevel.playSound(null, center.x, center.y, center.z,
                     SoundEvents.ENDER_DRAGON_GROWL, SoundSource.HOSTILE, 16.0F, 0.45F);
+            serverLevel.playSound(null, center.x, center.y, center.z,
+                    SoundEvents.WARDEN_SONIC_BOOM, SoundSource.HOSTILE, 12.0F, 0.55F);
             serverLevel.playSound(null, center.x, center.y, center.z,
                     SoundEvents.GENERIC_EXPLODE.value(), SoundSource.BLOCKS, 8.0F, 0.55F);
             // Unlike a normal fireball, antimatter collapses inward first and then
@@ -81,6 +103,7 @@ public class AntimatterExplosiveOrbEntity extends AbstractHurtingProjectile {
             sendShockwaveRing(serverLevel, center, 16.0D, ANTIMATTER_PURPLE, 288);
             sendShockwaveSphere(serverLevel, center, 22.0D, ANTIMATTER_PURPLE, 420);
             serverLevel.sendParticles(ParticleTypes.CLOUD, center.x, center.y + 1.0D, center.z, 260, 14, 3, 14, 0.35);
+            moremekasuitmodules.common.network.AntimatterShockwaveNetwork.sendNear(serverLevel, center, 64.0D);
         }
         discard();
     }
