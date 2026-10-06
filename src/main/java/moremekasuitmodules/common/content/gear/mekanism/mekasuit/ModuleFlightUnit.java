@@ -30,6 +30,7 @@ public record ModuleFlightUnit(FlightLevel level) implements ICustomModule<Modul
     public static final ResourceLocation FLIGHT_LEVEL = ResourceLocation.fromNamespaceAndPath("moremekasuitmodules", "flight_level");
     private static final long BASE_ENERGY_PER_TICK = 7_500L;
     private static final Set<UUID> ACTIVE_GLIDE = java.util.concurrent.ConcurrentHashMap.newKeySet();
+    private static final Set<UUID> TAKEOFF_REQUESTS = java.util.concurrent.ConcurrentHashMap.newKeySet();
 
     public ModuleFlightUnit(IModule<ModuleFlightUnit> module) {
         this(module.<FlightLevel>getConfigOrThrow(FLIGHT_LEVEL).get());
@@ -40,10 +41,11 @@ public record ModuleFlightUnit(FlightLevel level) implements ICustomModule<Modul
         if (!(player instanceof ServerPlayer serverPlayer) || !module.isEnabled() || player.isSpectator()) {
             return;
         }
-        // Takeoff follows the Jet Suit model: leave the ground, then apply a
-        // small camera-directed impulse every tick instead of teleporting the
-        // player to a fixed speed or granting creative flight.
-        if (player.onGround() || player.isCrouching()) {
+        // A jump event is the explicit takeoff control. The small vertical
+        // impulse also makes this reliable when Mekanism's jump override flag
+        // consumes the vanilla jump before the player leaves the ground.
+        boolean requestedTakeoff = TAKEOFF_REQUESTS.remove(player.getUUID());
+        if (player.onGround() && !requestedTakeoff && player.getDeltaMovement().y <= 0.1D || player.isCrouching()) {
             stopGlide(serverPlayer);
             return;
         }
@@ -53,6 +55,9 @@ public record ModuleFlightUnit(FlightLevel level) implements ICustomModule<Modul
             return;
         }
         module.useEnergy(player, stack, usage);
+        if (requestedTakeoff && player.onGround()) {
+            player.setDeltaMovement(player.getDeltaMovement().add(0.0D, 0.35D, 0.0D));
+        }
         propel(serverPlayer);
     }
 
@@ -72,6 +77,7 @@ public record ModuleFlightUnit(FlightLevel level) implements ICustomModule<Modul
         if (!player.isFallFlying()) {
             player.startFallFlying();
         }
+        player.setNoGravity(true);
         double acceleration = 0.075D * level.speedMultiplier;
         double maxSpeed = 2.0D * level.speedMultiplier;
         var movement = player.getDeltaMovement().add(player.getLookAngle().normalize().scale(acceleration));
@@ -95,7 +101,14 @@ public record ModuleFlightUnit(FlightLevel level) implements ICustomModule<Modul
     }
 
     public static void cleanup(ServerPlayer player) {
+        TAKEOFF_REQUESTS.remove(player.getUUID());
         stopGlide(player);
+    }
+
+    public static void requestTakeoff(Player player) {
+        if (player instanceof ServerPlayer serverPlayer) {
+            TAKEOFF_REQUESTS.add(serverPlayer.getUUID());
+        }
     }
 
     @NothingNullByDefault

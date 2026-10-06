@@ -107,6 +107,18 @@ public class CommonPlayerTickHandler {
         }
     }
 
+    @SubscribeEvent
+    public void onPlayerJump(LivingEvent.LivingJumpEvent event) {
+        if (!(event.getEntity() instanceof Player player) || player.level().isClientSide()) {
+            return;
+        }
+        ItemStack chest = player.getItemBySlot(EquipmentSlot.CHEST);
+        if (chest.getItem() instanceof IModuleContainerItem item
+                && item.isModuleEnabled(chest, MekaSuitMoreModules.FLIGHT_UNIT)) {
+            ModuleFlightUnit.requestTakeoff(player);
+        }
+    }
+
     private void Death(Player player, boolean isInfiniteModule) {
         player.revive();
         player.deathTime = 0;
