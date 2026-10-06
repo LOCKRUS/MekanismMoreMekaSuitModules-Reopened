@@ -40,8 +40,9 @@ public record ModuleFlightUnit(FlightLevel level) implements ICustomModule<Modul
         if (!(player instanceof ServerPlayer serverPlayer) || !module.isEnabled() || player.isSpectator()) {
             return;
         }
-        // This is deliberately not mayfly: takeoff happens from a normal jump or
-        // fall, just like an Elytra, but propulsion has no fireworks requirement.
+        // Takeoff follows the Jet Suit model: leave the ground, then apply a
+        // small camera-directed impulse every tick instead of teleporting the
+        // player to a fixed speed or granting creative flight.
         if (player.onGround() || player.isCrouching()) {
             stopGlide(serverPlayer);
             return;
@@ -71,9 +72,14 @@ public record ModuleFlightUnit(FlightLevel level) implements ICustomModule<Modul
         if (!player.isFallFlying()) {
             player.startFallFlying();
         }
-        player.setNoGravity(true);
-        player.setDeltaMovement(player.getLookAngle().normalize().scale(level.flightSpeed));
-        player.fallDistance = 0;
+        double acceleration = 0.075D * level.speedMultiplier;
+        double maxSpeed = 2.0D * level.speedMultiplier;
+        var movement = player.getDeltaMovement().add(player.getLookAngle().normalize().scale(acceleration));
+        if (movement.lengthSqr() > maxSpeed * maxSpeed) {
+            movement = movement.normalize().scale(maxSpeed);
+        }
+        player.setDeltaMovement(movement);
+        player.fallDistance = Math.max(player.fallDistance / 1.5F, 0.0F);
     }
 
     private static void stopGlide(ServerPlayer player) {
@@ -94,23 +100,23 @@ public record ModuleFlightUnit(FlightLevel level) implements ICustomModule<Modul
 
     @NothingNullByDefault
     public enum FlightLevel implements IHasTextComponent, StringRepresentable {
-        // Propulsion speed in blocks per tick. Unlike mayfly, this is driven by the
-        // player's look vector and does not slow down or require fireworks.
-        ONE(1.0F, 1.20F, 1.0D),
-        TWO(1.333F, 1.60F, 1.333D),
-        THREE(1.667F, 2.00F, 1.667D),
-        FOUR(2.0F, 2.40F, 2.0D);
+        // Ad Astra-style impulse and top speed multipliers. More modules add
+        // acceleration instead of replacing the player's velocity each tick.
+        ONE(1.0F, 1.0D, 1.0D),
+        TWO(1.333F, 1.333D, 1.333D),
+        THREE(1.667F, 1.667D, 1.667D),
+        FOUR(2.0F, 2.0D, 2.0D);
 
         public static final Codec<FlightLevel> CODEC = StringRepresentable.fromEnum(FlightLevel::values);
         public static final IntFunction<FlightLevel> BY_ID = ByIdMap.continuous(FlightLevel::ordinal, values(), ByIdMap.OutOfBoundsStrategy.WRAP);
         public static final StreamCodec<ByteBuf, FlightLevel> STREAM_CODEC = ByteBufCodecs.idMapper(BY_ID, FlightLevel::ordinal);
-        private final float flightSpeed;
+        private final double speedMultiplier;
         private final double energyMultiplier;
         private final String serializedName;
         private final Component label;
 
-        FlightLevel(float multiplier, float flightSpeed, double energyMultiplier) {
-            this.flightSpeed = flightSpeed;
+        FlightLevel(float multiplier, double speedMultiplier, double energyMultiplier) {
+            this.speedMultiplier = speedMultiplier;
             this.energyMultiplier = energyMultiplier;
             this.serializedName = name().toLowerCase(Locale.ROOT);
             this.label = TextComponentUtil.getString("x" + (multiplier == 1.333F ? "1.33" : multiplier == 1.667F ? "1.67" : multiplier == 1.0F ? "1" : "2"));

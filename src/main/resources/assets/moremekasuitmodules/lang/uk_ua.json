@@ -95,7 +95,5 @@
   "tooltip.moremekasuitmodules.lava_storage": "Лава: %s / %s мБ",
   "module.moremekasuitmodules.flight_unit": "Модуль енергетичного польоту",
   "description.moremekasuitmodules.flight_unit": "Надає прямий політ костюма без фізики елітр і візуальних змін броні. Використовуйте керування польотом. Споживає багато енергії MekaSuit. До чотирьох модулів; швидкість зростає до x2.",
-  "module.moremekasuitmodules.flight_level": "Швидкість польоту",
-  "module.moremekasuitmodules.meka_tool_heat_generator_unit": "Модуль теплогенератора MekaTool",
-  "description.moremekasuitmodules.meka_tool_heat_generator_unit": "Перетворює лаву з баків MekaTool на енергію у співвідношенні 2 мБ на 1 FE. Виробляє до 200 FE/т за кожен встановлений модуль і потребує модуль розширення лавового бака."
+  "module.moremekasuitmodules.flight_level": "Швидкість польоту"
 }

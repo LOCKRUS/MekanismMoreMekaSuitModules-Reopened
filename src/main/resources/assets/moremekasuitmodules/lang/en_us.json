@@ -95,7 +95,5 @@
   "tooltip.moremekasuitmodules.lava_storage": "Lava: %s / %s mB",
   "module.moremekasuitmodules.flight_unit": "Energy Flight Unit",
   "description.moremekasuitmodules.flight_unit": "Provides direct suit flight without Elytra physics or a visual armor change. Hold the flight controls to fly. Uses a large amount of MekaSuit energy. Up to four modules; speed increases to 2x.",
-  "module.moremekasuitmodules.flight_level": "Flight speed",
-  "module.moremekasuitmodules.meka_tool_heat_generator_unit": "MekaTool Heat Generator Unit",
-  "description.moremekasuitmodules.meka_tool_heat_generator_unit": "Converts lava stored in MekaTool tanks into energy at 2 mB per 1 FE. Generates up to 200 FE/t per installed module and requires a Lava Tank Expansion Unit."
+  "module.moremekasuitmodules.flight_level": "Flight speed"
 }

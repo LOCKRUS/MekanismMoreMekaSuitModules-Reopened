@@ -58,7 +58,5 @@
   "module.moremekasuitmodules.ultimate_band_of_aura_unit": "究極オーラユニット",
   "module.moremekasuitmodules.creative_band_of_aura_unit": "クリエイティブオーラユニット",
   "description.moremekasuitmodules.smart_shielding_unit": "チップ分析により、自動的に相手の視線を遮断します",
-  "module.moremekasuitmodules.smart_shielding_unit": "知能シールドユニット",
-  "module.moremekasuitmodules.meka_tool_heat_generator_unit": "MekaTool 熱発電ユニット",
-  "description.moremekasuitmodules.meka_tool_heat_generator_unit": "MekaToolのタンク内の溶岩を2 mB : 1 FEの比率でエネルギーに変換します。モジュール1個につき最大200 FE/tを生成し、溶岩タンク拡張ユニットが必要です。"
+  "module.moremekasuitmodules.smart_shielding_unit": "知能シールドユニット"
 }

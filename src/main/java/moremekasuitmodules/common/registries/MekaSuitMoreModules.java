@@ -13,7 +13,6 @@ import moremekasuitmodules.common.content.gear.mekanism.mekatool.ModuleMekaToolP
 import moremekasuitmodules.common.content.gear.mekanism.mekatool.ModuleMekaToolBlasterUnit;
 import moremekasuitmodules.common.content.gear.mekanism.mekatool.ModuleMekaToolAntimatterStrikeUnit;
 import moremekasuitmodules.common.content.gear.mekanism.mekatool.ModuleMekaToolLavaTankUnit;
-import moremekasuitmodules.common.content.gear.mekanism.mekatool.ModuleMekaToolHeatGeneratorUnit;
 import moremekasuitmodules.common.content.gear.mekanism.mekasuit.ModuleCounterattackUnit;
 import moremekasuitmodules.common.content.gear.mekanism.mekasuit.ModuleWallClingUnit;
 import moremekasuitmodules.common.content.gear.mekanism.mekasuit.ModuleImpactWaveUnit;
@@ -193,12 +192,6 @@ public class MekaSuitMoreModules {
             ModuleMekaToolLavaTankUnit::new,
             () -> MekaSuitMoreModulesItem.MODULE_MEKA_TOOL_LAVA_TANK,
             builder -> builder.maxStackSize(5).disabledByDefault());
-    // MekaTool heat generator: converts stored lava to energy at 2 mB per FE.
-    public static final ModuleRegistryObject<ModuleMekaToolHeatGeneratorUnit> MEKA_TOOL_HEAT_GENERATOR_UNIT = MODULES.registerInstanced(
-            "meka_tool_heat_generator_unit",
-            ModuleMekaToolHeatGeneratorUnit::new,
-            () -> MekaSuitMoreModulesItem.MODULE_MEKA_TOOL_HEAT_GENERATOR,
-            builder -> builder.maxStackSize(ModuleMekaToolHeatGeneratorUnit.MAX_MODULES).disabledByDefault());
 
 
 }

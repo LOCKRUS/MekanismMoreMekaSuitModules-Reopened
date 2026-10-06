@@ -60,7 +60,5 @@
   "module.moremekasuitmodules.ultimate_band_of_aura_unit": "终极光环单元",
   "module.moremekasuitmodules.creative_band_of_aura_unit": "创造光环单元",
   "description.moremekasuitmodules.smart_shielding_unit": "通过芯片分析，自动屏蔽对方的目光",
-  "module.moremekasuitmodules.smart_shielding_unit": "智能屏蔽单元",
-  "module.moremekasuitmodules.meka_tool_heat_generator_unit": "MekaTool 热发电单元",
-  "description.moremekasuitmodules.meka_tool_heat_generator_unit": "将 MekaTool 储罐中的岩浆按 2 mB 对 1 FE 转换为能量。每个模块最多产生 200 FE/t，并需要熔岩储罐扩展单元。"
+  "module.moremekasuitmodules.smart_shielding_unit": "智能屏蔽单元"
 }
