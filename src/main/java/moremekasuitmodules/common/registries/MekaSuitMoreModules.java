@@ -56,7 +56,7 @@ public class MekaSuitMoreModules {
     // Wall climbing and impact-wave modules are installed on MekaSuit boots.
     public static final ModuleRegistryObject<ModuleWallClingUnit> WALL_CLING_UNIT = MODULES.register(
             "wall_cling_unit", ModuleWallClingUnit::new, () -> MekaSuitMoreModulesItem.MODULE_WALL_CLING,
-            builder -> builder.maxStackSize(ModuleWallClingUnit.MAX_MODULES).disabledByDefault()
+            builder -> builder.maxStackSize(ModuleWallClingUnit.MAX_MODULES).handlesModeChange().modeChangeDisabledByDefault().disabledByDefault()
                     .addInstalledCountConfig(
                             installed -> ModuleEnumConfig.createBounded(ModuleWallClingUnit.CLIMB_SPEED, ModuleWallClingUnit.ClimbSpeed.LOW, Math.min(ModuleWallClingUnit.ClimbSpeed.values().length, installed)),
                             installed -> ModuleEnumConfig.codec(ModuleWallClingUnit.ClimbSpeed.CODEC, ModuleWallClingUnit.ClimbSpeed.class, Math.min(ModuleWallClingUnit.ClimbSpeed.values().length, installed)),
@@ -73,7 +73,7 @@ public class MekaSuitMoreModules {
     // Показывает рамки, имена, дистанцию и здоровье живых существ на экране.
     public static final ModuleRegistryObject<ModuleEntityDisplayBoxUnit> ENTITY_DISPLAY_BOX_UNIT = MODULES.register(
             "entity_display_box_unit", ModuleEntityDisplayBoxUnit::new, () -> MekaSuitMoreModulesItem.MODULE_ENTITY_DISPLAY_BOX,
-            builder -> builder.maxStackSize(1).disabledByDefault()
+            builder -> builder.maxStackSize(1).handlesModeChange().modeChangeDisabledByDefault().disabledByDefault()
                     .addConfig(ModuleEnumConfig.create(ModuleEntityDisplayBoxUnit.RANGE, ModuleEntityDisplayBoxUnit.Range.MEDIUM),
                             ModuleEnumConfig.codec(ModuleEntityDisplayBoxUnit.Range.CODEC), ModuleEnumConfig.streamCodec(ModuleEntityDisplayBoxUnit.Range.STREAM_CODEC))
                     .addConfig(ModuleEnumConfig.create(ModuleEntityDisplayBoxUnit.MAX_BOXES, ModuleEntityDisplayBoxUnit.MaxBoxes.MEDIUM),
