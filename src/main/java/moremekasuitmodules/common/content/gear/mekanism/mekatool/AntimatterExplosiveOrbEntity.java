@@ -165,8 +165,9 @@ public class AntimatterExplosiveOrbEntity extends AbstractHurtingProjectile {
     }
 
     /**
-     * Removes the lower half of a radius-50 sphere: a 100x100 bowl-shaped crater.
-     * The pass intentionally destroys without drops so an endgame shot cannot create
+     * Removes a radius-50 sphere (100x100 footprint) around the impact. The lower
+     * half forms the crater, while the upper half clears structures above it. The
+     * pass intentionally destroys without drops so an endgame shot cannot create
      * hundreds of thousands of item entities. Bedrock is the one absolute exception.
      */
     private void createUltraCrater(Vec3 center, boolean canGrief) {
@@ -184,12 +185,35 @@ public class AntimatterExplosiveOrbEntity extends AbstractHurtingProjectile {
                     continue;
                 }
                 int depth = (int) Math.floor(Math.sqrt(radius * radius - horizontalSquared));
-                for (int dy = -depth; dy <= 0; dy++) {
+                for (int dy = -depth; dy <= depth; dy++) {
                     BlockPos pos = new BlockPos(centerX + dx, centerY + dy, centerZ + dz);
-                    if (level().getBlockState(pos).is(Blocks.BEDROCK)) {
+                    if (level().getBlockState(pos).is(Blocks.BEDROCK)
+                            || level().getBlockState(pos).isAir()) {
                         continue;
                     }
                     level().destroyBlock(pos, false, this);
+                }
+            }
+        }
+        createUltraFire(centerX, centerY, centerZ);
+    }
+
+    /** Adds the burning surface left by the Ultra detonation, like the standard blast. */
+    private void createUltraFire(int centerX, int centerY, int centerZ) {
+        final int radius = 38;
+        for (int dx = -radius; dx <= radius; dx++) {
+            for (int dz = -radius; dz <= radius; dz++) {
+                if (dx * dx + dz * dz > radius * radius || level().random.nextInt(4) != 0) {
+                    continue;
+                }
+                for (int dy = 42; dy >= -50; dy--) {
+                    BlockPos solid = new BlockPos(centerX + dx, centerY + dy, centerZ + dz);
+                    BlockPos above = solid.above();
+                    if (!level().getBlockState(solid).isAir() && level().isEmptyBlock(above)
+                            && !level().getBlockState(solid).is(Blocks.BEDROCK)) {
+                        level().setBlock(above, Blocks.FIRE.defaultBlockState(), 3);
+                        break;
+                    }
                 }
             }
         }

@@ -140,6 +140,11 @@ public final class MekaToolBlasterHandler {
     }
 
     private void fireAntimatterStrike(Player player, ItemStack stack, boolean ultra) {
+        // Stop can be emitted more than once while the client/server use state is
+        // being reconciled. The cooldown is also the single-shot guard.
+        if (player.getCooldowns().isOnCooldown(stack.getItem())) {
+            return;
+        }
         int cooldownTicks = ultra ? ULTRA_COOLDOWN_TICKS : STANDARD_COOLDOWN_TICKS;
         long energyCost = ultra ? ULTRA_ENERGY_COST : STANDARD_ENERGY_COST;
         boolean creative = player.getAbilities().instabuild;
