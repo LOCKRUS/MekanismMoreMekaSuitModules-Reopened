@@ -213,7 +213,7 @@ public class MekaSuitMoreModules {
             "meka_tool_lava_tank_unit",
             ModuleMekaToolLavaTankUnit::new,
             () -> MekaSuitMoreModulesItem.MODULE_MEKA_TOOL_LAVA_TANK,
-            builder -> builder.maxStackSize(5).disabledByDefault());
+            builder -> builder.maxStackSize(5).disabledByDefault().exclusive(1));
 
 
 }
