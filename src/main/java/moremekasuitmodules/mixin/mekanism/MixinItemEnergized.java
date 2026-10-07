@@ -4,6 +4,7 @@ import mekanism.common.item.ItemEnergized;
 import mekanism.common.item.gear.ItemMekaTool;
 import moremekasuitmodules.common.content.gear.mekanism.mekatool.MekaToolLavaHandler;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TextColor;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
@@ -22,7 +23,8 @@ public abstract class MixinItemEnergized {
             IFluidHandlerItem tank = MekaToolLavaHandler.create(stack);
             if (tank != null && tank.getTanks() > 0) {
                 tooltip.add(Component.translatable("tooltip.moremekasuitmodules.lava_storage",
-                        tank.getFluidInTank(0).getAmount(), tank.getTankCapacity(0)));
+                        tank.getFluidInTank(0).getAmount(), tank.getTankCapacity(0))
+                        .withStyle(style -> style.withColor(TextColor.fromRgb(0xE67E22))));
             }
         }
     }

@@ -26,7 +26,7 @@ public class ClientTickHandler {
     public static final int ULTRA_CHARGE_TICKS = 20 * 15;
 
     public static void triggerCameraShake(int duration, float intensity) {
-        cameraShakeTicks = Math.max(cameraShakeTicks, Math.min(200, duration));
+        cameraShakeTicks = Math.max(cameraShakeTicks, Math.min(300, duration));
         cameraShakeIntensity = Math.max(cameraShakeIntensity, Math.min(0.85F, intensity));
     }
 

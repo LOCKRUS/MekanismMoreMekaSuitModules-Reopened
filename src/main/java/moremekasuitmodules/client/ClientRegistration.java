@@ -18,6 +18,7 @@ import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.event.entity.player.ItemTooltipEvent;
 import net.neoforged.neoforge.fluids.capability.IFluidHandlerItem;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TextColor;
 
 
 @EventBusSubscriber(modid = MoreMekaSuitModules.MODID, value = Dist.CLIENT)
@@ -45,7 +46,8 @@ public class ClientRegistration {
         IFluidHandlerItem tank = MekaToolLavaHandler.create(event.getItemStack());
         if (tank != null && tank.getTanks() > 0) {
             event.getToolTip().add(Component.translatable("tooltip.moremekasuitmodules.lava_storage",
-                    tank.getFluidInTank(0).getAmount(), tank.getTankCapacity(0)));
+                    tank.getFluidInTank(0).getAmount(), tank.getTankCapacity(0))
+                    .withStyle(style -> style.withColor(TextColor.fromRgb(0xE67E22))));
         }
     }
 

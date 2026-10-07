@@ -25,6 +25,7 @@ public abstract class MixinGuiGraphicsItemDecorations {
             GuiGraphics graphics = (GuiGraphics) (Object) this;
             graphics.fill(RenderType.guiOverlay(), x + 2, barY, x + 15, barY + 1, 0xFF160B0B);
             graphics.fill(RenderType.guiOverlay(), x + 2, barY, x + 2 + width, barY + 1, color);
+            graphics.flush();
             return;
         }
         IFluidHandlerItem tank = MekaToolLavaHandler.create(stack);
@@ -40,6 +41,8 @@ public abstract class MixinGuiGraphicsItemDecorations {
         if (width > 0) {
             graphics.fill(RenderType.guiOverlay(), x + 2, barY, x + 2 + width, barY + 1, 0xFFE67E22);
         }
+        // Flush after vanilla's cooldown overlay so the orange bar remains visible.
+        graphics.flush();
     }
 
     private static int gradientColor(int from, int to, float progress) {

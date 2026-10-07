@@ -149,9 +149,17 @@ public class AntimatterExplosiveOrbEntity extends AbstractHurtingProjectile {
             sendShockwaveRing(serverLevel, center, 3.0D, ANTIMATTER_WHITE, 128);
             sendShockwaveRing(serverLevel, center, 8.0D, ANTIMATTER_PURPLE, 192);
             sendShockwaveRing(serverLevel, center, 16.0D, ANTIMATTER_PURPLE, 288);
-            sendShockwaveSphere(serverLevel, center, 22.0D, ANTIMATTER_PURPLE, 420);
+            if (ultra) {
+                // The Ultra pressure shell matches the 100 x 100 crater footprint.
+                sendShockwaveRing(serverLevel, center, 32.0D, ANTIMATTER_PURPLE, 512);
+                sendShockwaveRing(serverLevel, center, 50.0D, ANTIMATTER_PURPLE, 800);
+                sendShockwaveSphere(serverLevel, center, 50.0D, ANTIMATTER_PURPLE, 1200);
+            } else {
+                sendShockwaveSphere(serverLevel, center, 22.0D, ANTIMATTER_PURPLE, 420);
+            }
             serverLevel.sendParticles(ParticleTypes.CLOUD, center.x, center.y + 1.0D, center.z, 260, 14, 3, 14, 0.35);
-            moremekasuitmodules.common.network.AntimatterShockwaveNetwork.sendNear(serverLevel, center, ultra ? 96.0D : 64.0D);
+            moremekasuitmodules.common.network.AntimatterShockwaveNetwork.sendNear(
+                    serverLevel, center, ultra ? 128.0D : 64.0D, ultra ? 300 : 200);
         }
         discard();
     }

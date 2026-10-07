@@ -9,7 +9,11 @@ public final class AntimatterShockwaveNetwork {
     }
 
     public static void sendNear(ServerLevel level, Vec3 center, double radius) {
+        sendNear(level, center, radius, 200);
+    }
+
+    public static void sendNear(ServerLevel level, Vec3 center, double radius, int duration) {
         PacketDistributor.sendToPlayersNear(level, null, center.x, center.y, center.z, radius,
-                new AntimatterShockwavePayload(200, 0.8F));
+                new AntimatterShockwavePayload(duration, 0.8F));
     }
 }
