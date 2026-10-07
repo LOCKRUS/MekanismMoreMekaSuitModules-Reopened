@@ -36,7 +36,7 @@ public abstract class MixinLocalPlayer extends AbstractClientPlayer {
     @Unique
     public boolean isModule(Player player) {
         //确保玩家是存活的 且玩家不在地面上
-        if (player != null && player.isAlive() && !player.noPhysics) {
+        if (player != null && player.isAlive()) {
             //获取胸部盔甲
             ItemStack stack = player.getItemBySlot(EquipmentSlot.CHEST);
             //如果是模块类型物品

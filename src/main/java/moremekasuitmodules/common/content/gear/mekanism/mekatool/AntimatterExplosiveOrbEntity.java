@@ -103,7 +103,7 @@ public class AntimatterExplosiveOrbEntity extends AbstractHurtingProjectile {
         if (ultra) {
             // Keep vanilla explosion visuals, while the custom pass below creates the exact
             // 100 x 100 hemispherical crater and can spare bedrock deterministically.
-            level().explode(this, center.x, center.y, center.z, 8.0F, false, Level.ExplosionInteraction.NONE);
+            level().explode(this, center.x, center.y, center.z, 8.0F, true, Level.ExplosionInteraction.NONE);
             createUltraCrater(center, canGrief);
         } else {
             // Standard mode preserves the existing nuclear-scale blast.
@@ -206,7 +206,9 @@ public class AntimatterExplosiveOrbEntity extends AbstractHurtingProjectile {
                 if (dx * dx + dz * dz > radius * radius || level().random.nextInt(4) != 0) {
                     continue;
                 }
-                for (int dy = 42; dy >= -50; dy--) {
+                // Search from above the impact down to the crater floor. This leaves
+                // fire on the exposed rim even when the whole central column was removed.
+                for (int dy = 50; dy >= -50; dy--) {
                     BlockPos solid = new BlockPos(centerX + dx, centerY + dy, centerZ + dz);
                     BlockPos above = solid.above();
                     if (!level().getBlockState(solid).isAir() && level().isEmptyBlock(above)

@@ -20,7 +20,9 @@ public class ModuleQuantumReconstructionUnit implements ICustomModule<ModuleQuan
 
     @Override
     public void tickClient(IModule<ModuleQuantumReconstructionUnit> module, IModuleContainer moduleContainer, ItemStack stack, Player player) {
-        // Collision/no-physics state must be controlled by the server only.
+        // Keep the local collision state synchronized with the server. Without this,
+        // the client continuously pushes the player back out of blocks.
+        player.noPhysics = module.isEnabled() && player.isAlive() && !player.onGround();
     }
 
     @Override
