@@ -38,21 +38,22 @@ public record ModuleWallClingUnit(ClimbSpeed climbSpeed) implements ICustomModul
             return;
         }
         double usage;
-        if (player.getDeltaMovement().y > 0.0D && !player.isCrouching()) {
-            usage = 250.0D * climbSpeed.energyMultiplier;
-            player.setDeltaMovement(player.getDeltaMovement().x, Math.max(player.getDeltaMovement().y,
-                    climbSpeed.verticalSpeed), player.getDeltaMovement().z);
-        } else if (player.isCrouching()) {
+        double verticalMotion;
+        if (player.isCrouching()) {
             usage = 80.0D * climbSpeed.energyMultiplier;
-            player.setDeltaMovement(player.getDeltaMovement().x, 0.0D, player.getDeltaMovement().z);
+            verticalMotion = 0.0D;
         } else {
-            usage = 60.0D * climbSpeed.energyMultiplier;
-            if (player.getDeltaMovement().y < -0.18D) {
-                player.setDeltaMovement(player.getDeltaMovement().x, -0.18D, player.getDeltaMovement().z);
-            }
+            // The server does not receive the raw jump-key state. Treating contact
+            // with a wall as the climb signal keeps the module reliable on servers
+            // and prevents the old "only slows falling" behaviour.
+            usage = player.getDeltaMovement().y > 0.0D
+                    ? 250.0D * climbSpeed.energyMultiplier
+                    : 120.0D * climbSpeed.energyMultiplier;
+            verticalMotion = climbSpeed.verticalSpeed;
         }
         if (module.canUseEnergy(player, stack, (long) usage, false)) {
             module.useEnergy(player, stack, (long) usage);
+            player.setDeltaMovement(player.getDeltaMovement().x, verticalMotion, player.getDeltaMovement().z);
             player.fallDistance = 0;
         }
     }
@@ -62,7 +63,7 @@ public record ModuleWallClingUnit(ClimbSpeed climbSpeed) implements ICustomModul
                 && !player.getAbilities().flying && !player.isFallFlying()
                 && !player.isPassenger() && !player.onClimbable()
                 && !player.isInWater() && !player.isInLava()
-                && (!player.onGround() || player.getDeltaMovement().y > 0.0D || player.isCrouching());
+                && !player.isSleeping();
     }
 
     private static boolean isTouchingWall(Player player) {

@@ -171,36 +171,40 @@ public class AntimatterExplosiveOrbEntity extends AbstractHurtingProjectile {
      * hundreds of thousands of item entities. Bedrock is the one absolute exception.
      */
     private void createUltraCrater(Vec3 center, boolean canGrief) {
-        if (!canGrief || !(level() instanceof net.minecraft.server.level.ServerLevel)) {
+        if (!(level() instanceof net.minecraft.server.level.ServerLevel)) {
             return;
         }
         final int radius = 50;
         final int centerX = (int) Math.floor(center.x);
         final int centerY = (int) Math.floor(center.y);
         final int centerZ = (int) Math.floor(center.z);
-        for (int dx = -radius; dx <= radius; dx++) {
-            for (int dz = -radius; dz <= radius; dz++) {
-                int horizontalSquared = dx * dx + dz * dz;
-                if (horizontalSquared > radius * radius) {
-                    continue;
-                }
-                int depth = (int) Math.floor(Math.sqrt(radius * radius - horizontalSquared));
-                for (int dy = -depth; dy <= depth; dy++) {
-                    BlockPos pos = new BlockPos(centerX + dx, centerY + dy, centerZ + dz);
-                    if (level().getBlockState(pos).is(Blocks.BEDROCK)
-                            || level().getBlockState(pos).isAir()) {
+        if (canGrief) {
+            for (int dx = -radius; dx <= radius; dx++) {
+                for (int dz = -radius; dz <= radius; dz++) {
+                    int horizontalSquared = dx * dx + dz * dz;
+                    if (horizontalSquared > radius * radius) {
                         continue;
                     }
-                    level().destroyBlock(pos, false, this);
+                    int depth = (int) Math.floor(Math.sqrt(radius * radius - horizontalSquared));
+                    for (int dy = -depth; dy <= depth; dy++) {
+                        BlockPos pos = new BlockPos(centerX + dx, centerY + dy, centerZ + dz);
+                        if (level().getBlockState(pos).is(Blocks.BEDROCK)
+                                || level().getBlockState(pos).isAir()) {
+                            continue;
+                        }
+                        level().destroyBlock(pos, false, this);
+                    }
                 }
             }
         }
+        // Fire is a visual aftermath and must not disappear merely because the
+        // world has mobGriefing disabled; block destruction remains gated above.
         createUltraFire(centerX, centerY, centerZ);
     }
 
     /** Adds the burning surface left by the Ultra detonation, like the standard blast. */
     private void createUltraFire(int centerX, int centerY, int centerZ) {
-        final int radius = 38;
+        final int radius = 52;
         for (int dx = -radius; dx <= radius; dx++) {
             for (int dz = -radius; dz <= radius; dz++) {
                 if (dx * dx + dz * dz > radius * radius || level().random.nextInt(4) != 0) {
@@ -208,7 +212,7 @@ public class AntimatterExplosiveOrbEntity extends AbstractHurtingProjectile {
                 }
                 // Search from above the impact down to the crater floor. This leaves
                 // fire on the exposed rim even when the whole central column was removed.
-                for (int dy = 50; dy >= -50; dy--) {
+                for (int dy = 60; dy >= -80; dy--) {
                     BlockPos solid = new BlockPos(centerX + dx, centerY + dy, centerZ + dz);
                     BlockPos above = solid.above();
                     if (!level().getBlockState(solid).isAir() && level().isEmptyBlock(above)
