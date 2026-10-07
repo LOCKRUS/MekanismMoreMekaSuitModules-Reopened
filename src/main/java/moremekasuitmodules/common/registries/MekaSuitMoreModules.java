@@ -1,6 +1,5 @@
 package moremekasuitmodules.common.registries;
 
-import mekanism.api.gear.ModuleData.ExclusiveFlag;
 import mekanism.api.gear.config.ModuleBooleanConfig;
 import mekanism.api.gear.config.ModuleColorConfig;
 import mekanism.api.gear.config.ModuleEnumConfig;
@@ -17,7 +16,6 @@ import moremekasuitmodules.common.content.gear.mekanism.mekatool.ModuleMekaToolL
 import moremekasuitmodules.common.content.gear.mekanism.mekasuit.ModuleCounterattackUnit;
 import moremekasuitmodules.common.content.gear.mekanism.mekasuit.ModuleWallClingUnit;
 import moremekasuitmodules.common.content.gear.mekanism.mekasuit.ModuleImpactWaveUnit;
-import moremekasuitmodules.common.content.gear.mekanism.mekasuit.ModuleFlightUnit;
 import moremekasuitmodules.common.content.gear.mekanism.mekasuit.ModuleEntityDisplayBoxUnit;
 
 public class MekaSuitMoreModules {
@@ -72,14 +70,6 @@ public class MekaSuitMoreModules {
                             installed -> ModuleEnumConfig.streamCodec(ModuleImpactWaveUnit.TriggerHeight.STREAM_CODEC, ModuleImpactWaveUnit.TriggerHeight.class, Math.min(ModuleImpactWaveUnit.TriggerHeight.values().length, installed)))
                     .addConfig(ModuleEnumConfig.create(ModuleImpactWaveUnit.RADIUS, ModuleImpactWaveUnit.ImpactRadius.LOW), ModuleEnumConfig.codec(ModuleImpactWaveUnit.ImpactRadius.CODEC), ModuleEnumConfig.streamCodec(ModuleImpactWaveUnit.ImpactRadius.STREAM_CODEC))
                     .addConfig(ModuleEnumConfig.create(ModuleImpactWaveUnit.DAMAGE, ModuleImpactWaveUnit.DamageScale.LOW), ModuleEnumConfig.codec(ModuleImpactWaveUnit.DamageScale.CODEC), ModuleEnumConfig.streamCodec(ModuleImpactWaveUnit.DamageScale.STREAM_CODEC)));
-    // Энергетический полёт: до четырёх модулей, каждый уровень повышает скорость до x2.
-    public static final ModuleRegistryObject<ModuleFlightUnit> FLIGHT_UNIT = MODULES.register(
-            "flight_unit", ModuleFlightUnit::new, () -> MekaSuitMoreModulesItem.MODULE_FLIGHT,
-            builder -> builder.maxStackSize(ModuleFlightUnit.MAX_MODULES).disabledByDefault().exclusive(ExclusiveFlag.OVERRIDE_JUMP)
-                    .addInstalledCountConfig(
-                            installed -> ModuleEnumConfig.createBounded(ModuleFlightUnit.FLIGHT_LEVEL, ModuleFlightUnit.FlightLevel.ONE, Math.min(ModuleFlightUnit.FlightLevel.values().length, installed)),
-                            installed -> ModuleEnumConfig.codec(ModuleFlightUnit.FlightLevel.CODEC, ModuleFlightUnit.FlightLevel.class, Math.min(ModuleFlightUnit.FlightLevel.values().length, installed)),
-                            installed -> ModuleEnumConfig.streamCodec(ModuleFlightUnit.FlightLevel.STREAM_CODEC, ModuleFlightUnit.FlightLevel.class, Math.min(ModuleFlightUnit.FlightLevel.values().length, installed))));
     // Показывает рамки, имена, дистанцию и здоровье живых существ на экране.
     public static final ModuleRegistryObject<ModuleEntityDisplayBoxUnit> ENTITY_DISPLAY_BOX_UNIT = MODULES.register(
             "entity_display_box_unit", ModuleEntityDisplayBoxUnit::new, () -> MekaSuitMoreModulesItem.MODULE_ENTITY_DISPLAY_BOX,
@@ -203,7 +193,9 @@ public class MekaSuitMoreModules {
             "meka_tool_antimatter_strike_unit",
             ModuleMekaToolAntimatterStrikeUnit::new,
             () -> MekaSuitMoreModulesItem.MODULE_MEKA_TOOL_ANTIMATTER_STRIKE,
-            builder -> builder.maxStackSize(1).disabledByDefault().exclusive(1)
+            // Bits 1 and 2 exclude Fireball Strike and Lava Tank respectively.
+            // Fireball remains compatible with the Lava Tank; antimatter is not.
+            builder -> builder.maxStackSize(1).disabledByDefault().exclusive(3)
                     .addConfig(ModuleEnumConfig.create(ModuleMekaToolAntimatterStrikeUnit.STRIKE_MODE,
                                     ModuleMekaToolAntimatterStrikeUnit.StrikeMode.STANDARD),
                             ModuleEnumConfig.codec(ModuleMekaToolAntimatterStrikeUnit.StrikeMode.CODEC),
@@ -213,7 +205,7 @@ public class MekaSuitMoreModules {
             "meka_tool_lava_tank_unit",
             ModuleMekaToolLavaTankUnit::new,
             () -> MekaSuitMoreModulesItem.MODULE_MEKA_TOOL_LAVA_TANK,
-            builder -> builder.maxStackSize(5).disabledByDefault().exclusive(1));
+            builder -> builder.maxStackSize(5).disabledByDefault().exclusive(2));
 
 
 }
