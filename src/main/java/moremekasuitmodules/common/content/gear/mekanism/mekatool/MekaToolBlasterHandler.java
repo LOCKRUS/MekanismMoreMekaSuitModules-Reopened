@@ -15,6 +15,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
+import net.neoforged.bus.api.EventPriority;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.neoforge.event.entity.living.LivingEntityUseItemEvent;
 import net.neoforged.neoforge.event.entity.player.PlayerInteractEvent;
@@ -29,7 +30,7 @@ public final class MekaToolBlasterHandler {
     private static final long STANDARD_ENERGY_COST = 500_000_000L;
     private static final long ULTRA_ENERGY_COST = 1_000_000_000L;
 
-    @SubscribeEvent
+    @SubscribeEvent(priority = EventPriority.HIGHEST)
     public void onRightClickItem(PlayerInteractEvent.RightClickItem event) {
         if (event.isCanceled() || event.getHand() != InteractionHand.MAIN_HAND) {
             return;
