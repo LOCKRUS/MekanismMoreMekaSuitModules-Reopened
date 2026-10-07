@@ -20,15 +20,16 @@ public class ClientTickHandler {
     private static float cameraShakeIntensity;
 
     public static void triggerCameraShake(int duration, float intensity) {
-        cameraShakeTicks = Math.max(cameraShakeTicks, Math.min(240, duration));
-        cameraShakeIntensity = Math.max(cameraShakeIntensity, Math.min(3.0F, intensity));
+        cameraShakeTicks = Math.max(cameraShakeTicks, Math.min(200, duration));
+        cameraShakeIntensity = Math.max(cameraShakeIntensity, Math.min(0.85F, intensity));
     }
 
     @SubscribeEvent
     public void clientTick(ClientTickEvent.Post event) {
         if (cameraShakeTicks > 0) {
             cameraShakeTicks--;
-            cameraShakeIntensity *= 0.985F;
+            // Exponential decay reaches almost zero at the end of the ten-second window.
+            cameraShakeIntensity *= 0.965F;
         } else {
             cameraShakeIntensity = 0;
         }
@@ -39,7 +40,7 @@ public class ClientTickHandler {
         if (cameraShakeTicks <= 0 || cameraShakeIntensity <= 0.01F) {
             return;
         }
-        float envelope = Math.min(1.0F, cameraShakeTicks / 12.0F);
+        float envelope = Math.min(1.0F, cameraShakeTicks / 20.0F);
         float amount = cameraShakeIntensity * envelope;
         long time = minecraft.level == null ? 0L : minecraft.level.getGameTime();
         float yaw = (float) Math.sin(time * 1.91D) * amount;

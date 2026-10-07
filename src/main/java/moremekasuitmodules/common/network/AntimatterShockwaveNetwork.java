@@ -10,6 +10,6 @@ public final class AntimatterShockwaveNetwork {
 
     public static void sendNear(ServerLevel level, Vec3 center, double radius) {
         PacketDistributor.sendToPlayersNear(level, null, center.x, center.y, center.z, radius,
-                new AntimatterShockwavePayload(200, 1.7F));
+                new AntimatterShockwavePayload(200, 0.8F));
     }
 }

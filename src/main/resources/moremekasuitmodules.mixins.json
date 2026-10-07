@@ -5,7 +5,6 @@
   "mixins": [
     "mekanism.MixinItemMekaSuitArmor",
     "mekanism.MixinItemMekaTool",
-    "mekanism.MixinItemEnergized",
     "minecraft.MixinEnchantedCountIncreaseFunction",
     "minecraft.MixinItemUseAnimation",
     "minecraft.MixinDamageSource",
@@ -19,6 +18,7 @@
     "requireAnnotations": true
   },
   "client": [
-    "minecraft.MixinLocalPlayer"
+    "minecraft.MixinLocalPlayer",
+    "minecraft.MixinGuiGraphicsItemDecorations"
   ]
 }
