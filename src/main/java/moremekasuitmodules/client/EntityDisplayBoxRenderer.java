@@ -10,7 +10,6 @@ import net.minecraft.client.Camera;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphics;
-import net.minecraft.client.renderer.culling.Frustum;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.EquipmentSlot;
@@ -77,15 +76,11 @@ public final class EntityDisplayBoxRenderer {
         Matrix4f modelView = event.getModelViewMatrix();
         Matrix4f projection = event.getProjectionMatrix();
         float partial = event.getPartialTick().getGameTimeDeltaPartialTick(false);
-        Frustum frustum = event.getFrustum();
         for (LivingEntity target : targets) {
             if (BOXES.size() >= unit.maxBoxCount()) {
                 break;
             }
             AABB box = paddedBox(target, partial);
-            if (!frustum.isVisible(box)) {
-                continue;
-            }
             ScreenBounds bounds = project(box, modelView, projection);
             if (bounds != null && bounds.isVisible(screenWidth, screenHeight)) {
                 BOXES.add(new DisplayBox(bounds.left - SCREEN_PADDING, bounds.top - SCREEN_PADDING,
