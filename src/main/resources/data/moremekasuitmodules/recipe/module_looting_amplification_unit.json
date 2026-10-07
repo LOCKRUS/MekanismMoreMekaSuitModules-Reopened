@@ -11,7 +11,7 @@
   ],
   "key": {
     "I": {
-      "tag": "c:alloys/atomic"
+      "item": "mekanism:alloy_atomic"
     },
     "A": {
       "item": "mekanism:module_base"
