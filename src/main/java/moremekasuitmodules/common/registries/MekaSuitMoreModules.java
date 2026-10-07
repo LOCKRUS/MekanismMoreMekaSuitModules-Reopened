@@ -188,18 +188,15 @@ public class MekaSuitMoreModules {
                             ModuleEnumConfig.create(ModuleMekaToolBlasterUnit.FIRE_MODE, ModuleMekaToolBlasterUnit.FireMode.STANDARD),
                             ModuleEnumConfig.codec(ModuleMekaToolBlasterUnit.FireMode.CODEC),
                             ModuleEnumConfig.streamCodec(ModuleMekaToolBlasterUnit.FireMode.STREAM_CODEC)));
-    // MekaTool antimatter orb launcher: Standard or charged Ultra strike mode.
-    public static final ModuleRegistryObject<ModuleMekaToolAntimatterStrikeUnit> MEKA_TOOL_ANTIMATTER_STRIKE_UNIT = MODULES.register(
+    // MekaTool antimatter orb launcher: release before 15 seconds for Standard,
+    // or hold for 15 seconds to automatically fire the Ultra strike.
+    public static final ModuleRegistryObject<ModuleMekaToolAntimatterStrikeUnit> MEKA_TOOL_ANTIMATTER_STRIKE_UNIT = MODULES.registerInstanced(
             "meka_tool_antimatter_strike_unit",
             ModuleMekaToolAntimatterStrikeUnit::new,
             () -> MekaSuitMoreModulesItem.MODULE_MEKA_TOOL_ANTIMATTER_STRIKE,
             // Bits 1 and 2 exclude Fireball Strike and Lava Tank respectively.
             // Fireball remains compatible with the Lava Tank; antimatter is not.
-            builder -> builder.maxStackSize(1).disabledByDefault().exclusive(3)
-                    .addConfig(ModuleEnumConfig.create(ModuleMekaToolAntimatterStrikeUnit.STRIKE_MODE,
-                                    ModuleMekaToolAntimatterStrikeUnit.StrikeMode.STANDARD),
-                            ModuleEnumConfig.codec(ModuleMekaToolAntimatterStrikeUnit.StrikeMode.CODEC),
-                            ModuleEnumConfig.streamCodec(ModuleMekaToolAntimatterStrikeUnit.StrikeMode.STREAM_CODEC)));
+            builder -> builder.maxStackSize(1).disabledByDefault().exclusive(3));
     // MekaTool lava tank expansion: each installed module adds 200,000 mB, up to five modules.
     public static final ModuleRegistryObject<ModuleMekaToolLavaTankUnit> MEKA_TOOL_LAVA_TANK_UNIT = MODULES.registerInstanced(
             "meka_tool_lava_tank_unit",

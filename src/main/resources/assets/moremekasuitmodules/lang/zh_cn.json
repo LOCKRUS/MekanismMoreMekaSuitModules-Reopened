@@ -69,8 +69,5 @@
   "module.moremekasuitmodules.entity_display_box_color": "方框颜色",
   "module.moremekasuitmodules.entity_display_name_color": "名称颜色",
   "module.moremekasuitmodules.entity_display_distance_color": "距离颜色",
-  "description.moremekasuitmodules.meka_tool_antimatter_strike_unit": "按住右键为攻击充能。标准模式松开即发射，冷却15秒；超级模式需要充能15秒，消耗10倍能量，制造100×100半球形陨坑，冷却35秒。",
-  "module.moremekasuitmodules.antimatter_strike_mode": "反物质打击模式",
-  "module.moremekasuitmodules.antimatter_strike_mode.standard": "标准",
-  "module.moremekasuitmodules.antimatter_strike_mode.ultra": "超级"
+  "description.moremekasuitmodules.meka_tool_antimatter_strike_unit": "按住右键充能。15秒前松开进行标准打击；持续15秒发射具有巨大陨石坑的超级打击。"
 }

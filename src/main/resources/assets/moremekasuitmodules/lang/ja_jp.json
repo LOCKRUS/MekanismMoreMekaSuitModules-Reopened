@@ -67,8 +67,5 @@
   "module.moremekasuitmodules.entity_display_box_color": "枠の色",
   "module.moremekasuitmodules.entity_display_name_color": "名前の色",
   "module.moremekasuitmodules.entity_display_distance_color": "距離の色",
-  "description.moremekasuitmodules.meka_tool_antimatter_strike_unit": "右クリック長押しでチャージします。標準は離した時に発射し、クールダウン15秒。ウルトラは15秒以上のチャージで発射し、10倍のエネルギー、100×100の半球状クレーター、35秒のクールダウンになります。",
-  "module.moremekasuitmodules.antimatter_strike_mode": "反物質攻撃モード",
-  "module.moremekasuitmodules.antimatter_strike_mode.standard": "標準",
-  "module.moremekasuitmodules.antimatter_strike_mode.ultra": "ウルトラ"
+  "description.moremekasuitmodules.meka_tool_antimatter_strike_unit": "右クリック長押しでチャージします。15秒未満で離すと通常攻撃、15秒間保持すると巨大なクレーターを作るウルトラ攻撃を発射します。"
 }

@@ -81,7 +81,7 @@
   "module.moremekasuitmodules.counterattack_unit": "Модуль: Модуль контратаки",
   "module.moremekasuitmodules.counter_level_hud": "Рівень контратаки: %1$s",
   "module.moremekasuitmodules.counter_level": "Сила контратаки",
-  "description.moremekasuitmodules.meka_tool_antimatter_strike_unit": "Удар заряджається під час утримання правої кнопки. Стандартний режим спрацьовує після відпускання і має перезарядку 15 секунд; для ультрарежиму потрібно тримати кнопку 15 секунд: він споживає у 10 разів більше енергії, створює напівсферичний кратер 100×100 і має перезарядку 35 секунд.",
+  "description.moremekasuitmodules.meka_tool_antimatter_strike_unit": "Заряджається під час утримання правої кнопки миші. Відпустіть раніше 15 секунд для стандартного удару; утримуйте 15 секунд для потужного Ультра-удару з величезним кратером.",
   "module.moremekasuitmodules.meka_tool_antimatter_strike_unit": "Модуль: Модуль антиматеріального удару MekaTool",
   "module.moremekasuitmodules.wall_cling_unit": "Модуль: Модуль прилипання до стін",
   "description.moremekasuitmodules.wall_cling_unit": "Дозволяє чіплятися за стіни й підніматися вгору під час утримання стрибка. Присідання утримує позицію. Використовує енергію MekaSuit.",
@@ -100,8 +100,5 @@
   "module.moremekasuitmodules.entity_display_health": "Відображення здоров’я",
   "module.moremekasuitmodules.entity_display_box_color": "Колір рамки",
   "module.moremekasuitmodules.entity_display_name_color": "Колір імені",
-  "module.moremekasuitmodules.entity_display_distance_color": "Колір відстані",
-  "module.moremekasuitmodules.antimatter_strike_mode": "Режим антиматеріального удару",
-  "module.moremekasuitmodules.antimatter_strike_mode.standard": "Стандарт",
-  "module.moremekasuitmodules.antimatter_strike_mode.ultra": "Ультра"
+  "module.moremekasuitmodules.entity_display_distance_color": "Колір відстані"
 }

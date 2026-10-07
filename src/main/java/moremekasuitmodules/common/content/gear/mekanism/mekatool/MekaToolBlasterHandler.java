@@ -21,10 +21,6 @@ import net.neoforged.neoforge.event.entity.player.PlayerInteractEvent;
 import net.neoforged.neoforge.fluids.capability.IFluidHandler;
 import net.neoforged.neoforge.fluids.capability.IFluidHandlerItem;
 
-import java.util.Map;
-import java.util.UUID;
-import java.util.concurrent.ConcurrentHashMap;
-
 public final class MekaToolBlasterHandler {
     private static final int ANTIMATTER_CHARGE_DURATION = 72_000;
     private static final int ULTRA_CHARGE_TICKS = 20 * 15;
@@ -32,7 +28,6 @@ public final class MekaToolBlasterHandler {
     private static final int ULTRA_COOLDOWN_TICKS = 20 * 35;
     private static final long STANDARD_ENERGY_COST = 500_000_000L;
     private static final long ULTRA_ENERGY_COST = STANDARD_ENERGY_COST * 10L;
-    private static final Map<UUID, ModuleMekaToolAntimatterStrikeUnit.StrikeMode> ACTIVE_CHARGES = new ConcurrentHashMap<>();
 
     @SubscribeEvent
     public void onRightClickItem(PlayerInteractEvent.RightClickItem event) {
@@ -108,18 +103,17 @@ public final class MekaToolBlasterHandler {
         }
         IModule<ModuleMekaToolAntimatterStrikeUnit> module = IModuleHelper.INSTANCE.getIfEnabled(
                 stack, MekaSuitMoreModules.MEKA_TOOL_ANTIMATTER_STRIKE_UNIT);
-        long requiredEnergy = module != null && module.getCustomInstance().mode()
-                == ModuleMekaToolAntimatterStrikeUnit.StrikeMode.ULTRA ? ULTRA_ENERGY_COST : STANDARD_ENERGY_COST;
         IEnergyContainer energyContainer = StorageUtils.getEnergyContainer(stack, 0);
+        // The final cost depends on how long the button is held, so do not require
+        // the Ultra amount here. The actual cost is checked on release.
         if (!player.getAbilities().instabuild && (energyContainer == null
-                || energyContainer.extract(requiredEnergy, Action.SIMULATE, AutomationType.MANUAL) < requiredEnergy)) {
+                || energyContainer.extract(STANDARD_ENERGY_COST, Action.SIMULATE, AutomationType.MANUAL) < STANDARD_ENERGY_COST)) {
             event.setCanceled(true);
             event.setCancellationResult(InteractionResult.FAIL);
             return;
         }
         // ItemMekaTool is normally not a bow-like item. The mixin supplies a long use
         // duration and bow animation only while the antimatter module is enabled.
-        ACTIVE_CHARGES.put(player.getUUID(), module.getCustomInstance().mode());
         player.startUsingItem(event.getHand());
         event.setCanceled(true);
         event.setCancellationResult(InteractionResult.CONSUME);
@@ -139,14 +133,9 @@ public final class MekaToolBlasterHandler {
         }
         event.setCanceled(true);
         int heldTicks = Math.max(0, ANTIMATTER_CHARGE_DURATION - event.getDuration());
-        // The mode belongs to the moment charging started. This prevents changing the
-        // module selector mid-draw from mixing Standard and Ultra behavior.
-        ModuleMekaToolAntimatterStrikeUnit.StrikeMode selected = ACTIVE_CHARGES.remove(
-                player.getUUID());
-        if (selected == null) {
-            selected = module.getCustomInstance().mode();
-        }
-        boolean ultra = selected == ModuleMekaToolAntimatterStrikeUnit.StrikeMode.ULTRA && heldTicks >= ULTRA_CHARGE_TICKS;
+        // One unified mode: release before 15 seconds fires Standard; holding for
+        // at least 15 seconds automatically fires the Ultra strike.
+        boolean ultra = heldTicks >= ULTRA_CHARGE_TICKS;
         fireAntimatterStrike(player, stack, ultra);
     }
 
