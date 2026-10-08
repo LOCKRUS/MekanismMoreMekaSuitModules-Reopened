@@ -16,11 +16,16 @@ import net.minecraft.world.phys.AABB;
 import net.neoforged.bus.api.EventPriority;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.neoforge.event.entity.living.LivingFallEvent;
+import net.neoforged.neoforge.event.tick.PlayerTickEvent;
 import org.joml.Vector3f;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.UUID;
 
 public final class ImpactWaveHandler {
+    private static final Map<UUID, FallTracker> FALL_TRACKERS = new HashMap<>();
     private static final DustParticleOptions SHOCKWAVE_PARTICLE =
             new DustParticleOptions(new Vector3f(0.20F, 0.85F, 1.0F), 1.5F);
 
@@ -29,33 +34,94 @@ public final class ImpactWaveHandler {
     // listened to canceled events, which was missed in the NeoForge port.
     @SubscribeEvent(priority = EventPriority.HIGHEST, receiveCanceled = true)
     public void onLivingFall(LivingFallEvent event) {
-        // Do not reject fall-flying here: custom flight modules may use the same
-        // entity flag while the boots still need to process a landing.
-        if (!(event.getEntity() instanceof Player player) || player.level().isClientSide()
-                || player.isSpectator() || event.getDistance() <= 0.0F
-                || player.isInWater() || player.isInLava()) {
+        if (!(event.getEntity() instanceof Player player) || player.level().isClientSide()) {
             return;
+        }
+        FallTracker tracker = FALL_TRACKERS.computeIfAbsent(player.getUUID(), ignored -> new FallTracker(player.getY()));
+        tracker.reset(player.getY());
+        if (tryTrigger(player, event.getDistance())) {
+            event.setCanceled(true);
+        }
+    }
+
+    /**
+     * Fallback for gravity/flight modules which reset or cancel LivingFallEvent
+     * before it reaches us. Tracking actual downward movement makes the impact
+     * wave depend on landing, not on vanilla fall-damage processing.
+     */
+    @SubscribeEvent
+    public void onPlayerTick(PlayerTickEvent.Post event) {
+        Player player = event.getEntity();
+        if (player.level().isClientSide()) {
+            return;
+        }
+        FallTracker tracker = FALL_TRACKERS.computeIfAbsent(player.getUUID(), ignored -> new FallTracker(player.getY()));
+        if (player.isSpectator() || player.isInWater() || player.isInLava()) {
+            tracker.reset(player.getY());
+            return;
+        }
+        if (!player.onGround()) {
+            if (!tracker.airborne) {
+                tracker.airborne = true;
+                tracker.fallDistance = Math.max(0.0F, player.fallDistance);
+            }
+            if (player.getY() < tracker.lastY) {
+                tracker.fallDistance += (float) (tracker.lastY - player.getY());
+            }
+            tracker.fallDistance = Math.max(tracker.fallDistance, player.fallDistance);
+            tracker.lastY = player.getY();
+            return;
+        }
+        if (tracker.airborne) {
+            float distance = Math.max(tracker.fallDistance, player.fallDistance);
+            tracker.reset(player.getY());
+            tryTrigger(player, distance);
+        } else {
+            tracker.lastY = player.getY();
+        }
+    }
+
+    private static boolean tryTrigger(Player player, float fallDistance) {
+        if (player.isSpectator() || fallDistance <= 0.0F
+                || player.isInWater() || player.isInLava()) {
+            return false;
         }
         ItemStack boots = player.getItemBySlot(EquipmentSlot.FEET);
         if (!(boots.getItem() instanceof IModuleContainerItem)) {
-            return;
+            return false;
         }
         IModule<ModuleImpactWaveUnit> module = IModuleHelper.INSTANCE.getIfEnabled(boots, MekaSuitMoreModules.IMPACT_WAVE_UNIT);
         if (module == null) {
-            return;
+            return false;
         }
         ModuleImpactWaveUnit unit = module.getCustomInstance();
-        if (event.getDistance() < unit.getTriggerHeight()) {
-            return;
+        if (fallDistance < unit.getTriggerHeight()) {
+            return false;
         }
         long energy = Math.max(1L, Math.round(MoreModulesConfig.config.mekaSuitEnergyUsageImpactWave.get()
                 * Math.max(1.0F, unit.getRadius())));
         if (!module.canUseEnergy(player, boots, energy, false)) {
-            return;
+            return false;
         }
         module.useEnergy(player, boots, energy);
-        event.setCanceled(true);
-        createWave(player, unit, event.getDistance());
+        createWave(player, unit, fallDistance);
+        return true;
+    }
+
+    private static final class FallTracker {
+        private double lastY;
+        private float fallDistance;
+        private boolean airborne;
+
+        private FallTracker(double y) {
+            reset(y);
+        }
+
+        private void reset(double y) {
+            lastY = y;
+            fallDistance = 0.0F;
+            airborne = false;
+        }
     }
 
     private static void createWave(Player player, ModuleImpactWaveUnit unit, float fallDistance) {
