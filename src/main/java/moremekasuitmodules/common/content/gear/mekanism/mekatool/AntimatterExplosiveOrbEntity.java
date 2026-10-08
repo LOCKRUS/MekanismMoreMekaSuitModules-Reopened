@@ -81,11 +81,6 @@ public class AntimatterExplosiveOrbEntity extends AbstractHurtingProjectile {
         clearFire();
         super.tick();
         clearFire();
-        if (level() instanceof net.minecraft.server.level.ServerLevel serverLevel) {
-            // Visible but restrained: four small purple motes per tick.
-            serverLevel.sendParticles(ANTIMATTER_PURPLE, getX(), getY(), getZ(), 4,
-                    0.08D, 0.08D, 0.08D, 0.015D);
-        }
     }
 
     @Override
@@ -106,9 +101,11 @@ public class AntimatterExplosiveOrbEntity extends AbstractHurtingProjectile {
             level().explode(this, center.x, center.y, center.z, 8.0F, true, Level.ExplosionInteraction.NONE);
             createUltraCrater(center, canGrief);
         } else {
-            // Standard mode preserves the existing nuclear-scale blast.
-            level().explode(this, center.x, center.y, center.z, EXPLOSION_POWER, canGrief, Level.ExplosionInteraction.BLOCK);
-            createSecondaryBlastCores(center, canGrief);
+            // Standard mode uses one custom spherical 20 x 20 blast rather than
+            // many overlapping vanilla explosions. This is both deterministic and
+            // considerably cheaper for the server to process.
+            level().explode(this, center.x, center.y, center.z, 4.0F, true, Level.ExplosionInteraction.NONE);
+            createStandardSphere(center, canGrief);
         }
         double damageRadius = ultra ? 75.0D : DAMAGE_RADIUS;
         float maxDamage = ultra ? ENTITY_DAMAGE * 2.0F : ENTITY_DAMAGE;
@@ -140,24 +137,31 @@ public class AntimatterExplosiveOrbEntity extends AbstractHurtingProjectile {
             // detonation has a clearly different silhouette in-game.
             serverLevel.sendParticles(ParticleTypes.FLASH, center.x, center.y, center.z, 1, 0, 0, 0, 0);
             serverLevel.sendParticles(ParticleTypes.SONIC_BOOM, center.x, center.y, center.z, 8, 3, 3, 3, 0);
-            serverLevel.sendParticles(ParticleTypes.REVERSE_PORTAL, center.x, center.y, center.z, 900, 13, 11, 13, 0.7);
-            serverLevel.sendParticles(ParticleTypes.PORTAL, center.x, center.y, center.z, 700, 12, 10, 12, 1.0);
-            serverLevel.sendParticles(ParticleTypes.LARGE_SMOKE, center.x, center.y + 2.0D, center.z, 500, 13, 9, 13, 0.08);
-            serverLevel.sendParticles(ParticleTypes.DRAGON_BREATH, center.x, center.y, center.z, 520, 11, 9, 11, 0.5);
-            serverLevel.sendParticles(ParticleTypes.ELECTRIC_SPARK, center.x, center.y, center.z, 320, 12, 10, 12, 0.7);
-            serverLevel.sendParticles(ParticleTypes.SOUL_FIRE_FLAME, center.x, center.y, center.z, 260, 10, 10, 10, 0.35);
-            sendShockwaveRing(serverLevel, center, 3.0D, ANTIMATTER_WHITE, 128);
-            sendShockwaveRing(serverLevel, center, 8.0D, ANTIMATTER_PURPLE, 192);
-            sendShockwaveRing(serverLevel, center, 16.0D, ANTIMATTER_PURPLE, 288);
+            int cloudCount = ultra ? 500 : 120;
+            int portalCount = ultra ? 900 : 180;
+            int breathCount = ultra ? 520 : 100;
+            int sparkCount = ultra ? 320 : 70;
+            int flameCount = ultra ? 260 : 40;
+            serverLevel.sendParticles(ParticleTypes.REVERSE_PORTAL, center.x, center.y, center.z, portalCount, ultra ? 13 : 5, ultra ? 11 : 5, ultra ? 13 : 5, 0.7);
+            serverLevel.sendParticles(ParticleTypes.PORTAL, center.x, center.y, center.z, ultra ? 700 : 120, ultra ? 12 : 5, ultra ? 10 : 5, ultra ? 12 : 5, 1.0);
+            serverLevel.sendParticles(ParticleTypes.LARGE_SMOKE, center.x, center.y + 2.0D, center.z, cloudCount, ultra ? 13 : 5, ultra ? 9 : 4, ultra ? 13 : 5, 0.08);
+            serverLevel.sendParticles(ParticleTypes.DRAGON_BREATH, center.x, center.y, center.z, breathCount, ultra ? 11 : 5, ultra ? 9 : 4, ultra ? 11 : 5, 0.5);
+            serverLevel.sendParticles(ParticleTypes.ELECTRIC_SPARK, center.x, center.y, center.z, sparkCount, ultra ? 12 : 5, ultra ? 10 : 4, ultra ? 12 : 5, 0.7);
+            serverLevel.sendParticles(ParticleTypes.SOUL_FIRE_FLAME, center.x, center.y, center.z, flameCount, ultra ? 10 : 4, ultra ? 10 : 4, ultra ? 10 : 4, 0.35);
+            sendShockwaveRing(serverLevel, center, 3.0D, ANTIMATTER_WHITE, ultra ? 128 : 48);
+            sendShockwaveRing(serverLevel, center, ultra ? 8.0D : 5.0D, ANTIMATTER_PURPLE, ultra ? 192 : 72);
+            sendShockwaveRing(serverLevel, center, ultra ? 16.0D : 8.0D, ANTIMATTER_PURPLE, ultra ? 288 : 96);
             if (ultra) {
                 // The Ultra pressure shell matches the 100 x 100 crater footprint.
                 sendShockwaveRing(serverLevel, center, 32.0D, ANTIMATTER_PURPLE, 512);
                 sendShockwaveRing(serverLevel, center, 50.0D, ANTIMATTER_PURPLE, 800);
                 sendShockwaveSphere(serverLevel, center, 50.0D, ANTIMATTER_PURPLE, 1200);
             } else {
-                sendShockwaveSphere(serverLevel, center, 22.0D, ANTIMATTER_PURPLE, 420);
+                // Match the 20 x 20 standard sphere without flooding clients.
+                sendShockwaveSphere(serverLevel, center, 10.0D, ANTIMATTER_PURPLE, 220);
             }
-            serverLevel.sendParticles(ParticleTypes.CLOUD, center.x, center.y + 1.0D, center.z, 260, 14, 3, 14, 0.35);
+            serverLevel.sendParticles(ParticleTypes.CLOUD, center.x, center.y + 1.0D, center.z,
+                    ultra ? 260 : 70, ultra ? 14 : 6, 3, ultra ? 14 : 6, 0.35);
             moremekasuitmodules.common.network.AntimatterShockwaveNetwork.sendNear(
                     serverLevel, center, ultra ? 128.0D : 64.0D, ultra ? 300 : 200);
         }
@@ -188,11 +192,14 @@ public class AntimatterExplosiveOrbEntity extends AbstractHurtingProjectile {
                     int depth = (int) Math.floor(Math.sqrt(radius * radius - horizontalSquared));
                     for (int dy = -depth; dy <= depth; dy++) {
                         BlockPos pos = new BlockPos(centerX + dx, centerY + dy, centerZ + dz);
-                        if (level().getBlockState(pos).is(Blocks.BEDROCK)
-                                || level().getBlockState(pos).isAir()) {
+                        var state = level().getBlockState(pos);
+                        if (state.is(Blocks.BEDROCK) || state.isAir()) {
                             continue;
                         }
-                        level().destroyBlock(pos, false, this);
+                        // No drops and no explosion recalculation: direct replacement
+                        // avoids the expensive per-block destroy event path while
+                        // preserving the bedrock exception.
+                        level().setBlock(pos, Blocks.AIR.defaultBlockState(), 2);
                     }
                 }
             }
@@ -202,17 +209,48 @@ public class AntimatterExplosiveOrbEntity extends AbstractHurtingProjectile {
         createUltraFire(centerX, centerY, centerZ);
     }
 
+    /** Removes a radius-10 sphere: a compact 20 x 20 standard antimatter blast. */
+    private void createStandardSphere(Vec3 center, boolean canGrief) {
+        if (!canGrief || !(level() instanceof net.minecraft.server.level.ServerLevel)) {
+            return;
+        }
+        final int radius = 10;
+        final int centerX = (int) Math.floor(center.x);
+        final int centerY = (int) Math.floor(center.y);
+        final int centerZ = (int) Math.floor(center.z);
+        final int radiusSquared = radius * radius;
+        for (int dx = -radius; dx <= radius; dx++) {
+            for (int dy = -radius; dy <= radius; dy++) {
+                int horizontal = radiusSquared - dy * dy - dx * dx;
+                if (horizontal < 0) {
+                    continue;
+                }
+                int dzLimit = (int) Math.sqrt(horizontal);
+                for (int dz = -dzLimit; dz <= dzLimit; dz++) {
+                    BlockPos pos = new BlockPos(centerX + dx, centerY + dy, centerZ + dz);
+                    var state = level().getBlockState(pos);
+                    if (!state.isAir() && !state.is(Blocks.BEDROCK)) {
+                        level().setBlock(pos, Blocks.AIR.defaultBlockState(), 2);
+                    }
+                }
+            }
+        }
+    }
+
     /** Adds the burning surface left by the Ultra detonation, like the standard blast. */
     private void createUltraFire(int centerX, int centerY, int centerZ) {
         final int radius = 52;
         for (int dx = -radius; dx <= radius; dx++) {
             for (int dz = -radius; dz <= radius; dz++) {
-                if (dx * dx + dz * dz > radius * radius || level().random.nextInt(4) != 0) {
+                // Fire is an aftermath accent, not a second crater-sized scan.
+                // One out of eight columns is enough visually and keeps the
+                // post-explosion server spike small.
+                if (dx * dx + dz * dz > radius * radius || level().random.nextInt(8) != 0) {
                     continue;
                 }
                 // Search from above the impact down to the crater floor. This leaves
                 // fire on the exposed rim even when the whole central column was removed.
-                for (int dy = 60; dy >= -80; dy--) {
+                for (int dy = radius; dy >= -radius; dy--) {
                     BlockPos solid = new BlockPos(centerX + dx, centerY + dy, centerZ + dz);
                     BlockPos above = solid.above();
                     if (!level().getBlockState(solid).isAir() && level().isEmptyBlock(above)
