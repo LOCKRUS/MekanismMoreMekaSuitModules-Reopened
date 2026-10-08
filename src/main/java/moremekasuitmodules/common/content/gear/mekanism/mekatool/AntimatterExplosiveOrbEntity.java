@@ -157,8 +157,8 @@ public class AntimatterExplosiveOrbEntity extends AbstractHurtingProjectile {
                 sendShockwaveRing(serverLevel, center, 50.0D, ANTIMATTER_PURPLE, 800);
                 sendShockwaveSphere(serverLevel, center, 50.0D, ANTIMATTER_PURPLE, 1200);
             } else {
-                // Match the 20 x 20 standard sphere without flooding clients.
-                sendShockwaveSphere(serverLevel, center, 10.0D, ANTIMATTER_PURPLE, 220);
+                // Match the 25 x 25 standard sphere without flooding clients.
+                sendShockwaveSphere(serverLevel, center, 12.0D, ANTIMATTER_PURPLE, 260);
             }
             serverLevel.sendParticles(ParticleTypes.CLOUD, center.x, center.y + 1.0D, center.z,
                     ultra ? 260 : 70, ultra ? 14 : 6, 3, ultra ? 14 : 6, 0.35);
@@ -209,28 +209,52 @@ public class AntimatterExplosiveOrbEntity extends AbstractHurtingProjectile {
         createUltraFire(centerX, centerY, centerZ);
     }
 
-    /** Removes a radius-10 sphere: a compact 20 x 20 standard antimatter blast. */
+    /** Removes a radius-12 sphere: a 25 x 25 standard antimatter blast. */
     private void createStandardSphere(Vec3 center, boolean canGrief) {
-        if (!canGrief || !(level() instanceof net.minecraft.server.level.ServerLevel)) {
+        if (!(level() instanceof net.minecraft.server.level.ServerLevel)) {
             return;
         }
-        final int radius = 10;
+        final int radius = 12;
         final int centerX = (int) Math.floor(center.x);
         final int centerY = (int) Math.floor(center.y);
         final int centerZ = (int) Math.floor(center.z);
         final int radiusSquared = radius * radius;
+        if (canGrief) {
+            for (int dx = -radius; dx <= radius; dx++) {
+                for (int dy = -radius; dy <= radius; dy++) {
+                    int horizontal = radiusSquared - dy * dy - dx * dx;
+                    if (horizontal < 0) {
+                        continue;
+                    }
+                    int dzLimit = (int) Math.sqrt(horizontal);
+                    for (int dz = -dzLimit; dz <= dzLimit; dz++) {
+                        BlockPos pos = new BlockPos(centerX + dx, centerY + dy, centerZ + dz);
+                        var state = level().getBlockState(pos);
+                        if (!state.isAir() && !state.is(Blocks.BEDROCK)) {
+                            level().setBlock(pos, Blocks.AIR.defaultBlockState(), 2);
+                        }
+                    }
+                }
+            }
+        }
+        createStandardFire(centerX, centerY, centerZ);
+    }
+
+    /** Places a sparse burning layer on the newly exposed floor of Standard. */
+    private void createStandardFire(int centerX, int centerY, int centerZ) {
+        final int radius = 12;
         for (int dx = -radius; dx <= radius; dx++) {
-            for (int dy = -radius; dy <= radius; dy++) {
-                int horizontal = radiusSquared - dy * dy - dx * dx;
-                if (horizontal < 0) {
+            for (int dz = -radius; dz <= radius; dz++) {
+                if (dx * dx + dz * dz > radius * radius || level().random.nextInt(3) != 0) {
                     continue;
                 }
-                int dzLimit = (int) Math.sqrt(horizontal);
-                for (int dz = -dzLimit; dz <= dzLimit; dz++) {
-                    BlockPos pos = new BlockPos(centerX + dx, centerY + dy, centerZ + dz);
-                    var state = level().getBlockState(pos);
-                    if (!state.isAir() && !state.is(Blocks.BEDROCK)) {
-                        level().setBlock(pos, Blocks.AIR.defaultBlockState(), 2);
+                for (int dy = -radius - 2; dy <= radius + 2; dy++) {
+                    BlockPos solid = new BlockPos(centerX + dx, centerY + dy, centerZ + dz);
+                    BlockPos above = solid.above();
+                    if (!level().getBlockState(solid).isAir() && level().isEmptyBlock(above)
+                            && !level().getBlockState(solid).is(Blocks.BEDROCK)) {
+                        level().setBlock(above, Blocks.FIRE.defaultBlockState(), 3);
+                        break;
                     }
                 }
             }
