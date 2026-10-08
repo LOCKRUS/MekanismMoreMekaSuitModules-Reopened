@@ -262,27 +262,23 @@ public class AntimatterExplosiveOrbEntity extends AbstractHurtingProjectile {
         }
     }
 
-    /** Fills one source-lava layer at the lowest exposed point of the Ultra sphere. */
+    /** Fills only the penultimate horizontal layer at the very bottom of the Ultra sphere. */
     private void createUltraLava(int centerX, int centerY, int centerZ) {
         final int radius = 50;
-        final int radiusSquared = radius * radius;
+        // A fixed Y level is intentional: do not follow each column's curved
+        // floor, otherwise the whole hemispherical cavity becomes lava-lined.
+        final int lavaY = centerY - radius + 1;
+        final int layerOffset = 1;
+        final int layerRadiusSquared = radius * radius - layerOffset * layerOffset;
         for (int dx = -radius; dx <= radius; dx++) {
             for (int dz = -radius; dz <= radius; dz++) {
-                if (dx * dx + dz * dz > radiusSquared) {
+                if (dx * dx + dz * dz > layerRadiusSquared) {
                     continue;
                 }
-                // Start below the sphere and move upward. The first solid block is
-                // the natural floor; placing lava above it creates one even layer
-                // instead of a deep fluid volume.
-                for (int dy = -radius - 2; dy <= radius; dy++) {
-                    BlockPos floor = new BlockPos(centerX + dx, centerY + dy, centerZ + dz);
-                    BlockPos lavaPos = floor.above();
-                    var floorState = level().getBlockState(floor);
-                    if (!floorState.isAir() && level().isEmptyBlock(lavaPos)
-                            && !level().getBlockState(lavaPos).is(Blocks.BEDROCK)) {
-                        level().setBlock(lavaPos, Blocks.LAVA.defaultBlockState(), 3);
-                        break;
-                    }
+                BlockPos lavaPos = new BlockPos(centerX + dx, lavaY, centerZ + dz);
+                if (level().isEmptyBlock(lavaPos)
+                        && !level().getBlockState(lavaPos).is(Blocks.BEDROCK)) {
+                    level().setBlock(lavaPos, Blocks.LAVA.defaultBlockState(), 3);
                 }
             }
         }
