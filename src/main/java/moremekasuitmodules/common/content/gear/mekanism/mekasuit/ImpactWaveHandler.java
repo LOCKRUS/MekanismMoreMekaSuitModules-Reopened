@@ -24,7 +24,10 @@ public final class ImpactWaveHandler {
     private static final DustParticleOptions SHOCKWAVE_PARTICLE =
             new DustParticleOptions(new Vector3f(0.20F, 0.85F, 1.0F), 1.5F);
 
-    @SubscribeEvent(priority = EventPriority.HIGHEST)
+    // Mekanism and flight-related modules may cancel fall damage before the
+    // wave handler sees it. The original 1.12.2 implementation explicitly
+    // listened to canceled events, which was missed in the NeoForge port.
+    @SubscribeEvent(priority = EventPriority.HIGHEST, receiveCanceled = true)
     public void onLivingFall(LivingFallEvent event) {
         // Do not reject fall-flying here: custom flight modules may use the same
         // entity flag while the boots still need to process a landing.
