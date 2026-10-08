@@ -206,6 +206,7 @@ public class AntimatterExplosiveOrbEntity extends AbstractHurtingProjectile {
         }
         // Fire is a visual aftermath and must not disappear merely because the
         // world has mobGriefing disabled; block destruction remains gated above.
+        createUltraLava(centerX, centerY, centerZ);
         createUltraFire(centerX, centerY, centerZ);
     }
 
@@ -261,6 +262,32 @@ public class AntimatterExplosiveOrbEntity extends AbstractHurtingProjectile {
         }
     }
 
+    /** Fills one source-lava layer at the lowest exposed point of the Ultra sphere. */
+    private void createUltraLava(int centerX, int centerY, int centerZ) {
+        final int radius = 50;
+        final int radiusSquared = radius * radius;
+        for (int dx = -radius; dx <= radius; dx++) {
+            for (int dz = -radius; dz <= radius; dz++) {
+                if (dx * dx + dz * dz > radiusSquared) {
+                    continue;
+                }
+                // Start below the sphere and move upward. The first solid block is
+                // the natural floor; placing lava above it creates one even layer
+                // instead of a deep fluid volume.
+                for (int dy = -radius - 2; dy <= radius; dy++) {
+                    BlockPos floor = new BlockPos(centerX + dx, centerY + dy, centerZ + dz);
+                    BlockPos lavaPos = floor.above();
+                    var floorState = level().getBlockState(floor);
+                    if (!floorState.isAir() && level().isEmptyBlock(lavaPos)
+                            && !level().getBlockState(lavaPos).is(Blocks.BEDROCK)) {
+                        level().setBlock(lavaPos, Blocks.LAVA.defaultBlockState(), 3);
+                        break;
+                    }
+                }
+            }
+        }
+    }
+
     /** Adds the burning surface left by the Ultra detonation, like the standard blast. */
     private void createUltraFire(int centerX, int centerY, int centerZ) {
         final int radius = 52;
@@ -277,8 +304,9 @@ public class AntimatterExplosiveOrbEntity extends AbstractHurtingProjectile {
                 for (int dy = radius; dy >= -radius; dy--) {
                     BlockPos solid = new BlockPos(centerX + dx, centerY + dy, centerZ + dz);
                     BlockPos above = solid.above();
-                    if (!level().getBlockState(solid).isAir() && level().isEmptyBlock(above)
-                            && !level().getBlockState(solid).is(Blocks.BEDROCK)) {
+                    var solidState = level().getBlockState(solid);
+                    if (!solidState.isAir() && !solidState.is(Blocks.LAVA) && level().isEmptyBlock(above)
+                            && !solidState.is(Blocks.BEDROCK)) {
                         level().setBlock(above, Blocks.FIRE.defaultBlockState(), 3);
                         break;
                     }
