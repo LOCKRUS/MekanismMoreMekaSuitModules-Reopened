@@ -75,13 +75,14 @@ public final class EntityDisplayBoxRenderer {
         targets.sort(Comparator.comparingDouble(player::distanceToSqr));
         Matrix4f modelView = event.getModelViewMatrix();
         Matrix4f projection = event.getProjectionMatrix();
+        Vec3 cameraPosition = minecraft.gameRenderer.getMainCamera().getPosition();
         float partial = event.getPartialTick().getGameTimeDeltaPartialTick(false);
         for (LivingEntity target : targets) {
             if (BOXES.size() >= unit.maxBoxCount()) {
                 break;
             }
             AABB box = paddedBox(target, partial);
-            ScreenBounds bounds = project(box, modelView, projection);
+            ScreenBounds bounds = project(box, modelView, projection, cameraPosition);
             if (bounds != null && bounds.isVisible(screenWidth, screenHeight)) {
                 BOXES.add(new DisplayBox(bounds.left - SCREEN_PADDING, bounds.top - SCREEN_PADDING,
                         bounds.right + SCREEN_PADDING, bounds.bottom + SCREEN_PADDING,
@@ -129,13 +130,18 @@ public final class EntityDisplayBoxRenderer {
                 current.maxX + horizontal, current.maxY + top, current.maxZ + horizontal);
     }
 
-    private static ScreenBounds project(AABB box, Matrix4f modelView, Matrix4f projection) {
+    private static ScreenBounds project(AABB box, Matrix4f modelView, Matrix4f projection, Vec3 cameraPosition) {
         ScreenBounds bounds = new ScreenBounds();
         double[] xs = {box.minX, box.maxX};
         double[] ys = {box.minY, box.maxY};
         double[] zs = {box.minZ, box.maxZ};
         for (double x : xs) for (double y : ys) for (double z : zs) {
-            Vector4f point = new Vector4f((float) x, (float) y, (float) z, 1.0F).mul(modelView).mul(projection);
+            // RenderLevelStageEvent matrices expect camera-relative world
+            // coordinates. The old renderer did this explicitly; omitting it
+            // shifted boxes by the player's world position.
+            Vector4f point = new Vector4f((float) (x - cameraPosition.x),
+                    (float) (y - cameraPosition.y), (float) (z - cameraPosition.z), 1.0F)
+                    .mul(modelView).mul(projection);
             if (point.w <= 0.0F) continue;
             float nx = point.x / point.w;
             float ny = point.y / point.w;
