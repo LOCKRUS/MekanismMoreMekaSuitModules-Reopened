@@ -119,14 +119,14 @@ public final class EntityDisplayBoxRenderer {
 
     private static AABB paddedBox(LivingEntity entity, float partial) {
         AABB current = entity.getBoundingBox();
-        double dx = entity.xOld + (entity.getX() - entity.xOld) * partial - entity.getX();
-        double dy = entity.yOld + (entity.getY() - entity.yOld) * partial - entity.getY();
-        double dz = entity.zOld + (entity.getZ() - entity.zOld) * partial - entity.getZ();
         double horizontal = Math.max(0.2D, entity.getBbWidth() * 0.18D);
         double vertical = Math.max(0.05D, entity.getBbHeight() * 0.08D);
         double top = Math.max(0.1D, entity.getBbHeight() * 0.12D);
-        return new AABB(current.minX + dx - horizontal, current.minY + dy - vertical, current.minZ + dz - horizontal,
-                current.maxX + dx + horizontal, current.maxY + dy + top, current.maxZ + dz + horizontal);
+        // RenderLevelStageEvent already exposes the render-time camera matrix.
+        // Applying xOld/yOld/zOld here as well caused a second interpolation and
+        // made the screen box visibly trail the entity.
+        return new AABB(current.minX - horizontal, current.minY - vertical, current.minZ - horizontal,
+                current.maxX + horizontal, current.maxY + top, current.maxZ + horizontal);
     }
 
     private static ScreenBounds project(AABB box, Matrix4f modelView, Matrix4f projection) {

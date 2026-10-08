@@ -34,6 +34,17 @@ public record ModuleWallClingUnit(ClimbSpeed climbSpeed) implements ICustomModul
 
     @Override
     public void tickServer(IModule<ModuleWallClingUnit> module, IModuleContainer container, ItemStack stack, Player player) {
+        tick(module, stack, player, true);
+    }
+
+    @Override
+    public void tickClient(IModule<ModuleWallClingUnit> module, IModuleContainer container, ItemStack stack, Player player) {
+        // Mirror the movement locally so the server correction does not make the
+        // climb look stationary. Energy is deliberately consumed server-side only.
+        tick(module, stack, player, false);
+    }
+
+    private void tick(IModule<ModuleWallClingUnit> module, ItemStack stack, Player player, boolean consumeEnergy) {
         if (!module.isEnabled() || !canFunction(player) || !isTouchingWall(player)) {
             return;
         }
@@ -51,8 +62,10 @@ public record ModuleWallClingUnit(ClimbSpeed climbSpeed) implements ICustomModul
                     : 120.0D * climbSpeed.energyMultiplier;
             verticalMotion = climbSpeed.verticalSpeed;
         }
-        if (module.canUseEnergy(player, stack, (long) usage, false)) {
-            module.useEnergy(player, stack, (long) usage);
+        if (!consumeEnergy || module.canUseEnergy(player, stack, (long) usage, false)) {
+            if (consumeEnergy) {
+                module.useEnergy(player, stack, (long) usage);
+            }
             player.setDeltaMovement(player.getDeltaMovement().x, verticalMotion, player.getDeltaMovement().z);
             player.fallDistance = 0;
         }
