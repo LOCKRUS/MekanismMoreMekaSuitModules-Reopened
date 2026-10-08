@@ -3,6 +3,7 @@ package moremekasuitmodules.common.content.gear.mekanism.mekasuit;
 import mekanism.api.gear.IModule;
 import mekanism.api.gear.IModuleHelper;
 import mekanism.common.content.gear.IModuleContainerItem;
+import moremekasuitmodules.common.config.MoreModulesConfig;
 import moremekasuitmodules.common.registries.MekaSuitMoreModules;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.core.particles.DustParticleOptions;
@@ -20,7 +21,6 @@ import org.joml.Vector3f;
 import java.util.List;
 
 public final class ImpactWaveHandler {
-    private static final float ENERGY_PER_RADIUS = 1_500.0F;
     private static final DustParticleOptions SHOCKWAVE_PARTICLE =
             new DustParticleOptions(new Vector3f(0.20F, 0.85F, 1.0F), 1.5F);
 
@@ -48,7 +48,8 @@ public final class ImpactWaveHandler {
         if (event.getDistance() < unit.getTriggerHeight()) {
             return;
         }
-        long energy = (long) (ENERGY_PER_RADIUS * unit.getRadius());
+        long energy = Math.max(1L, Math.round(MoreModulesConfig.config.mekaSuitEnergyUsageImpactWave.get()
+                * Math.max(1.0F, unit.getRadius())));
         if (!module.canUseEnergy(player, boots, energy, false)) {
             return;
         }
