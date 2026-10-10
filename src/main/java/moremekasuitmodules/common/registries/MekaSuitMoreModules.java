@@ -17,6 +17,7 @@ import moremekasuitmodules.common.content.gear.mekanism.mekasuit.ModuleCounterat
 import moremekasuitmodules.common.content.gear.mekanism.mekasuit.ModuleWallClingUnit;
 import moremekasuitmodules.common.content.gear.mekanism.mekasuit.ModuleImpactWaveUnit;
 import moremekasuitmodules.common.content.gear.mekanism.mekasuit.ModuleEntityDisplayBoxUnit;
+import moremekasuitmodules.common.content.gear.mekanism.mekasuit.ModuleHyperArmorUnit;
 
 public class MekaSuitMoreModules {
 
@@ -70,6 +71,10 @@ public class MekaSuitMoreModules {
                             installed -> ModuleEnumConfig.streamCodec(ModuleImpactWaveUnit.TriggerHeight.STREAM_CODEC, ModuleImpactWaveUnit.TriggerHeight.class, Math.min(ModuleImpactWaveUnit.TriggerHeight.values().length, installed)))
                     .addConfig(ModuleEnumConfig.create(ModuleImpactWaveUnit.RADIUS, ModuleImpactWaveUnit.ImpactRadius.LOW), ModuleEnumConfig.codec(ModuleImpactWaveUnit.ImpactRadius.CODEC), ModuleEnumConfig.streamCodec(ModuleImpactWaveUnit.ImpactRadius.STREAM_CODEC))
                     .addConfig(ModuleEnumConfig.create(ModuleImpactWaveUnit.DAMAGE, ModuleImpactWaveUnit.DamageScale.LOW), ModuleEnumConfig.codec(ModuleImpactWaveUnit.DamageScale.CODEC), ModuleEnumConfig.streamCodec(ModuleImpactWaveUnit.DamageScale.STREAM_CODEC)));
+    public static final ModuleRegistryObject<ModuleHyperArmorUnit> HYPER_ARMOR_UNIT = MODULES.register(
+            "hyper_armor_unit", ModuleHyperArmorUnit::new, () -> MekaSuitMoreModulesItem.MODULE_HYPER_ARMOR,
+            builder -> builder.maxStackSize(1).disabledByDefault().handlesModeChange()
+                    .addConfig(ModuleBooleanConfig.create(ModuleHyperArmorUnit.SOLID_HITBOX, true)));
     // Показывает рамки, имена, дистанцию и здоровье живых существ на экране.
     public static final ModuleRegistryObject<ModuleEntityDisplayBoxUnit> ENTITY_DISPLAY_BOX_UNIT = MODULES.register(
             "entity_display_box_unit", ModuleEntityDisplayBoxUnit::new, () -> MekaSuitMoreModulesItem.MODULE_ENTITY_DISPLAY_BOX,

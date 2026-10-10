@@ -100,5 +100,8 @@
   "module.moremekasuitmodules.entity_display_health": "Health display",
   "module.moremekasuitmodules.entity_display_box_color": "Box color",
   "module.moremekasuitmodules.entity_display_name_color": "Name color",
-  "module.moremekasuitmodules.entity_display_distance_color": "Distance color"
+  "module.moremekasuitmodules.entity_display_distance_color": "Distance color",
+  "item.moremekasuitmodules.module_hyper_armor_unit": "Hyper Armor Unit",
+  "description.moremekasuitmodules.hyper_armor_unit": "Adds +15 armor, +5 armor toughness, 50% knockback resistance and Resistance III. Breaks blocks on high-speed impact.",
+  "module.moremekasuitmodules.hyper_armor_unit": "Module: Hyper Armor Unit"
 }

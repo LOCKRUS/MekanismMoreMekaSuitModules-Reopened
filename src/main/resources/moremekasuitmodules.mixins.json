@@ -9,7 +9,8 @@
     "minecraft.MixinItemUseAnimation",
     "minecraft.MixinDamageSource",
     "minecraft.MixinLevel",
-    "minecraft.MixinMob"
+    "minecraft.MixinMob",
+    "minecraft.MixinEntity"
   ],
   "injectors": {
     "defaultRequire": 1

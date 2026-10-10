@@ -1,0 +1,4 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {"layer0": "moremekasuitmodules:item/module_hyper_armor_unit"}
+}

@@ -100,5 +100,8 @@
   "module.moremekasuitmodules.entity_display_health": "Отображение здоровья",
   "module.moremekasuitmodules.entity_display_box_color": "Цвет рамки",
   "module.moremekasuitmodules.entity_display_name_color": "Цвет имени",
-  "module.moremekasuitmodules.entity_display_distance_color": "Цвет дистанции"
+  "module.moremekasuitmodules.entity_display_distance_color": "Цвет дистанции",
+  "item.moremekasuitmodules.module_hyper_armor_unit": "Модуль гиперброни",
+  "description.moremekasuitmodules.hyper_armor_unit": "Даёт +15 брони, +5 твёрдости брони, 50% сопротивления отбрасыванию и Resistance III. Ломает блоки при высокоскоростном столкновении.",
+  "module.moremekasuitmodules.hyper_armor_unit": "Модуль: гиперброня"
 }

@@ -15,6 +15,7 @@ import moremekasuitmodules.common.content.gear.mekanism.mekatool.MekaToolBlaster
 import moremekasuitmodules.common.content.gear.mekanism.mekatool.MekaToolLavaHandler;
 import moremekasuitmodules.common.content.gear.mekanism.mekasuit.CounterattackHandler;
 import moremekasuitmodules.common.content.gear.mekanism.mekasuit.ImpactWaveHandler;
+import moremekasuitmodules.common.content.gear.mekanism.mekasuit.HyperArmorHandler;
 import moremekasuitmodules.common.network.AntimatterShockwavePayload;
 import net.minecraft.resources.ResourceLocation;
 import net.neoforged.bus.api.IEventBus;
@@ -88,7 +89,8 @@ public class MoreMekaSuitModules implements IModModule {
                 MekaSuitMoreModules.COUNTERATTACK_UNIT,
                 MekaSuitMoreModules.ENERGY_SHIELD_UNIT,
                 MekaSuitMoreModules.POWER_ENHANCEMENT_UNIT,
-                MekaSuitMoreModules.HP_BOOTS_UNIT
+                MekaSuitMoreModules.HP_BOOTS_UNIT,
+                MekaSuitMoreModules.HYPER_ARMOR_UNIT
         );
         MekanismIMC.addMekaSuitBootsModules(
                 MekaSuitMoreModules.WALL_CLING_UNIT,
@@ -126,6 +128,7 @@ public class MoreMekaSuitModules implements IModModule {
         NeoForge.EVENT_BUS.register(new MekaToolBlasterHandler());
         NeoForge.EVENT_BUS.register(new CounterattackHandler());
         NeoForge.EVENT_BUS.register(new ImpactWaveHandler());
+        NeoForge.EVENT_BUS.register(new HyperArmorHandler());
     }
 
     @Override
