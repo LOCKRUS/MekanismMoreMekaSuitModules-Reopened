@@ -93,9 +93,9 @@ public final class HyperArmorHandler {
         if (attribute == null) {
             return;
         }
-        if (active) {
+        if (active && !attribute.hasModifier(id)) {
             attribute.addOrUpdateTransientModifier(modifier);
-        } else if (attribute.hasModifier(id)) {
+        } else if (!active && attribute.hasModifier(id)) {
             attribute.removeModifier(id);
         }
     }

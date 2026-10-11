@@ -9,8 +9,13 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.entity.EquipmentSlotGroup;
+import net.minecraft.world.entity.ai.attributes.AttributeModifier;
+import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.ItemStack;
+import net.neoforged.neoforge.event.ItemAttributeModifierEvent;
 
 @ParametersAreNotNullByDefault
 public record ModuleHyperArmorUnit(boolean solidHitbox) implements ICustomModule<ModuleHyperArmorUnit> {
@@ -21,6 +26,22 @@ public record ModuleHyperArmorUnit(boolean solidHitbox) implements ICustomModule
 
     public ModuleHyperArmorUnit(IModule<ModuleHyperArmorUnit> module) {
         this(module.<Boolean>getConfigOrThrow(SOLID_HITBOX).get());
+    }
+
+    @Override
+    public void adjustAttributes(IModule<ModuleHyperArmorUnit> module, ItemAttributeModifierEvent event) {
+        if (event.getItemStack().getItem() instanceof ArmorItem armor && armor.getType() == ArmorItem.Type.CHESTPLATE) {
+            double count = module.getInstalledCount();
+            event.addModifier(Attributes.ARMOR,
+                    new AttributeModifier(ARMOR, count * 15.0D, AttributeModifier.Operation.ADD_VALUE),
+                    EquipmentSlotGroup.CHEST);
+            event.addModifier(Attributes.ARMOR_TOUGHNESS,
+                    new AttributeModifier(TOUGHNESS, count * 5.0D, AttributeModifier.Operation.ADD_VALUE),
+                    EquipmentSlotGroup.CHEST);
+            event.addModifier(Attributes.KNOCKBACK_RESISTANCE,
+                    new AttributeModifier(KNOCKBACK, count * 0.5D, AttributeModifier.Operation.ADD_VALUE),
+                    EquipmentSlotGroup.CHEST);
+        }
     }
 
     @Override

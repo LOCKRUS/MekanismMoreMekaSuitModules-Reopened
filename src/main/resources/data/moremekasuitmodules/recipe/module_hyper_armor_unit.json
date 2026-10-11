@@ -7,7 +7,7 @@
     "C": {"tag": "c:circuits/elite"},
     "M": {"item": "mekanism:module_base"},
     "P": {"item": "minecraft:piston"},
-    "D": {"item": "mekanism:mekasuit_chestplate"}
+    "D": {"item": "mekanism:mekasuit_bodyarmor"}
   },
   "result": {"count": 1, "id": "moremekasuitmodules:module_hyper_armor_unit"}
 }
