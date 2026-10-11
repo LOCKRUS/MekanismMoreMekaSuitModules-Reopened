@@ -23,12 +23,9 @@ import net.neoforged.neoforge.fluids.capability.IFluidHandlerItem;
 
 /**
  * Reuses Mekanism's EntityFlame while making a MekaTool act as the flamethrower.
- * The MekaTool must contain the Lava Tank module and 10 mB of lava per flame.
+ * The MekaTool must contain the Lava Tank module. Consumption is mode-dependent.
  */
 public final class MekaToolFlamethrowerHandler {
-    private static final int LAVA_PER_FLAME = 10;
-    private static final long HYDROGEN_PER_FLAME = 2;
-
     @SubscribeEvent(priority = EventPriority.HIGH)
     public void onRightClickItem(PlayerInteractEvent.RightClickItem event) {
         if (event.isCanceled() || event.getHand() != InteractionHand.MAIN_HAND) {
@@ -36,11 +33,13 @@ public final class MekaToolFlamethrowerHandler {
         }
         Player player = event.getEntity();
         ItemStack stack = event.getItemStack();
-        if (!(stack.getItem() instanceof ItemMekaTool)
-                || IModuleHelper.INSTANCE.getIfEnabled(stack, MekaSuitMoreModules.MEKA_TOOL_FLAMETHROWER_UNIT) == null) {
+        if (!(stack.getItem() instanceof ItemMekaTool)) {
             return;
         }
-        if (!canFire(player, stack)) {
+        IModule<ModuleMekaToolFlamethrowerUnit> module = IModuleHelper.INSTANCE.getIfEnabled(
+                stack, MekaSuitMoreModules.MEKA_TOOL_FLAMETHROWER_UNIT);
+        if (module == null || (!player.getAbilities().instabuild
+                && !canFire(player, stack, module.getCustomInstance().flameMode()))) {
             event.setCanceled(true);
             event.setCancellationResult(InteractionResult.FAIL);
             return;
@@ -63,7 +62,8 @@ public final class MekaToolFlamethrowerHandler {
         if (!(stack.getItem() instanceof ItemMekaTool) || module == null) {
             return;
         }
-        if (!canFire(player, stack)) {
+        ModuleMekaToolFlamethrowerUnit.FlameMode mode = module.getCustomInstance().flameMode();
+        if (!player.getAbilities().instabuild && !canFire(player, stack, mode)) {
             player.releaseUsingItem();
             return;
         }
@@ -74,17 +74,19 @@ public final class MekaToolFlamethrowerHandler {
         }
         IFluidHandlerItem lavaTank = MekaToolLavaHandler.create(stack);
         IChemicalHandler hydrogenTank = getHydrogenTank(player);
-        if (lavaTank == null || hydrogenTank == null) {
+        if (!player.getAbilities().instabuild && (lavaTank == null || hydrogenTank == null)) {
             return;
         }
-        lavaTank.drain(LAVA_PER_FLAME, IFluidHandler.FluidAction.EXECUTE);
-        hydrogenTank.extractChemical(MekanismChemicals.HYDROGEN.asStack(HYDROGEN_PER_FLAME), Action.EXECUTE);
+        if (!player.getAbilities().instabuild) {
+            lavaTank.drain(mode.lavaPerFlame(), IFluidHandler.FluidAction.EXECUTE);
+            hydrogenTank.extractChemical(MekanismChemicals.HYDROGEN.asStack(mode.hydrogenPerFlame()), Action.EXECUTE);
+        }
         player.level().addFreshEntity(flame);
     }
 
-    private static boolean canFire(Player player, ItemStack stack) {
+    private static boolean canFire(Player player, ItemStack stack, ModuleMekaToolFlamethrowerUnit.FlameMode mode) {
         IFluidHandlerItem lavaTank = MekaToolLavaHandler.create(stack);
-        if (!MekaToolLavaHandler.hasLava(lavaTank, LAVA_PER_FLAME)) {
+        if (!MekaToolLavaHandler.hasLava(lavaTank, mode.lavaPerFlame())) {
             return false;
         }
         IChemicalHandler hydrogenTank = getHydrogenTank(player);
@@ -92,8 +94,8 @@ public final class MekaToolFlamethrowerHandler {
             return false;
         }
         ChemicalStack extracted = hydrogenTank.extractChemical(
-                MekanismChemicals.HYDROGEN.asStack(HYDROGEN_PER_FLAME), Action.SIMULATE);
-        return extracted.getAmount() >= HYDROGEN_PER_FLAME;
+                MekanismChemicals.HYDROGEN.asStack(mode.hydrogenPerFlame()), Action.SIMULATE);
+        return extracted.getAmount() >= mode.hydrogenPerFlame();
     }
 
     private static IChemicalHandler getHydrogenTank(Player player) {

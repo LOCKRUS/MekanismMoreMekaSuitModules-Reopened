@@ -214,7 +214,7 @@ public class MekaSuitMoreModules {
             "meka_tool_flamethrower_unit",
             ModuleMekaToolFlamethrowerUnit::new,
             () -> MekaSuitMoreModulesItem.MODULE_MEKA_TOOL_FLAMETHROWER,
-            builder -> builder.maxStackSize(1).disabledByDefault().handlesModeChange()
+            builder -> builder.maxStackSize(1).disabledByDefault().handlesModeChange().exclusive(1)
                     .addConfig(ModuleEnumConfig.create(ModuleMekaToolFlamethrowerUnit.FLAME_MODE,
                                     ModuleMekaToolFlamethrowerUnit.FlameMode.COMBAT),
                             ModuleEnumConfig.codec(ModuleMekaToolFlamethrowerUnit.FlameMode.CODEC),

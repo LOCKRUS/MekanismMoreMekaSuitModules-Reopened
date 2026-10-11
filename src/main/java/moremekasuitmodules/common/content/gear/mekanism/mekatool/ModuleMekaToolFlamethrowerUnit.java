@@ -59,7 +59,23 @@ public record ModuleMekaToolFlamethrowerUnit(FlameMode flameMode)
 
         FlameMode(String serializedName) {
             this.serializedName = serializedName.toLowerCase(Locale.ROOT);
-            this.label = TextComponentUtil.getString("flamethrower_" + this.serializedName);
+            this.label = TextComponentUtil.getString("flamethrower_mode." + this.serializedName);
+        }
+
+        public int lavaPerFlame() {
+            return switch (this) {
+                case COMBAT -> 10;
+                case HEAT -> 25;
+                case INFERNO -> 50;
+            };
+        }
+
+        public long hydrogenPerFlame() {
+            return switch (this) {
+                case COMBAT -> 2;
+                case HEAT -> 5;
+                case INFERNO -> 10;
+            };
         }
 
         public mekanism.common.item.gear.ItemFlamethrower.FlamethrowerMode mekanismMode() {

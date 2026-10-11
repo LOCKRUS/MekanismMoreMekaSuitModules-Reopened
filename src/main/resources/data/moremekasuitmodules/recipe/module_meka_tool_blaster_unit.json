@@ -17,7 +17,7 @@
       "item": "minecraft:nether_star"
     },
     "T": {
-      "item": "mekanism:ultimate_chemical_tank"
+      "item": "moremekasuitmodules:module_meka_tool_flamethrower_unit"
     },
     "A": {
       "item": "moremekasuitmodules:module_meka_tool_performance_amplification_unit"

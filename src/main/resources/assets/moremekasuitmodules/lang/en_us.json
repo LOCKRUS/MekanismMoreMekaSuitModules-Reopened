@@ -109,7 +109,7 @@
   "module.moremekasuitmodules.meka_tool_flamethrower_unit": "Module: MekaTool Flamethrower Unit",
   "module.moremekasuitmodules.meka_tool_flamethrower_mode_hud": "Flamethrower mode: %1$s",
   "module.moremekasuitmodules.flamethrower_mode": "Flamethrower mode",
-  "module.moremekasuitmodules.flamethrower_combat": "Combat",
-  "module.moremekasuitmodules.flamethrower_heat": "Heat",
-  "module.moremekasuitmodules.flamethrower_inferno": "Inferno"
+  "module.moremekasuitmodules.flamethrower_mode.combat": "Combat",
+  "module.moremekasuitmodules.flamethrower_mode.heat": "Heat",
+  "module.moremekasuitmodules.flamethrower_mode.inferno": "Inferno"
 }
