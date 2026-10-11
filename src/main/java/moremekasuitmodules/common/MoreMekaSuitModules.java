@@ -138,7 +138,7 @@ public class MoreMekaSuitModules implements IModModule {
 
     @Override
     public String getName() {
-        return "MoreMekaSuitModules";
+        return "MoreMekaModulesReopen";
     }
 
     @Override

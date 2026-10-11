@@ -36,7 +36,7 @@
   "module.moremekasuitmodules.looting_level_hud": "Looting level: %1$s",
   "module.moremekasuitmodules.meka_tool_performance_amplification_unit": "Module: MekaTool Performance Amplification Unit",
   "module.moremekasuitmodules.meka_tool_performance_multiplier_hud": "MekaTool performance multiplier: x%1$s",
-  "constants.moremekasuitmodules.mod_name": "More MekaSuit Modules",
+  "constants.moremekasuitmodules.mod_name": "MoreMekaModulesReopen",
   "module.moremekasuitmodules.wireless_terminal": "Wireless terminal",
   "module.moremekasuitmodules.wireless_matching": "Wireless terminal matching",
   "module.moremekasuitmodules.damage_1": "Exclusion of direct sources of harm",

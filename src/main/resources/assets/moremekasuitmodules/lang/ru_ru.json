@@ -36,7 +36,7 @@
   "module.moremekasuitmodules.looting_level_hud": "Уровень добычи: %1$s",
   "module.moremekasuitmodules.meka_tool_performance_amplification_unit": "Модуль: Модуль усиления производительности MekaTool",
   "module.moremekasuitmodules.meka_tool_performance_multiplier_hud": "Множитель производительности MekaTool: ×%1$s",
-  "constants.moremekasuitmodules.mod_name": "Дополнительные модули MekaSuit",
+  "constants.moremekasuitmodules.mod_name": "MoreMekaModulesReopen",
   "module.moremekasuitmodules.wireless_terminal": "Беспроводной терминал",
   "module.moremekasuitmodules.wireless_matching": "Сопряжение беспроводного терминала",
   "module.moremekasuitmodules.damage_1": "Блокировка прямых источников урона",
