@@ -4,11 +4,11 @@
   "pattern": [
     "PLP",
     "IAI",
-    "PSP"
+    "PLP"
   ],
   "key": {
     "P": {
-      "item": "mekanism:pellet_antimatter"
+      "item": "moremekasuitmodules:solipsismium_296"
     },
     "L": {
       "item": "mekanism:supercharged_coil"
@@ -18,9 +18,6 @@
     },
     "A": {
       "item": "moremekasuitmodules:module_meka_tool_blaster_unit"
-    },
-    "S": {
-      "item": "minecraft:nether_star"
     }
   },
   "result": {

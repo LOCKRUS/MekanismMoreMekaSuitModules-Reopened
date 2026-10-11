@@ -1,0 +1,17 @@
+{
+  "type": "moremekasuitmodules:solipsismium_nucleosynthesizing",
+  "chemical_input": {
+    "amount": 1000,
+    "chemical": "mekanism:antimatter"
+  },
+  "duration": 3000,
+  "item_input": {
+    "count": 1,
+    "item": "moremekasuitmodules:star_thermite"
+  },
+  "output": {
+    "count": 1,
+    "id": "moremekasuitmodules:solipsismium_296"
+  },
+  "per_tick_usage": false
+}

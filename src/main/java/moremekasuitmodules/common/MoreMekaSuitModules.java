@@ -11,6 +11,7 @@ import moremekasuitmodules.common.registries.MekaSuitMoreModulesCreativeTabs;
 import moremekasuitmodules.common.registries.MekaSuitMoreModulesItem;
 import moremekasuitmodules.common.registries.MoreMekaSuitModulesEntities;
 import moremekasuitmodules.common.registries.MoreMekaSuitModulesDataComponents;
+import moremekasuitmodules.common.registries.MoreMekaSuitModulesRecipeSerializers;
 import moremekasuitmodules.common.content.gear.mekanism.mekatool.MekaToolBlasterHandler;
 import moremekasuitmodules.common.content.gear.mekanism.mekatool.MekaToolFlamethrowerHandler;
 import moremekasuitmodules.common.content.gear.mekanism.mekatool.MekaToolLavaHandler;
@@ -50,6 +51,7 @@ public class MoreMekaSuitModules implements IModModule {
         modEventBus.addListener(this::imcQueue);
         MoreMekaSuitModulesDataComponents.DATA_COMPONENTS.register(modEventBus);
         MekaSuitMoreModulesItem.ITEMS.register(modEventBus);
+        MoreMekaSuitModulesRecipeSerializers.RECIPE_SERIALIZERS.register(modEventBus);
         MekaSuitMoreModules.MODULES.register(modEventBus);
         if (hooks.DraconicEvolutionLoaded.isLoaded()) {
 
