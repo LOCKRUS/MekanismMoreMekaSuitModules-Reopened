@@ -111,5 +111,6 @@
   "module.moremekasuitmodules.flamethrower_mode": "Режим огнемёта",
   "module.moremekasuitmodules.flamethrower_mode.combat": "Боевой",
   "module.moremekasuitmodules.flamethrower_mode.heat": "Тепловой",
-  "module.moremekasuitmodules.flamethrower_mode.inferno": "Инферно"
+  "module.moremekasuitmodules.flamethrower_mode.inferno": "Инферно",
+  "item.moremekasuitmodules.stardust": "Звёздная пыль"
 }

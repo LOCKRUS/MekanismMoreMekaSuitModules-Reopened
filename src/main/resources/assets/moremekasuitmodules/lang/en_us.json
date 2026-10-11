@@ -111,5 +111,6 @@
   "module.moremekasuitmodules.flamethrower_mode": "Flamethrower mode",
   "module.moremekasuitmodules.flamethrower_mode.combat": "Combat",
   "module.moremekasuitmodules.flamethrower_mode.heat": "Heat",
-  "module.moremekasuitmodules.flamethrower_mode.inferno": "Inferno"
+  "module.moremekasuitmodules.flamethrower_mode.inferno": "Inferno",
+  "item.moremekasuitmodules.stardust": "Stardust"
 }

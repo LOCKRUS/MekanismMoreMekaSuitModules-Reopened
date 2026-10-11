@@ -4,6 +4,7 @@ import mekanism.common.item.ItemModule;
 import mekanism.common.registration.impl.ItemDeferredRegister;
 import mekanism.common.registration.impl.ItemRegistryObject;
 import moremekasuitmodules.common.MoreMekaSuitModules;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Rarity;
 
 public class MekaSuitMoreModulesItem {
@@ -64,4 +65,6 @@ public class MekaSuitMoreModulesItem {
     public static final ItemRegistryObject<ItemModule> MODULE_MEKA_TOOL_LAVA_TANK = ITEMS.registerModule(MekaSuitMoreModules.MEKA_TOOL_LAVA_TANK_UNIT, Rarity.UNCOMMON);
     //MekaTool огнемётный модуль
     public static final ItemRegistryObject<ItemModule> MODULE_MEKA_TOOL_FLAMETHROWER = ITEMS.registerModule(MekaSuitMoreModules.MEKA_TOOL_FLAMETHROWER_UNIT, Rarity.EPIC);
+    // Stardust, produced by enriching a Nether Star.
+    public static final ItemRegistryObject<Item> STARDUST = ITEMS.register("stardust", Rarity.RARE);
 }
