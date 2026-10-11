@@ -2,6 +2,7 @@ package moremekasuitmodules.client;
 
 import mekanism.common.content.gear.IModuleContainerItem;
 import mekanism.common.item.gear.ItemMekaTool;
+import moremekasuitmodules.common.AntimatterStrikeActivation;
 import moremekasuitmodules.common.config.MoreModulesConfig;
 import moremekasuitmodules.common.registries.MekaSuitMoreModules;
 import net.minecraft.client.Minecraft;
@@ -76,6 +77,7 @@ public class ClientTickHandler {
 
     private static boolean isAntimatterModuleEnabled(ItemStack stack) {
         return stack.getItem() instanceof IModuleContainerItem item
+                && AntimatterStrikeActivation.isActive(stack)
                 && item.isModuleEnabled(stack, MekaSuitMoreModules.MEKA_TOOL_ANTIMATTER_STRIKE_UNIT);
     }
 

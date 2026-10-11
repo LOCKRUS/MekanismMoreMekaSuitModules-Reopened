@@ -7,6 +7,7 @@
     "mekanism.MixinItemMekaTool",
     "minecraft.MixinEnchantedCountIncreaseFunction",
     "minecraft.MixinItemUseAnimation",
+    "minecraft.MixinItemAntimatterStrike",
     "minecraft.MixinDamageSource",
     "minecraft.MixinLevel",
     "minecraft.MixinMob",

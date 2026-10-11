@@ -4,6 +4,7 @@ import mekanism.common.item.ItemModule;
 import mekanism.common.registration.impl.ItemDeferredRegister;
 import mekanism.common.registration.impl.ItemRegistryObject;
 import moremekasuitmodules.common.MoreMekaModulesReopen;
+import moremekasuitmodules.common.item.StardustItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Rarity;
 
@@ -66,9 +67,12 @@ public class MekaSuitMoreModulesItem {
     //MekaTool огнемётный модуль
     public static final ItemRegistryObject<ItemModule> MODULE_MEKA_TOOL_FLAMETHROWER = ITEMS.registerModule(MekaSuitMoreModules.MEKA_TOOL_FLAMETHROWER_UNIT, Rarity.EPIC);
     // Stardust, produced by enriching a Nether Star.
-    public static final ItemRegistryObject<Item> STARDUST = ITEMS.register("stardust", Rarity.RARE);
-    // Star Thermite, crafted from Stardust, iron dust, salt and gunpowder.
+    public static final ItemRegistryObject<StardustItem> STARDUST = ITEMS.registerItem(
+            "stardust", properties -> new StardustItem(properties.rarity(Rarity.RARE)));
+    // Star Thermite, crafted from Stardust, iron dust, tin dust and osmium dust.
     public static final ItemRegistryObject<Item> STAR_THERMITE = ITEMS.register("star_thermite", Rarity.RARE);
     // Solipsismium-296 powder; its recipe will be added later.
     public static final ItemRegistryObject<Item> SOLIPSISMIUM_296 = ITEMS.register("solipsismium_296", Rarity.EPIC);
+    // Otherworldly Alloy, created by infusing Atomic Alloy with Solipsismium.
+    public static final ItemRegistryObject<Item> ALLOY_OTHERWORLDLY = ITEMS.register("alloy_otherworldly", Rarity.EPIC);
 }

@@ -101,5 +101,9 @@
   "module.moremekasuitmodules.entity_display_box_color": "Колір рамки",
   "module.moremekasuitmodules.entity_display_name_color": "Колір імені",
   "module.moremekasuitmodules.entity_display_distance_color": "Колір відстані",
-  "module.moremekasuitmodules.hyper_armor_solid_hitbox": "Твердий хітбокс"
+  "module.moremekasuitmodules.hyper_armor_solid_hitbox": "Твердий хітбокс",
+  "chemical.moremekasuitmodules.solipsismium": "Соліпсизмiй",
+  "item.moremekasuitmodules.alloy_otherworldly": "Потойбічний сплав"
+  ,"item.moremekasuitmodules.antimatter_strike_disabled": "Вимкнено"
+  ,"item.moremekasuitmodules.antimatter_strike_active": "Активний"
 }

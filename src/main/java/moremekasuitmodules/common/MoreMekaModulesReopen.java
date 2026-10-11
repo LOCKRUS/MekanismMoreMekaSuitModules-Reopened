@@ -11,9 +11,12 @@ import moremekasuitmodules.common.registries.MekaSuitMoreModulesCreativeTabs;
 import moremekasuitmodules.common.registries.MekaSuitMoreModulesItem;
 import moremekasuitmodules.common.registries.MoreMekaSuitModulesEntities;
 import moremekasuitmodules.common.registries.MoreMekaSuitModulesDataComponents;
+import moremekasuitmodules.common.registries.MoreMekaSuitModulesChemicals;
+import moremekasuitmodules.common.registries.MoreMekaSuitModulesSounds;
 import moremekasuitmodules.common.content.gear.mekanism.mekatool.MekaToolBlasterHandler;
 import moremekasuitmodules.common.content.gear.mekanism.mekatool.MekaToolFlamethrowerHandler;
 import moremekasuitmodules.common.content.gear.mekanism.mekatool.MekaToolLavaHandler;
+import moremekasuitmodules.common.AntimatterStrikeActivationHandler;
 import moremekasuitmodules.common.content.gear.mekanism.mekasuit.CounterattackHandler;
 import moremekasuitmodules.common.content.gear.mekanism.mekasuit.ImpactWaveHandler;
 import moremekasuitmodules.common.content.gear.mekanism.mekasuit.HyperArmorHandler;
@@ -50,6 +53,8 @@ public class MoreMekaModulesReopen implements IModModule {
         modEventBus.addListener(this::imcQueue);
         MoreMekaSuitModulesDataComponents.DATA_COMPONENTS.register(modEventBus);
         MekaSuitMoreModulesItem.ITEMS.register(modEventBus);
+        MoreMekaSuitModulesChemicals.CHEMICALS.register(modEventBus);
+        MoreMekaSuitModulesSounds.SOUND_EVENTS.register(modEventBus);
         MekaSuitMoreModules.MODULES.register(modEventBus);
         if (hooks.DraconicEvolutionLoaded.isLoaded()) {
 
@@ -129,6 +134,7 @@ public class MoreMekaModulesReopen implements IModModule {
         NeoForge.EVENT_BUS.register(new ShieldProviderHandler());
         NeoForge.EVENT_BUS.register(new MekaToolBlasterHandler());
         NeoForge.EVENT_BUS.register(new MekaToolFlamethrowerHandler());
+        NeoForge.EVENT_BUS.register(new AntimatterStrikeActivationHandler());
         NeoForge.EVENT_BUS.register(new CounterattackHandler());
         NeoForge.EVENT_BUS.register(new ImpactWaveHandler());
         NeoForge.EVENT_BUS.register(new HyperArmorHandler());

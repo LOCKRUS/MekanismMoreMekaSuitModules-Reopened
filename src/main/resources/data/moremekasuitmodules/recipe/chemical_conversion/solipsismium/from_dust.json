@@ -1,0 +1,11 @@
+{
+  "type": "mekanism:chemical_conversion",
+  "input": {
+    "item": "moremekasuitmodules:solipsismium_296",
+    "count": 1
+  },
+  "output": {
+    "amount": 20,
+    "id": "moremekasuitmodules:solipsismium"
+  }
+}

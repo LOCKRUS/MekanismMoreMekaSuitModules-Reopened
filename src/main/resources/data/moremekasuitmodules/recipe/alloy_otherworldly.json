@@ -1,0 +1,16 @@
+{
+  "type": "mekanism:metallurgic_infusing",
+  "chemical_input": {
+    "amount": 40,
+    "chemical": "moremekasuitmodules:solipsismium"
+  },
+  "item_input": {
+    "count": 1,
+    "item": "mekanism:alloy_atomic"
+  },
+  "output": {
+    "count": 1,
+    "id": "moremekasuitmodules:alloy_otherworldly"
+  },
+  "per_tick_usage": false
+}

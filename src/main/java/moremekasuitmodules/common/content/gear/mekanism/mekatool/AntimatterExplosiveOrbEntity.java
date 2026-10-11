@@ -2,6 +2,7 @@ package moremekasuitmodules.common.content.gear.mekanism.mekatool;
 
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.core.particles.DustParticleOptions;
+import net.minecraft.core.particles.DustColorTransitionOptions;
 import net.minecraft.core.BlockPos;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
@@ -32,8 +33,19 @@ public class AntimatterExplosiveOrbEntity extends AbstractHurtingProjectile {
             new DustParticleOptions(new Vector3f(0.48F, 0.04F, 0.95F), 2.8F);
     private static final DustParticleOptions ANTIMATTER_WHITE =
             new DustParticleOptions(new Vector3f(0.92F, 0.82F, 1.0F), 2.0F);
+    private static final DustColorTransitionOptions ANTIMATTER_TRAIL =
+            new DustColorTransitionOptions(
+                    new Vector3f(0.72F, 0.32F, 1.0F),
+                    new Vector3f(0.28F, 0.04F, 0.62F),
+                    1.15F);
     private static final EntityDataAccessor<Boolean> ULTRA_MODE = SynchedEntityData.defineId(
             AntimatterExplosiveOrbEntity.class, EntityDataSerializers.BOOLEAN);
+    /**
+     * The orb is a directed antimatter strike, not a normal physics projectile.
+     * Keep its launch velocity independent from entity-push effects supplied by
+     * shields and addon mods.
+     */
+    private Vec3 lockedVelocity;
 
     public AntimatterExplosiveOrbEntity(EntityType<AntimatterExplosiveOrbEntity> type, Level level) {
         super(type, level);
@@ -47,7 +59,8 @@ public class AntimatterExplosiveOrbEntity extends AbstractHurtingProjectile {
                                         Vec3 direction, Level level, boolean ultra) {
         super(type, owner, direction, level);
         setUltraMode(ultra);
-        setDeltaMovement(direction.normalize().scale(SPEED));
+        lockedVelocity = direction.normalize().scale(SPEED);
+        setDeltaMovement(lockedVelocity);
     }
 
     @Override
@@ -79,8 +92,114 @@ public class AntimatterExplosiveOrbEntity extends AbstractHurtingProjectile {
     @Override
     public void tick() {
         clearFire();
+        // Restore the intended velocity before vanilla projectile logic runs.
+        // This also covers addons that write delta movement directly instead of
+        // using Entity.push(...).
+        restoreLockedVelocity();
         super.tick();
+        // Some shield implementations apply their impulse during the tick. Do
+        // not let that impulse leak into the next tick or the networked state.
+        restoreLockedVelocity();
+        spawnFlightParticles();
         clearFire();
+    }
+
+    @Override
+    public boolean isPushable() {
+        return false;
+    }
+
+    @Override
+    public void push(Entity entity) {
+        // Antimatter orbs cannot be redirected by entity collision physics.
+    }
+
+    @Override
+    public void push(Vec3 impulse) {
+        // Antimatter orbs cannot be redirected by external impulses.
+    }
+
+    @Override
+    public void push(double x, double y, double z) {
+        // Antimatter orbs cannot be redirected by external impulses.
+    }
+
+    private void restoreLockedVelocity() {
+        if (lockedVelocity == null) {
+            Vec3 movement = getDeltaMovement();
+            if (movement.lengthSqr() > 1.0E-8D) {
+                lockedVelocity = movement;
+            }
+        }
+        if (lockedVelocity != null) {
+            setDeltaMovement(lockedVelocity);
+        }
+    }
+
+    /**
+     * Draws a small atomic model around the projectile. The orbit plane is
+     * constructed from the flight vector, so the electrons remain radial to
+     * the orb regardless of its direction of travel.
+     */
+    private void spawnFlightParticles() {
+        if (!level().isClientSide()) {
+            return;
+        }
+
+        Vec3 flight = getDeltaMovement();
+        if (flight.lengthSqr() < 1.0E-8D) {
+            return;
+        }
+
+        Vec3 axis = flight.normalize();
+        Vec3 reference = Math.abs(axis.y) < 0.9D ? new Vec3(0.0D, 1.0D, 0.0D)
+                : new Vec3(1.0D, 0.0D, 0.0D);
+        Vec3 orbitA = axis.cross(reference).normalize();
+        Vec3 orbitB = axis.cross(orbitA).normalize();
+
+        boolean ultra = isUltraMode();
+        int electronCount = ultra ? 3 : 2;
+        double orbitRadius = ultra ? 0.95D : 0.58D;
+        double angularSpeed = ultra ? 0.58D : 0.34D;
+        float electronScale = ultra ? 1.25F : 0.82F;
+        double phase = (tickCount + random.nextFloat()) * angularSpeed;
+        Vec3 center = position();
+
+        for (int i = 0; i < electronCount; i++) {
+            double angle = phase + (Math.PI * 2.0D * i / electronCount);
+            Vec3 radial = orbitA.scale(Math.cos(angle) * orbitRadius)
+                    .add(orbitB.scale(Math.sin(angle) * orbitRadius));
+            Vec3 electron = center.add(radial);
+
+            // The dense purple point is the electron itself.
+            level().addParticle(
+                    new DustParticleOptions(new Vector3f(0.48F, 0.04F, 0.95F), electronScale),
+                    electron.x, electron.y, electron.z, 0.0D, 0.0D, 0.0D);
+
+            // A translucent dragon-breath particle and a fading color dust
+            // particle make the electron leave a soft light-purple trail.
+            Vec3 trailVelocity = axis.scale(-0.035D).add(radial.normalize().scale(-0.012D));
+            level().addParticle(ParticleTypes.DRAGON_BREATH,
+                    electron.x, electron.y, electron.z,
+                    trailVelocity.x, trailVelocity.y, trailVelocity.z);
+            if (ultra) {
+                level().addParticle(ANTIMATTER_TRAIL,
+                        electron.x, electron.y, electron.z,
+                        trailVelocity.x, trailVelocity.y, trailVelocity.z);
+            }
+        }
+
+        // Ultra has a denser nucleus and a stronger axial wake than Standard.
+        level().addParticle(ultra ? ANTIMATTER_WHITE : ANTIMATTER_TRAIL,
+                center.x, center.y, center.z,
+                -axis.x * (ultra ? 0.05D : 0.025D),
+                -axis.y * (ultra ? 0.05D : 0.025D),
+                -axis.z * (ultra ? 0.05D : 0.025D));
+        if (ultra) {
+            level().addParticle(ParticleTypes.DRAGON_BREATH,
+                    center.x, center.y, center.z,
+                    -axis.x * 0.08D, -axis.y * 0.08D, -axis.z * 0.08D);
+        }
     }
 
     @Override

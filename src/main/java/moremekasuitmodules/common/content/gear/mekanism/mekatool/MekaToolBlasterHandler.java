@@ -7,8 +7,10 @@ import mekanism.api.gear.IModule;
 import mekanism.api.gear.IModuleHelper;
 import mekanism.common.item.gear.ItemMekaTool;
 import mekanism.common.util.StorageUtils;
+import moremekasuitmodules.common.AntimatterStrikeActivation;
 import moremekasuitmodules.common.registries.MekaSuitMoreModules;
 import moremekasuitmodules.common.registries.MoreMekaSuitModulesEntities;
+import moremekasuitmodules.common.registries.MoreMekaSuitModulesSounds;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
@@ -49,7 +51,7 @@ public final class MekaToolBlasterHandler {
 
         IModule<ModuleMekaToolAntimatterStrikeUnit> antimatterModule = IModuleHelper.INSTANCE.getIfEnabled(
                 stack, MekaSuitMoreModules.MEKA_TOOL_ANTIMATTER_STRIKE_UNIT);
-        if (antimatterModule != null) {
+        if (antimatterModule != null && AntimatterStrikeActivation.isActive(stack)) {
             beginAntimatterCharge(event, player, stack);
             return;
         }
@@ -129,7 +131,7 @@ public final class MekaToolBlasterHandler {
         ItemStack stack = player.getItemInHand(event.getHand());
         IModule<ModuleMekaToolAntimatterStrikeUnit> module = IModuleHelper.INSTANCE.getIfEnabled(
                 stack, MekaSuitMoreModules.MEKA_TOOL_ANTIMATTER_STRIKE_UNIT);
-        if (module == null) {
+        if (module == null || !AntimatterStrikeActivation.isActive(stack)) {
             return;
         }
         event.setCanceled(true);
@@ -168,5 +170,8 @@ public final class MekaToolBlasterHandler {
         Vec3 origin = player.getEyePosition().add(direction.scale(0.8));
         orb.setPos(origin.x, origin.y, origin.z);
         level.addFreshEntity(orb);
+        level.playSound(null, origin.x, origin.y, origin.z,
+                MoreMekaSuitModulesSounds.ANTIMATTER_STRIKE_FIRE.get(),
+                net.minecraft.sounds.SoundSource.PLAYERS, 1.6F, 0.78F);
     }
 }

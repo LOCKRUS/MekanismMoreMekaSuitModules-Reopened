@@ -2,13 +2,13 @@
   "type": "minecraft:crafting_shaped",
   "category": "misc",
   "pattern": [
-    "PLP",
+    "OLO",
     "IAI",
-    "PLP"
+    "SLS"
   ],
   "key": {
-    "P": {
-      "item": "moremekasuitmodules:solipsismium_296"
+    "O": {
+      "item": "moremekasuitmodules:alloy_otherworldly"
     },
     "L": {
       "item": "mekanism:supercharged_coil"
@@ -18,6 +18,9 @@
     },
     "A": {
       "item": "moremekasuitmodules:module_meka_tool_blaster_unit"
+    },
+    "S": {
+      "item": "moremekasuitmodules:stardust"
     }
   },
   "result": {

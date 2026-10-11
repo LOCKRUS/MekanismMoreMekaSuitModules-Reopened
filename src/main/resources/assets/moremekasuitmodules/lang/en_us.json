@@ -114,5 +114,9 @@
   "module.moremekasuitmodules.flamethrower_mode.inferno": "Inferno",
   "item.moremekasuitmodules.stardust": "Stardust",
   "item.moremekasuitmodules.star_thermite": "Star Thermite",
-  "item.moremekasuitmodules.solipsismium_296": "Solipsismium-296 Powder"
+  "item.moremekasuitmodules.solipsismium_296": "Solipsismium-296 Powder",
+  "chemical.moremekasuitmodules.solipsismium": "Solipsismium",
+  "item.moremekasuitmodules.alloy_otherworldly": "Otherworldly Alloy"
+  ,"item.moremekasuitmodules.antimatter_strike_disabled": "Disabled"
+  ,"item.moremekasuitmodules.antimatter_strike_active": "Active"
 }

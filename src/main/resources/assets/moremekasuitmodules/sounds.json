@@ -1,0 +1,11 @@
+{
+  "antimatter_strike_fire": {
+    "sounds": [
+      {
+        "name": "moremekasuitmodules:antimatter_strike_fire",
+        "volume": 1.0,
+        "pitch": 1.0
+      }
+    ]
+  }
+}

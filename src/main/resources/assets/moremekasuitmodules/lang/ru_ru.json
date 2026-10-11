@@ -114,5 +114,9 @@
   "module.moremekasuitmodules.flamethrower_mode.inferno": "Инферно",
   "item.moremekasuitmodules.stardust": "Звёздная пыль",
   "item.moremekasuitmodules.star_thermite": "Звёздный термит",
-  "item.moremekasuitmodules.solipsismium_296": "Порошок солипсизмия-296"
+  "item.moremekasuitmodules.solipsismium_296": "Порошок солипсизмия-296",
+  "chemical.moremekasuitmodules.solipsismium": "Солипсизмий",
+  "item.moremekasuitmodules.alloy_otherworldly": "Потусторонний сплав"
+  ,"item.moremekasuitmodules.antimatter_strike_disabled": "Отключен"
+  ,"item.moremekasuitmodules.antimatter_strike_active": "Активен"
 }

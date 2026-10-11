@@ -13,10 +13,10 @@
       "item": "moremekasuitmodules:stardust"
     },
     "G": {
-      "item": "minecraft:gunpowder"
+      "item": "mekanism:dust_osmium"
     },
     "O": {
-      "item": "mekanism:salt"
+      "item": "mekanism:dust_tin"
     }
   },
   "result": {
