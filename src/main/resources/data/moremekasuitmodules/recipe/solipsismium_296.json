@@ -1,5 +1,5 @@
 {
-  "type": "moremekasuitmodules:solipsismium_nucleosynthesizing",
+  "type": "mekanism:nucleosynthesizing",
   "chemical_input": {
     "amount": 1000,
     "chemical": "mekanism:antimatter"
