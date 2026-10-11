@@ -1,0 +1,26 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    "IS",
+    "GO"
+  ],
+  "key": {
+    "I": {
+      "item": "mekanism:dust_iron"
+    },
+    "S": {
+      "item": "moremekasuitmodules:stardust"
+    },
+    "G": {
+      "item": "minecraft:gunpowder"
+    },
+    "O": {
+      "item": "mekanism:salt"
+    }
+  },
+  "result": {
+    "count": 1,
+    "id": "moremekasuitmodules:star_thermite"
+  }
+}

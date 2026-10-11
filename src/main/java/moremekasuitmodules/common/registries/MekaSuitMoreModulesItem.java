@@ -67,4 +67,6 @@ public class MekaSuitMoreModulesItem {
     public static final ItemRegistryObject<ItemModule> MODULE_MEKA_TOOL_FLAMETHROWER = ITEMS.registerModule(MekaSuitMoreModules.MEKA_TOOL_FLAMETHROWER_UNIT, Rarity.EPIC);
     // Stardust, produced by enriching a Nether Star.
     public static final ItemRegistryObject<Item> STARDUST = ITEMS.register("stardust", Rarity.RARE);
+    // Star Thermite, crafted from Stardust, iron dust, salt and gunpowder.
+    public static final ItemRegistryObject<Item> STAR_THERMITE = ITEMS.register("star_thermite", Rarity.RARE);
 }
