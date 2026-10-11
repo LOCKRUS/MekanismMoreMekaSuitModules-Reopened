@@ -100,5 +100,6 @@
   "module.moremekasuitmodules.entity_display_health": "Відображення здоров’я",
   "module.moremekasuitmodules.entity_display_box_color": "Колір рамки",
   "module.moremekasuitmodules.entity_display_name_color": "Колір імені",
-  "module.moremekasuitmodules.entity_display_distance_color": "Колір відстані"
+  "module.moremekasuitmodules.entity_display_distance_color": "Колір відстані",
+  "module.moremekasuitmodules.hyper_armor_solid_hitbox": "Твердий хітбокс"
 }

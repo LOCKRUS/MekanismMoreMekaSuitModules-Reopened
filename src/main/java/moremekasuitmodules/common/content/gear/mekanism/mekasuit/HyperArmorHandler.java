@@ -8,6 +8,9 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.world.phys.Vec3;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.entity.ai.attributes.AttributeInstance;
+import net.minecraft.world.entity.ai.attributes.AttributeModifier;
+import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.item.ItemStack;
 import net.neoforged.neoforge.event.tick.PlayerTickEvent;
 import net.neoforged.bus.api.SubscribeEvent;
@@ -17,6 +20,9 @@ import java.util.UUID;
 
 public final class HyperArmorHandler {
     private static final double MIN_SPEED_SQUARED = 1.0D;
+    private static final AttributeModifier ARMOR_MODIFIER = new AttributeModifier(ModuleHyperArmorUnit.ARMOR, 15.0D, AttributeModifier.Operation.ADD_VALUE);
+    private static final AttributeModifier TOUGHNESS_MODIFIER = new AttributeModifier(ModuleHyperArmorUnit.TOUGHNESS, 5.0D, AttributeModifier.Operation.ADD_VALUE);
+    private static final AttributeModifier KNOCKBACK_MODIFIER = new AttributeModifier(ModuleHyperArmorUnit.KNOCKBACK, 0.5D, AttributeModifier.Operation.ADD_VALUE);
     private static final Map<UUID, Vec3> PREVIOUS_MOTION = new HashMap<>();
     private static final Map<UUID, Integer> COOLDOWN = new HashMap<>();
 
@@ -29,7 +35,11 @@ public final class HyperArmorHandler {
 
     @SubscribeEvent
     public void onPlayerTickPost(PlayerTickEvent.Post event) {
-        if (!(event.getEntity() instanceof ServerPlayer player) || !player.horizontalCollision) {
+        if (!(event.getEntity() instanceof ServerPlayer player)) {
+            return;
+        }
+        syncArmorAttributes(player);
+        if (!player.horizontalCollision) {
             return;
         }
         ItemStack chest = player.getItemBySlot(EquipmentSlot.CHEST);
@@ -67,4 +77,27 @@ public final class HyperArmorHandler {
         }
         if (broken > 0) COOLDOWN.put(player.getUUID(), 5);
     }
+    private static void syncArmorAttributes(ServerPlayer player) {
+        ItemStack chest = player.getItemBySlot(EquipmentSlot.CHEST);
+        IModule<ModuleHyperArmorUnit> module = chest.getItem() instanceof IModuleContainerItem
+                ? IModuleHelper.INSTANCE.getIfEnabled(chest, MekaSuitMoreModules.HYPER_ARMOR_UNIT)
+                : null;
+        boolean active = module != null;
+        syncModifier(player.getAttribute(Attributes.ARMOR), ModuleHyperArmorUnit.ARMOR, ARMOR_MODIFIER, active);
+        syncModifier(player.getAttribute(Attributes.ARMOR_TOUGHNESS), ModuleHyperArmorUnit.TOUGHNESS, TOUGHNESS_MODIFIER, active);
+        syncModifier(player.getAttribute(Attributes.KNOCKBACK_RESISTANCE), ModuleHyperArmorUnit.KNOCKBACK, KNOCKBACK_MODIFIER, active);
+    }
+
+    private static void syncModifier(AttributeInstance attribute, net.minecraft.resources.ResourceLocation id,
+            AttributeModifier modifier, boolean active) {
+        if (attribute == null) {
+            return;
+        }
+        if (active) {
+            attribute.addOrUpdateTransientModifier(modifier);
+        } else if (attribute.hasModifier(id)) {
+            attribute.removeModifier(id);
+        }
+    }
+
 }

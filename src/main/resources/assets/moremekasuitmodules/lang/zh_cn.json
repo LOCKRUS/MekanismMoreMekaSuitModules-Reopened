@@ -69,5 +69,6 @@
   "module.moremekasuitmodules.entity_display_box_color": "方框颜色",
   "module.moremekasuitmodules.entity_display_name_color": "名称颜色",
   "module.moremekasuitmodules.entity_display_distance_color": "距离颜色",
-  "description.moremekasuitmodules.meka_tool_antimatter_strike_unit": "按住右键充能。15秒前松开进行标准打击；持续15秒发射具有巨大陨石坑的超级打击。"
+  "description.moremekasuitmodules.meka_tool_antimatter_strike_unit": "按住右键充能。15秒前松开进行标准打击；持续15秒发射具有巨大陨石坑的超级打击。",
+  "module.moremekasuitmodules.hyper_armor_solid_hitbox": "实体碰撞箱"
 }

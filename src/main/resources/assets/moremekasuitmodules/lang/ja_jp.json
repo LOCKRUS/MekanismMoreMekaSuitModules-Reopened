@@ -67,5 +67,6 @@
   "module.moremekasuitmodules.entity_display_box_color": "枠の色",
   "module.moremekasuitmodules.entity_display_name_color": "名前の色",
   "module.moremekasuitmodules.entity_display_distance_color": "距離の色",
-  "description.moremekasuitmodules.meka_tool_antimatter_strike_unit": "右クリック長押しでチャージします。15秒未満で離すと通常攻撃、15秒間保持すると巨大なクレーターを作るウルトラ攻撃を発射します。"
+  "description.moremekasuitmodules.meka_tool_antimatter_strike_unit": "右クリック長押しでチャージします。15秒未満で離すと通常攻撃、15秒間保持すると巨大なクレーターを作るウルトラ攻撃を発射します。",
+  "module.moremekasuitmodules.hyper_armor_solid_hitbox": "固体ヒットボックス"
 }

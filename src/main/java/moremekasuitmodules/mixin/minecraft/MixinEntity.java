@@ -28,4 +28,24 @@ public abstract class MixinEntity {
             }
         }
     }
+    @Inject(method = "canBeCollidedWith", at = @At("HEAD"), cancellable = true)
+    private void moremekasuitmodules$hyperArmorCollision(CallbackInfoReturnable<Boolean> cir) {
+        if (isSolidHyperArmorPlayer()) {
+            cir.setReturnValue(true);
+        }
+    }
+
+    private boolean isSolidHyperArmorPlayer() {
+        Entity self = (Entity) (Object) this;
+        if (!(self instanceof Player player)) {
+            return false;
+        }
+        ItemStack chest = player.getItemBySlot(EquipmentSlot.CHEST);
+        if (!(chest.getItem() instanceof IModuleContainerItem)) {
+            return false;
+        }
+        IModule<?> module = IModuleHelper.INSTANCE.getIfEnabled(chest, MekaSuitMoreModules.HYPER_ARMOR_UNIT);
+        return module != null && module.getCustomInstance() instanceof moremekasuitmodules.common.content.gear.mekanism.mekasuit.ModuleHyperArmorUnit unit && unit.solidHitbox();
+    }
+
 }
