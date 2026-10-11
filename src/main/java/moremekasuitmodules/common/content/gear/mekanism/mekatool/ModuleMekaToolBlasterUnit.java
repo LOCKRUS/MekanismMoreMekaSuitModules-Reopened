@@ -10,7 +10,7 @@ import mekanism.api.gear.IModuleContainer;
 import mekanism.api.gear.config.ModuleEnumConfig;
 import mekanism.api.text.IHasTextComponent;
 import mekanism.api.text.TextComponentUtil;
-import moremekasuitmodules.common.MoreMekaSuitModules;
+import moremekasuitmodules.common.MoreMekaModulesReopen;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
@@ -26,7 +26,7 @@ import java.util.function.IntFunction;
 
 @ParametersAreNotNullByDefault
 public record ModuleMekaToolBlasterUnit(FireMode fireMode) implements ICustomModule<ModuleMekaToolBlasterUnit> {
-    public static final ResourceLocation FIRE_MODE = MoreMekaSuitModules.rl("blaster_fire_mode");
+    public static final ResourceLocation FIRE_MODE = MoreMekaModulesReopen.rl("blaster_fire_mode");
 
     public ModuleMekaToolBlasterUnit(IModule<ModuleMekaToolBlasterUnit> module) {
         this(module.<FireMode>getConfigOrThrow(FIRE_MODE).get());

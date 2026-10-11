@@ -2,7 +2,7 @@ package moremekasuitmodules.common.config;
 
 import mekanism.common.config.IConfigTranslation;
 import mekanism.common.config.TranslationPreset;
-import moremekasuitmodules.common.MoreMekaSuitModules;
+import moremekasuitmodules.common.MoreMekaModulesReopen;
 import net.minecraft.Util;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -35,7 +35,7 @@ public enum MekaSuitMoreModulesConfigTranslations implements IConfigTranslation 
     }
 
     MekaSuitMoreModulesConfigTranslations(String path, String title, String tooltip, @Nullable String button) {
-        this.key = Util.makeDescriptionId("configuration", MoreMekaSuitModules.rl(path));
+        this.key = Util.makeDescriptionId("configuration", MoreMekaModulesReopen.rl(path));
         this.title = title;
         this.tooltip = tooltip;
         this.button = button;

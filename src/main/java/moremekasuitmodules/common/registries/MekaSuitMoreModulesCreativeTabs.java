@@ -10,7 +10,7 @@ import mekanism.common.registration.MekanismDeferredHolder;
 import mekanism.common.registration.impl.CreativeTabDeferredRegister;
 import mekanism.common.registries.MekanismCreativeTabs;
 import mekanism.common.util.StorageUtils;
-import moremekasuitmodules.common.MoreMekaSuitModules;
+import moremekasuitmodules.common.MoreMekaModulesReopen;
 import moremekasuitmodules.common.MoreMekaSuitModulesLang;
 import moremekasuitmodules.common.config.MoreModulesConfig;
 import moremekasuitmodules.common.item.interfaces.IShieldProvider;
@@ -28,7 +28,7 @@ import java.util.List;
 
 public class MekaSuitMoreModulesCreativeTabs {
 
-    public static final CreativeTabDeferredRegister CREATIVE_TABS = new CreativeTabDeferredRegister(MoreMekaSuitModules.MODID);
+    public static final CreativeTabDeferredRegister CREATIVE_TABS = new CreativeTabDeferredRegister(MoreMekaModulesReopen.MODID);
 
 
     public static final MekanismDeferredHolder<CreativeModeTab, CreativeModeTab> MoreModules = CREATIVE_TABS.registerMain(MoreMekaSuitModulesLang.MEKANISM_MORE_MODULES,
@@ -37,12 +37,12 @@ public class MekaSuitMoreModulesCreativeTabs {
                             .displayItems((displayParameters, output) -> {
                                 addAllModule(displayParameters, output);
                                 CreativeTabDeferredRegister.addToDisplay(MekaSuitMoreModulesItem.ITEMS, output);
-                                if (MoreMekaSuitModules.hooks.DraconicEvolutionLoaded.isLoaded()) {
+                                if (MoreMekaModulesReopen.hooks.DraconicEvolutionLoaded.isLoaded()) {
                                 }
-                                if (MoreMekaSuitModules.hooks.IceAndFireLoaded.isLoaded()) {
+                                if (MoreMekaModulesReopen.hooks.IceAndFireLoaded.isLoaded()) {
                                     //    CreativeTabDeferredRegister.addToDisplay(iceAndFireModulesItem.ITEMS, output);
                                 }
-                                if (MoreMekaSuitModules.hooks.BotaniaLoaded.isLoaded()) {
+                                if (MoreMekaModulesReopen.hooks.BotaniaLoaded.isLoaded()) {
                                     //    CreativeTabDeferredRegister.addToDisplay(botaniaModulesItem.ITEMS, output);
                                 }
                             })

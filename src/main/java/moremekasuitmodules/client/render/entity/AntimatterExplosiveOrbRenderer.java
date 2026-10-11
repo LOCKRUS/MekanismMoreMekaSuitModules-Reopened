@@ -2,7 +2,7 @@ package moremekasuitmodules.client.render.entity;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
-import moremekasuitmodules.common.MoreMekaSuitModules;
+import moremekasuitmodules.common.MoreMekaModulesReopen;
 import moremekasuitmodules.common.content.gear.mekanism.mekatool.AntimatterExplosiveOrbEntity;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
@@ -12,7 +12,7 @@ import net.minecraft.util.Mth;
 import net.minecraft.resources.ResourceLocation;
 
 public class AntimatterExplosiveOrbRenderer extends EntityRenderer<AntimatterExplosiveOrbEntity> {
-    private static final ResourceLocation TEXTURE = MoreMekaSuitModules.rl("textures/entity/antimatter_explosive_orb.png");
+    private static final ResourceLocation TEXTURE = MoreMekaModulesReopen.rl("textures/entity/antimatter_explosive_orb.png");
     private final AntimatterExplosiveOrbModel model;
 
     public AntimatterExplosiveOrbRenderer(EntityRendererProvider.Context context) {

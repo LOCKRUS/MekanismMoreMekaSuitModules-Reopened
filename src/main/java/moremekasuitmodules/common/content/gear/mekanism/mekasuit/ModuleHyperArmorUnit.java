@@ -4,7 +4,7 @@ import mekanism.api.annotations.ParametersAreNotNullByDefault;
 import mekanism.api.gear.ICustomModule;
 import mekanism.api.gear.IModule;
 import mekanism.api.gear.IModuleContainer;
-import moremekasuitmodules.common.MoreMekaSuitModules;
+import moremekasuitmodules.common.MoreMekaModulesReopen;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
@@ -19,10 +19,10 @@ import net.neoforged.neoforge.event.ItemAttributeModifierEvent;
 
 @ParametersAreNotNullByDefault
 public record ModuleHyperArmorUnit(boolean solidHitbox) implements ICustomModule<ModuleHyperArmorUnit> {
-    public static final ResourceLocation SOLID_HITBOX = MoreMekaSuitModules.rl("hyper_armor_solid_hitbox");
-    public static final ResourceLocation ARMOR = MoreMekaSuitModules.rl("hyper_armor.armor");
-    public static final ResourceLocation TOUGHNESS = MoreMekaSuitModules.rl("hyper_armor.toughness");
-    public static final ResourceLocation KNOCKBACK = MoreMekaSuitModules.rl("hyper_armor.knockback");
+    public static final ResourceLocation SOLID_HITBOX = MoreMekaModulesReopen.rl("hyper_armor_solid_hitbox");
+    public static final ResourceLocation ARMOR = MoreMekaModulesReopen.rl("hyper_armor.armor");
+    public static final ResourceLocation TOUGHNESS = MoreMekaModulesReopen.rl("hyper_armor.toughness");
+    public static final ResourceLocation KNOCKBACK = MoreMekaModulesReopen.rl("hyper_armor.knockback");
 
     public ModuleHyperArmorUnit(IModule<ModuleHyperArmorUnit> module) {
         this(module.<Boolean>getConfigOrThrow(SOLID_HITBOX).get());

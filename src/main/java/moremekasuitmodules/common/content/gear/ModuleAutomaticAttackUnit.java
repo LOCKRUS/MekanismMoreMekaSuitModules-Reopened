@@ -11,7 +11,7 @@ import mekanism.api.gear.IModuleContainer;
 import mekanism.api.text.IHasTextComponent;
 import mekanism.api.text.TextComponentUtil;
 import mekanism.common.Mekanism;
-import moremekasuitmodules.common.MoreMekaSuitModules;
+import moremekasuitmodules.common.MoreMekaModulesReopen;
 import moremekasuitmodules.common.config.MoreModulesConfig;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.codec.ByteBufCodecs;
@@ -38,10 +38,10 @@ public record ModuleAutomaticAttackUnit(boolean attackPlayer, boolean attackHost
                                         boolean attackOther,
                                         Range range) implements ICustomModule<ModuleAutomaticAttackUnit> {
 
-    public static final ResourceLocation ATTACK_PLAYER = MoreMekaSuitModules.rl("attack_player");
-    public static final ResourceLocation ATTACK_HOSTILE = MoreMekaSuitModules.rl("attack_hostile");
-    public static final ResourceLocation ATTACK_NEUTRAL = MoreMekaSuitModules.rl("attack_neutral");
-    public static final ResourceLocation ATTACK_OTHER = MoreMekaSuitModules.rl("attack_other");
+    public static final ResourceLocation ATTACK_PLAYER = MoreMekaModulesReopen.rl("attack_player");
+    public static final ResourceLocation ATTACK_HOSTILE = MoreMekaModulesReopen.rl("attack_hostile");
+    public static final ResourceLocation ATTACK_NEUTRAL = MoreMekaModulesReopen.rl("attack_neutral");
+    public static final ResourceLocation ATTACK_OTHER = MoreMekaModulesReopen.rl("attack_other");
     public static final ResourceLocation RANGE = Mekanism.rl("range");
 
 

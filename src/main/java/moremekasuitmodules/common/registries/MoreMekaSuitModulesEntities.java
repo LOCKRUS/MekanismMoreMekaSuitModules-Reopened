@@ -1,6 +1,6 @@
 package moremekasuitmodules.common.registries;
 
-import moremekasuitmodules.common.MoreMekaSuitModules;
+import moremekasuitmodules.common.MoreMekaModulesReopen;
 import moremekasuitmodules.common.content.gear.mekanism.mekatool.AntimatterExplosiveOrbEntity;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.world.entity.EntityType;
@@ -11,7 +11,7 @@ import net.neoforged.neoforge.registries.DeferredHolder;
 
 public final class MoreMekaSuitModulesEntities {
     public static final DeferredRegister<EntityType<?>> ENTITY_TYPES =
-            DeferredRegister.create(Registries.ENTITY_TYPE, MoreMekaSuitModules.MODID);
+            DeferredRegister.create(Registries.ENTITY_TYPE, MoreMekaModulesReopen.MODID);
 
     public static final DeferredHolder<EntityType<?>, EntityType<AntimatterExplosiveOrbEntity>> ANTIMATTER_EXPLOSIVE_ORB =
             ENTITY_TYPES.register("antimatter_explosive_orb", () -> EntityType.Builder
@@ -20,7 +20,7 @@ public final class MoreMekaSuitModulesEntities {
                     .sized(0.5F, 0.5F)
                     .clientTrackingRange(12)
                     .updateInterval(1)
-                    .build(MoreMekaSuitModules.rl("antimatter_explosive_orb").toString()));
+                    .build(MoreMekaModulesReopen.rl("antimatter_explosive_orb").toString()));
 
     private MoreMekaSuitModulesEntities() {
     }

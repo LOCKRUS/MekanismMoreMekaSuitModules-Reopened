@@ -130,7 +130,7 @@ public class CommonPlayerTickHandler {
     //为什么没有剔除接口了呢?
     @SubscribeEvent
     public void onIEElectricDamage(LivingIncomingDamageEvent event) {
-        if (MoreMekaSuitModules.hooks.IELoaded.isLoaded()) {
+        if (MoreMekaModulesReopen.hooks.IELoaded.isLoaded()) {
             LivingEntity base = event.getEntity();
             boolean helmet = isInsulated(base.getItemBySlot(EquipmentSlot.HEAD));
             boolean chest = isInsulated(base.getItemBySlot(EquipmentSlot.CHEST));

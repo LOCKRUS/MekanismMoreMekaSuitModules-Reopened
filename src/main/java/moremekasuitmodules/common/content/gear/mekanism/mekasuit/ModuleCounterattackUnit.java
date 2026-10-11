@@ -10,7 +10,7 @@ import mekanism.api.gear.IModuleContainer;
 import mekanism.api.gear.config.ModuleEnumConfig;
 import mekanism.api.text.IHasTextComponent;
 import mekanism.api.text.TextComponentUtil;
-import moremekasuitmodules.common.MoreMekaSuitModules;
+import moremekasuitmodules.common.MoreMekaModulesReopen;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
@@ -27,7 +27,7 @@ import java.util.function.IntFunction;
 public record ModuleCounterattackUnit(CounterLevel counterLevel) implements ICustomModule<ModuleCounterattackUnit> {
     public static final int MAX_MODULES_PER_ARMOR = 10;
     public static final float DAMAGE_DIVISOR = 10.0F;
-    public static final ResourceLocation COUNTER_LEVEL = MoreMekaSuitModules.rl("counter_level");
+    public static final ResourceLocation COUNTER_LEVEL = MoreMekaModulesReopen.rl("counter_level");
 
     public ModuleCounterattackUnit(IModule<ModuleCounterattackUnit> module) {
         this(module.<CounterLevel>getConfigOrThrow(COUNTER_LEVEL).get());

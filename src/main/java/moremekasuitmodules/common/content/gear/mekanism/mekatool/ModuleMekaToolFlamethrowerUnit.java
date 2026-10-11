@@ -10,7 +10,7 @@ import mekanism.api.gear.IModuleContainer;
 import mekanism.api.gear.config.ModuleEnumConfig;
 import mekanism.api.text.IHasTextComponent;
 import mekanism.api.text.TextComponentUtil;
-import moremekasuitmodules.common.MoreMekaSuitModules;
+import moremekasuitmodules.common.MoreMekaModulesReopen;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
@@ -27,7 +27,7 @@ import java.util.function.IntFunction;
 @ParametersAreNotNullByDefault
 public record ModuleMekaToolFlamethrowerUnit(FlameMode flameMode)
         implements ICustomModule<ModuleMekaToolFlamethrowerUnit> {
-    public static final ResourceLocation FLAME_MODE = MoreMekaSuitModules.rl("flamethrower_mode");
+    public static final ResourceLocation FLAME_MODE = MoreMekaModulesReopen.rl("flamethrower_mode");
 
     public ModuleMekaToolFlamethrowerUnit(IModule<ModuleMekaToolFlamethrowerUnit> module) {
         this(module.<FlameMode>getConfigOrThrow(FLAME_MODE).get());

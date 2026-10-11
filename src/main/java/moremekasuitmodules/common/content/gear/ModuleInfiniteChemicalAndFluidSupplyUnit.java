@@ -6,7 +6,7 @@ import mekanism.api.gear.IModule;
 import mekanism.api.gear.IModuleContainer;
 import mekanism.common.Mekanism;
 import mekanism.common.integration.curios.CuriosIntegration;
-import moremekasuitmodules.common.MoreMekaSuitModules;
+import moremekasuitmodules.common.MoreMekaModulesReopen;
 import moremekasuitmodules.common.util.MoreMekaSuitModulesUtils;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Player;
@@ -20,10 +20,10 @@ import java.util.List;
 public record ModuleInfiniteChemicalAndFluidSupplyUnit(boolean isArmor, boolean isInventory, boolean isOffhand,
                                                        boolean isCurios) implements ICustomModule<ModuleInfiniteChemicalAndFluidSupplyUnit> {
 
-    public static final ResourceLocation SUPPLY_ARMOR = MoreMekaSuitModules.rl("supply_armor");
-    public static final ResourceLocation SUPPLY_INVENTORY = MoreMekaSuitModules.rl("supply_inventory");
-    public static final ResourceLocation SUPPLY_OFFHAND = MoreMekaSuitModules.rl("supply_offhand");
-    public static final ResourceLocation SUPPLY_CURIOS = MoreMekaSuitModules.rl("supply_curios");
+    public static final ResourceLocation SUPPLY_ARMOR = MoreMekaModulesReopen.rl("supply_armor");
+    public static final ResourceLocation SUPPLY_INVENTORY = MoreMekaModulesReopen.rl("supply_inventory");
+    public static final ResourceLocation SUPPLY_OFFHAND = MoreMekaModulesReopen.rl("supply_offhand");
+    public static final ResourceLocation SUPPLY_CURIOS = MoreMekaModulesReopen.rl("supply_curios");
 
     public ModuleInfiniteChemicalAndFluidSupplyUnit(IModule<ModuleInfiniteChemicalAndFluidSupplyUnit> module) {
         this(module.getBooleanConfigOrFalse(SUPPLY_ARMOR), module.getBooleanConfigOrFalse(SUPPLY_INVENTORY), module.getBooleanConfigOrFalse(SUPPLY_OFFHAND), Mekanism.hooks.curios.isLoaded() && module.getBooleanConfigOrFalse(SUPPLY_CURIOS));

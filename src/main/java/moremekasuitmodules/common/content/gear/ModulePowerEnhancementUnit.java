@@ -3,7 +3,7 @@ package moremekasuitmodules.common.content.gear;
 import mekanism.api.annotations.ParametersAreNotNullByDefault;
 import mekanism.api.gear.ICustomModule;
 import mekanism.api.gear.IModule;
-import moremekasuitmodules.common.MoreMekaSuitModules;
+import moremekasuitmodules.common.MoreMekaModulesReopen;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EquipmentSlotGroup;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
@@ -15,14 +15,14 @@ import net.neoforged.neoforge.event.ItemAttributeModifierEvent;
 public class ModulePowerEnhancementUnit implements ICustomModule<ModulePowerEnhancementUnit> {
 
 
-    private static final ResourceLocation ATTACK_DAMAGE_HEAD = MoreMekaSuitModules.rl("attack_damage.head");
-    private static final ResourceLocation ATTACK_DAMAGE_CHEST = MoreMekaSuitModules.rl("attack_damage.chest");
-    private static final ResourceLocation ATTACK_DAMAGE_LEGS = MoreMekaSuitModules.rl("attack_damage.legs");
-    private static final ResourceLocation ATTACK_DAMAGE_FEET = MoreMekaSuitModules.rl("attack_damage.feet");
-    private static final ResourceLocation ATTACK_SPEED_HEAD = MoreMekaSuitModules.rl("attack_speed.head");
-    private static final ResourceLocation ATTACK_SPEED_CHEST = MoreMekaSuitModules.rl("attack_speed.chest");
-    private static final ResourceLocation ATTACK_SPEED_LEGS = MoreMekaSuitModules.rl("attack_speed.legs");
-    private static final ResourceLocation ATTACK_SPEED_FEET = MoreMekaSuitModules.rl("attack_speed.feet");
+    private static final ResourceLocation ATTACK_DAMAGE_HEAD = MoreMekaModulesReopen.rl("attack_damage.head");
+    private static final ResourceLocation ATTACK_DAMAGE_CHEST = MoreMekaModulesReopen.rl("attack_damage.chest");
+    private static final ResourceLocation ATTACK_DAMAGE_LEGS = MoreMekaModulesReopen.rl("attack_damage.legs");
+    private static final ResourceLocation ATTACK_DAMAGE_FEET = MoreMekaModulesReopen.rl("attack_damage.feet");
+    private static final ResourceLocation ATTACK_SPEED_HEAD = MoreMekaModulesReopen.rl("attack_speed.head");
+    private static final ResourceLocation ATTACK_SPEED_CHEST = MoreMekaModulesReopen.rl("attack_speed.chest");
+    private static final ResourceLocation ATTACK_SPEED_LEGS = MoreMekaModulesReopen.rl("attack_speed.legs");
+    private static final ResourceLocation ATTACK_SPEED_FEET = MoreMekaModulesReopen.rl("attack_speed.feet");
 
     @Override
     public void adjustAttributes(IModule<ModulePowerEnhancementUnit> module, ItemAttributeModifierEvent event) {

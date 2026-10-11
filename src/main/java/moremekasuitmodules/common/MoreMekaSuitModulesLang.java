@@ -13,7 +13,7 @@ public enum MoreMekaSuitModulesLang implements ILangEntry {
     private final String key;
 
     MoreMekaSuitModulesLang(String type, String path) {
-        this(Util.makeDescriptionId(type, MoreMekaSuitModules.rl(path)));
+        this(Util.makeDescriptionId(type, MoreMekaModulesReopen.rl(path)));
     }
 
     MoreMekaSuitModulesLang(String key) {

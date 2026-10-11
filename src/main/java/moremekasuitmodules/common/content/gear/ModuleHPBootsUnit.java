@@ -3,7 +3,7 @@ package moremekasuitmodules.common.content.gear;
 import mekanism.api.annotations.ParametersAreNotNullByDefault;
 import mekanism.api.gear.ICustomModule;
 import mekanism.api.gear.IModule;
-import moremekasuitmodules.common.MoreMekaSuitModules;
+import moremekasuitmodules.common.MoreMekaModulesReopen;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EquipmentSlotGroup;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
@@ -15,10 +15,10 @@ import net.neoforged.neoforge.event.ItemAttributeModifierEvent;
 public class ModuleHPBootsUnit implements ICustomModule<ModuleHPBootsUnit> {
 
 
-    private static final ResourceLocation HP_BOOTS_HEAD = MoreMekaSuitModules.rl("hp_boots.head");
-    private static final ResourceLocation HP_BOOTS_CHEST = MoreMekaSuitModules.rl("hp_boots.chest");
-    private static final ResourceLocation HP_BOOTS_LEGS = MoreMekaSuitModules.rl("hp_boots.legs");
-    private static final ResourceLocation HP_BOOTS_FEET = MoreMekaSuitModules.rl("hp_boots.feet");
+    private static final ResourceLocation HP_BOOTS_HEAD = MoreMekaModulesReopen.rl("hp_boots.head");
+    private static final ResourceLocation HP_BOOTS_CHEST = MoreMekaModulesReopen.rl("hp_boots.chest");
+    private static final ResourceLocation HP_BOOTS_LEGS = MoreMekaModulesReopen.rl("hp_boots.legs");
+    private static final ResourceLocation HP_BOOTS_FEET = MoreMekaModulesReopen.rl("hp_boots.feet");
 
     @Override
     public void adjustAttributes(IModule<ModuleHPBootsUnit> module, ItemAttributeModifierEvent event) {

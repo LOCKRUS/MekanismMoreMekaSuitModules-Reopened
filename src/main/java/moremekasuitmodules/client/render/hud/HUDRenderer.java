@@ -10,7 +10,7 @@ import moremekasuitmodules.client.render.hud.MoreMekaSuitModulesHUD.DelayedStrin
 import mekanism.common.config.MekanismConfig;
 import mekanism.common.item.gear.ItemMekaSuitArmor;
 import mekanism.common.util.text.TextUtils;
-import moremekasuitmodules.common.MoreMekaSuitModules;
+import moremekasuitmodules.common.MoreMekaModulesReopen;
 import moremekasuitmodules.common.ShieldProviderHandler.ArmorSummery;
 import moremekasuitmodules.common.registries.MekaSuitMoreModules;
 import moremekasuitmodules.common.util.MoreMekaSuitModulesUtils;

@@ -10,7 +10,7 @@ import mekanism.api.gear.IModuleContainer;
 import mekanism.api.gear.config.ModuleEnumConfig;
 import mekanism.api.text.IHasTextComponent;
 import mekanism.api.text.TextComponentUtil;
-import moremekasuitmodules.common.MoreMekaSuitModules;
+import moremekasuitmodules.common.MoreMekaModulesReopen;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
@@ -26,7 +26,7 @@ import java.util.function.IntFunction;
 
 @ParametersAreNotNullByDefault
 public record ModuleLootingAmplificationUnit(LootingLevel lootingLevel) implements ICustomModule<ModuleLootingAmplificationUnit> {
-    public static final ResourceLocation LOOTING_LEVEL = MoreMekaSuitModules.rl("looting_level");
+    public static final ResourceLocation LOOTING_LEVEL = MoreMekaModulesReopen.rl("looting_level");
     public static final int MAX_MODULES = 10;
 
     public ModuleLootingAmplificationUnit(IModule<ModuleLootingAmplificationUnit> module) {

@@ -3,7 +3,7 @@ package moremekasuitmodules.common.registries;
 import mekanism.common.item.ItemModule;
 import mekanism.common.registration.impl.ItemDeferredRegister;
 import mekanism.common.registration.impl.ItemRegistryObject;
-import moremekasuitmodules.common.MoreMekaSuitModules;
+import moremekasuitmodules.common.MoreMekaModulesReopen;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Rarity;
 
@@ -12,7 +12,7 @@ public class MekaSuitMoreModulesItem {
     public MekaSuitMoreModulesItem() {
     }
 
-    public static final ItemDeferredRegister ITEMS = new ItemDeferredRegister(MoreMekaSuitModules.MODID);
+    public static final ItemDeferredRegister ITEMS = new ItemDeferredRegister(MoreMekaModulesReopen.MODID);
 
     //生命恢复单元
     public static final ItemRegistryObject<ItemModule> MODULE_HEALTH_REGENERATION = ITEMS.registerModule(MekaSuitMoreModules.HEALTH_REGENERATION_UNIT, Rarity.RARE);

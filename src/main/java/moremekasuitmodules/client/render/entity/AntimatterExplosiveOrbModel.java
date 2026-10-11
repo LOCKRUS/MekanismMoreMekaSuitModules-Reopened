@@ -2,7 +2,7 @@ package moremekasuitmodules.client.render.entity;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
-import moremekasuitmodules.common.MoreMekaSuitModules;
+import moremekasuitmodules.common.MoreMekaModulesReopen;
 import moremekasuitmodules.common.content.gear.mekanism.mekatool.AntimatterExplosiveOrbEntity;
 import net.minecraft.client.model.EntityModel;
 import net.minecraft.client.model.geom.ModelLayerLocation;
@@ -15,7 +15,7 @@ import net.minecraft.client.model.geom.PartPose;
 
 public class AntimatterExplosiveOrbModel extends EntityModel<AntimatterExplosiveOrbEntity> {
     public static final ModelLayerLocation LAYER_LOCATION = new ModelLayerLocation(
-            MoreMekaSuitModules.rl("antimatter_explosive_orb"), "main");
+            MoreMekaModulesReopen.rl("antimatter_explosive_orb"), "main");
     private final ModelPart bone;
 
     public AntimatterExplosiveOrbModel(ModelPart root) {

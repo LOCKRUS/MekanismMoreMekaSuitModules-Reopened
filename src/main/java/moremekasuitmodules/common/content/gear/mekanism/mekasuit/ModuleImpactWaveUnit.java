@@ -9,7 +9,7 @@ import mekanism.api.gear.IModule;
 import mekanism.api.gear.config.ModuleEnumConfig;
 import mekanism.api.text.IHasTextComponent;
 import mekanism.api.text.TextComponentUtil;
-import moremekasuitmodules.common.MoreMekaSuitModules;
+import moremekasuitmodules.common.MoreMekaModulesReopen;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
@@ -24,9 +24,9 @@ import java.util.function.IntFunction;
 public record ModuleImpactWaveUnit(TriggerHeight triggerHeight, ImpactRadius radius, DamageScale damageScale)
         implements ICustomModule<ModuleImpactWaveUnit> {
     public static final int MAX_MODULES = 4;
-    public static final ResourceLocation TRIGGER_HEIGHT = MoreMekaSuitModules.rl("impact_trigger_height");
-    public static final ResourceLocation RADIUS = MoreMekaSuitModules.rl("impact_radius");
-    public static final ResourceLocation DAMAGE = MoreMekaSuitModules.rl("impact_damage");
+    public static final ResourceLocation TRIGGER_HEIGHT = MoreMekaModulesReopen.rl("impact_trigger_height");
+    public static final ResourceLocation RADIUS = MoreMekaModulesReopen.rl("impact_radius");
+    public static final ResourceLocation DAMAGE = MoreMekaModulesReopen.rl("impact_damage");
 
     public ModuleImpactWaveUnit(IModule<ModuleImpactWaveUnit> module) {
         this(module.<TriggerHeight>getConfigOrThrow(TRIGGER_HEIGHT).get(),

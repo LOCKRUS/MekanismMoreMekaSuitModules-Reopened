@@ -15,7 +15,7 @@ import mekanism.common.content.gear.ModuleContainer;
 import mekanism.common.content.gear.ModuleHelper;
 import mekanism.common.registration.impl.ModuleRegistryObject;
 import mekanism.common.registries.MekanismDataComponents;
-import moremekasuitmodules.common.MoreMekaSuitModules;
+import moremekasuitmodules.common.MoreMekaModulesReopen;
 import moremekasuitmodules.common.MoreMekaSuitModulesLang;
 import moremekasuitmodules.common.registries.MekaSuitMoreModules;
 import net.minecraft.core.Holder;
@@ -32,7 +32,7 @@ import net.neoforged.neoforge.fluids.capability.IFluidHandlerItem;
 public class MoreMekaSuitModulesUtils {
 
     public static ResourceLocation getResource(ResourceType type, String name) {
-        return MoreMekaSuitModules.rl(type.getPrefix() + name);
+        return MoreMekaModulesReopen.rl(type.getPrefix() + name);
     }
 
     public static Component ShieldModuleWarning() {

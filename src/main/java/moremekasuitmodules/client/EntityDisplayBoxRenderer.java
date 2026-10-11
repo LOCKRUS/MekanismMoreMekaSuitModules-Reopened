@@ -3,7 +3,7 @@ package moremekasuitmodules.client;
 import com.mojang.blaze3d.vertex.PoseStack;
 import mekanism.api.gear.IModule;
 import mekanism.api.gear.IModuleHelper;
-import moremekasuitmodules.common.MoreMekaSuitModules;
+import moremekasuitmodules.common.MoreMekaModulesReopen;
 import moremekasuitmodules.common.content.gear.mekanism.mekasuit.ModuleEntityDisplayBoxUnit;
 import moremekasuitmodules.common.registries.MekaSuitMoreModules;
 import net.minecraft.client.Camera;
@@ -30,7 +30,7 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
-@EventBusSubscriber(modid = MoreMekaSuitModules.MODID, value = Dist.CLIENT)
+@EventBusSubscriber(modid = MoreMekaModulesReopen.MODID, value = Dist.CLIENT)
 public final class EntityDisplayBoxRenderer {
     private static final double SCREEN_PADDING = 2.0D;
     private static final int LABEL_GAP = 4;

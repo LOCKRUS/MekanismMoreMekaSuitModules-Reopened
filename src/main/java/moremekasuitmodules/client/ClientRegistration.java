@@ -3,7 +3,7 @@ package moremekasuitmodules.client;
 import moremekasuitmodules.client.render.hud.MoreMekaSuitModulesHUD;
 import moremekasuitmodules.client.render.entity.AntimatterExplosiveOrbModel;
 import moremekasuitmodules.client.render.entity.AntimatterExplosiveOrbRenderer;
-import moremekasuitmodules.common.MoreMekaSuitModules;
+import moremekasuitmodules.common.MoreMekaModulesReopen;
 import moremekasuitmodules.common.content.gear.mekanism.mekatool.MekaToolLavaHandler;
 import moremekasuitmodules.common.registries.MoreMekaSuitModulesEntities;
 import mekanism.common.item.gear.ItemMekaTool;
@@ -21,7 +21,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TextColor;
 
 
-@EventBusSubscriber(modid = MoreMekaSuitModules.MODID, value = Dist.CLIENT)
+@EventBusSubscriber(modid = MoreMekaModulesReopen.MODID, value = Dist.CLIENT)
 public class ClientRegistration {
 
     private ClientRegistration() {
@@ -35,7 +35,7 @@ public class ClientRegistration {
 
     @SubscribeEvent
     public static void registerOverlays(RegisterGuiLayersEvent event) {
-        event.registerAbove(VanillaGuiLayers.HOTBAR, MoreMekaSuitModules.rl("shield_hud"), MoreMekaSuitModulesHUD.INSTANCE);
+        event.registerAbove(VanillaGuiLayers.HOTBAR, MoreMekaModulesReopen.rl("shield_hud"), MoreMekaSuitModulesHUD.INSTANCE);
     }
 
     @SubscribeEvent

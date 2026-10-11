@@ -5,7 +5,7 @@ import mekanism.api.gear.config.ModuleColorConfig;
 import mekanism.api.gear.config.ModuleEnumConfig;
 import mekanism.common.registration.impl.ModuleDeferredRegister;
 import mekanism.common.registration.impl.ModuleRegistryObject;
-import moremekasuitmodules.common.MoreMekaSuitModules;
+import moremekasuitmodules.common.MoreMekaModulesReopen;
 import moremekasuitmodules.common.content.gear.*;
 import moremekasuitmodules.common.content.gear.ModuleAutomaticAttackUnit.Range;
 import moremekasuitmodules.common.content.gear.mekanism.mekatool.ModuleLootingAmplificationUnit;
@@ -27,7 +27,7 @@ public class MekaSuitMoreModules {
     }
 
     //注册所属ID
-    public static final ModuleDeferredRegister MODULES = new ModuleDeferredRegister(MoreMekaSuitModules.MODID);
+    public static final ModuleDeferredRegister MODULES = new ModuleDeferredRegister(MoreMekaModulesReopen.MODID);
 
 
     //开始注册模块

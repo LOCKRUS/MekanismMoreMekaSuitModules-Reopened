@@ -2,7 +2,7 @@ package moremekasuitmodules.common.config;
 
 import mekanism.common.config.IMekanismConfig;
 import mekanism.common.config.MekanismConfigHelper;
-import moremekasuitmodules.common.MoreMekaSuitModules;
+import moremekasuitmodules.common.MoreMekaModulesReopen;
 import net.neoforged.fml.ModContainer;
 import net.neoforged.fml.config.IConfigSpec;
 import net.neoforged.fml.event.config.ModConfigEvent;
@@ -25,7 +25,7 @@ public class MoreModulesConfig {
     }
 
     public static void onConfigLoad(ModConfigEvent configEvent) {
-        MekanismConfigHelper.onConfigLoad(configEvent, MoreMekaSuitModules.MODID, KNOWN_CONFIGS);
+        MekanismConfigHelper.onConfigLoad(configEvent, MoreMekaModulesReopen.MODID, KNOWN_CONFIGS);
     }
 
     public static Collection<IMekanismConfig> getConfigs() {

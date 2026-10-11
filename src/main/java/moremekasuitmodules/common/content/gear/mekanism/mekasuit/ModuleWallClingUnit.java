@@ -10,7 +10,7 @@ import mekanism.api.gear.IModuleContainer;
 import mekanism.api.gear.config.ModuleEnumConfig;
 import mekanism.api.text.IHasTextComponent;
 import mekanism.api.text.TextComponentUtil;
-import moremekasuitmodules.common.MoreMekaSuitModules;
+import moremekasuitmodules.common.MoreMekaModulesReopen;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
@@ -26,7 +26,7 @@ import java.util.function.IntFunction;
 @ParametersAreNotNullByDefault
 public record ModuleWallClingUnit(ClimbSpeed climbSpeed) implements ICustomModule<ModuleWallClingUnit> {
     public static final int MAX_MODULES = 3;
-    public static final ResourceLocation CLIMB_SPEED = MoreMekaSuitModules.rl("climb_speed");
+    public static final ResourceLocation CLIMB_SPEED = MoreMekaModulesReopen.rl("climb_speed");
 
     public ModuleWallClingUnit(IModule<ModuleWallClingUnit> module) {
         this(module.<ClimbSpeed>getConfigOrThrow(CLIMB_SPEED).get());

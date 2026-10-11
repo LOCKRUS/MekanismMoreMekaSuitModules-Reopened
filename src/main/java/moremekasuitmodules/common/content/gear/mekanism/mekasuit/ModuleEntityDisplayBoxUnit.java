@@ -11,7 +11,7 @@ import mekanism.api.gear.config.ModuleColorConfig;
 import mekanism.api.gear.config.ModuleEnumConfig;
 import mekanism.api.text.IHasTextComponent;
 import mekanism.api.text.TextComponentUtil;
-import moremekasuitmodules.common.MoreMekaSuitModules;
+import moremekasuitmodules.common.MoreMekaModulesReopen;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
@@ -29,12 +29,12 @@ public record ModuleEntityDisplayBoxUnit(Range range, MaxBoxes maxBoxes, HealthD
     public static final int DEFAULT_BOX_COLOR = 0xFF3CFE9A;
     public static final int DEFAULT_NAME_COLOR = 0xFFFFFFFF;
     public static final int DEFAULT_DISTANCE_COLOR = 0xFFFFFF55;
-    public static final ResourceLocation RANGE = MoreMekaSuitModules.rl("entity_display_range");
-    public static final ResourceLocation MAX_BOXES = MoreMekaSuitModules.rl("entity_display_max_boxes");
-    public static final ResourceLocation HEALTH_DISPLAY = MoreMekaSuitModules.rl("entity_display_health");
-    public static final ResourceLocation BOX_COLOR = MoreMekaSuitModules.rl("entity_display_box_color");
-    public static final ResourceLocation NAME_COLOR = MoreMekaSuitModules.rl("entity_display_name_color");
-    public static final ResourceLocation DISTANCE_COLOR = MoreMekaSuitModules.rl("entity_display_distance_color");
+    public static final ResourceLocation RANGE = MoreMekaModulesReopen.rl("entity_display_range");
+    public static final ResourceLocation MAX_BOXES = MoreMekaModulesReopen.rl("entity_display_max_boxes");
+    public static final ResourceLocation HEALTH_DISPLAY = MoreMekaModulesReopen.rl("entity_display_health");
+    public static final ResourceLocation BOX_COLOR = MoreMekaModulesReopen.rl("entity_display_box_color");
+    public static final ResourceLocation NAME_COLOR = MoreMekaModulesReopen.rl("entity_display_name_color");
+    public static final ResourceLocation DISTANCE_COLOR = MoreMekaModulesReopen.rl("entity_display_distance_color");
 
     public ModuleEntityDisplayBoxUnit(IModule<ModuleEntityDisplayBoxUnit> module) {
         this(module.<Range>getConfigOrThrow(RANGE).get(),

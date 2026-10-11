@@ -27,18 +27,18 @@ import net.neoforged.fml.event.lifecycle.InterModEnqueueEvent;
 import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.network.event.RegisterPayloadHandlersEvent;
 
-@Mod(MoreMekaSuitModules.MODID)
-public class MoreMekaSuitModules implements IModModule {
+@Mod(MoreMekaModulesReopen.MODID)
+public class MoreMekaModulesReopen implements IModModule {
 
     public static final String MODID = "moremekasuitmodules";
 
-    public static MoreMekaSuitModules instance;
+    public static MoreMekaModulesReopen instance;
 
     public final Version versionNumber;
 
     public static MoreMekaSuitModulesHooks hooks;
 
-    public MoreMekaSuitModules(ModContainer modContainer, IEventBus modEventBus) {
+    public MoreMekaModulesReopen(ModContainer modContainer, IEventBus modEventBus) {
         Mekanism.addModule(instance = this);
         versionNumber = new Version(modContainer);
         MoreModulesConfig.registerConfigs(modContainer);
@@ -69,7 +69,7 @@ public class MoreMekaSuitModules implements IModModule {
     }
 
     public static ResourceLocation rl(String path) {
-        return ResourceLocation.fromNamespaceAndPath(MoreMekaSuitModules.MODID, path);
+        return ResourceLocation.fromNamespaceAndPath(MoreMekaModulesReopen.MODID, path);
     }
 
     private void registerPayloads(RegisterPayloadHandlersEvent event) {
