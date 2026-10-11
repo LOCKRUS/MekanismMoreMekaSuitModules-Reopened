@@ -89,8 +89,7 @@ public class MoreMekaSuitModules implements IModModule {
                 MekaSuitMoreModules.COUNTERATTACK_UNIT,
                 MekaSuitMoreModules.ENERGY_SHIELD_UNIT,
                 MekaSuitMoreModules.POWER_ENHANCEMENT_UNIT,
-                MekaSuitMoreModules.HP_BOOTS_UNIT,
-                MekaSuitMoreModules.HYPER_ARMOR_UNIT
+                MekaSuitMoreModules.HP_BOOTS_UNIT
         );
         MekanismIMC.addMekaSuitBootsModules(
                 MekaSuitMoreModules.WALL_CLING_UNIT,
@@ -110,7 +109,8 @@ public class MoreMekaSuitModules implements IModModule {
                 MekaSuitMoreModules.HEALTH_REGENERATION_UNIT,
                 MekaSuitMoreModules.INFINITE_CHEMICAL_AND_FLUID_SUPPLY_UNIT,
                 MekaSuitMoreModules.HIGH_SPEED_COOLING_UNIT,
-                MekaSuitMoreModules.QUANTUM_RECONSTRUCTION_UNIT);
+                MekaSuitMoreModules.QUANTUM_RECONSTRUCTION_UNIT,
+                MekaSuitMoreModules.HYPER_ARMOR_UNIT);
         MekanismIMC.addMekaToolModules(
                 MekaSuitMoreModules.LOOTING_AMPLIFICATION_UNIT,
                 MekaSuitMoreModules.MEKA_TOOL_PERFORMANCE_AMPLIFICATION_UNIT,
