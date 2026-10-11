@@ -28,7 +28,7 @@ public final class MekaToolBlasterHandler {
     private static final int STANDARD_COOLDOWN_TICKS = 20 * 15;
     private static final int ULTRA_COOLDOWN_TICKS = 20 * 35;
     private static final long STANDARD_ENERGY_COST = 500_000_000L;
-    private static final long ULTRA_ENERGY_COST = 1_000_000_000L;
+    private static final long ULTRA_ENERGY_COST = 2_000_000_000L;
 
     @SubscribeEvent(priority = EventPriority.HIGHEST)
     public void onRightClickItem(PlayerInteractEvent.RightClickItem event) {

@@ -1,13 +1,30 @@
 {
   "type": "minecraft:crafting_shaped",
-  "pattern": ["AEA", "CMC", "PDP"],
+  "category": "misc",
+  "pattern": [
+    "ABA",
+    "CMC",
+    "DDD"
+  ],
   "key": {
-    "A": {"tag": "c:alloys/elite"},
-    "E": {"item": "mekanism:energy_tablet"},
-    "C": {"tag": "c:circuits/elite"},
-    "M": {"item": "mekanism:module_base"},
-    "P": {"item": "minecraft:piston"},
-    "D": {"item": "mekanism:mekasuit_bodyarmor"}
+    "A": {
+      "tag": "c:alloys/atomic"
+    },
+    "B": {
+      "item": "mekanism:mekasuit_bodyarmor"
+    },
+    "C": {
+      "tag": "c:circuits/ultimate"
+    },
+    "M": {
+      "item": "mekanism:module_base"
+    },
+    "D": {
+      "item": "mekanism:block_steel"
+    }
   },
-  "result": {"count": 1, "id": "moremekasuitmodules:module_hyper_armor_unit"}
+  "result": {
+    "count": 1,
+    "id": "moremekasuitmodules:module_hyper_armor_unit"
+  }
 }
