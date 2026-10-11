@@ -7,7 +7,7 @@
   "pattern": [
     "I#I",
     "IAI",
-    "PPP"
+    "PQP"
   ],
   "key": {
     "I": {
@@ -21,6 +21,9 @@
     },
     "P": {
       "tag": "c:pellets/polonium"
+    },
+    "Q": {
+      "tag": "c:pellets/plutonium"
     }
   }
 }
