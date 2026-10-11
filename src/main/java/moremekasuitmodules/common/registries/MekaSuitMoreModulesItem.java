@@ -62,4 +62,6 @@ public class MekaSuitMoreModulesItem {
     public static final ItemRegistryObject<ItemModule> MODULE_MEKA_TOOL_ANTIMATTER_STRIKE = ITEMS.registerModule(MekaSuitMoreModules.MEKA_TOOL_ANTIMATTER_STRIKE_UNIT, Rarity.EPIC);
     //MekaTool液体储罐扩展单元
     public static final ItemRegistryObject<ItemModule> MODULE_MEKA_TOOL_LAVA_TANK = ITEMS.registerModule(MekaSuitMoreModules.MEKA_TOOL_LAVA_TANK_UNIT, Rarity.UNCOMMON);
+    //MekaTool огнемётный модуль
+    public static final ItemRegistryObject<ItemModule> MODULE_MEKA_TOOL_FLAMETHROWER = ITEMS.registerModule(MekaSuitMoreModules.MEKA_TOOL_FLAMETHROWER_UNIT, Rarity.EPIC);
 }

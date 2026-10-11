@@ -12,6 +12,7 @@ import moremekasuitmodules.common.registries.MekaSuitMoreModulesItem;
 import moremekasuitmodules.common.registries.MoreMekaSuitModulesEntities;
 import moremekasuitmodules.common.registries.MoreMekaSuitModulesDataComponents;
 import moremekasuitmodules.common.content.gear.mekanism.mekatool.MekaToolBlasterHandler;
+import moremekasuitmodules.common.content.gear.mekanism.mekatool.MekaToolFlamethrowerHandler;
 import moremekasuitmodules.common.content.gear.mekanism.mekatool.MekaToolLavaHandler;
 import moremekasuitmodules.common.content.gear.mekanism.mekasuit.CounterattackHandler;
 import moremekasuitmodules.common.content.gear.mekanism.mekasuit.ImpactWaveHandler;
@@ -116,7 +117,8 @@ public class MoreMekaSuitModules implements IModModule {
                 MekaSuitMoreModules.MEKA_TOOL_PERFORMANCE_AMPLIFICATION_UNIT,
                 MekaSuitMoreModules.MEKA_TOOL_BLASTER_UNIT,
                 MekaSuitMoreModules.MEKA_TOOL_ANTIMATTER_STRIKE_UNIT,
-                MekaSuitMoreModules.MEKA_TOOL_LAVA_TANK_UNIT);
+                MekaSuitMoreModules.MEKA_TOOL_LAVA_TANK_UNIT,
+                MekaSuitMoreModules.MEKA_TOOL_FLAMETHROWER_UNIT);
         //meka护腿
 
         //meka靴子
@@ -126,6 +128,7 @@ public class MoreMekaSuitModules implements IModModule {
         NeoForge.EVENT_BUS.register(new CommonPlayerTickHandler());
         NeoForge.EVENT_BUS.register(new ShieldProviderHandler());
         NeoForge.EVENT_BUS.register(new MekaToolBlasterHandler());
+        NeoForge.EVENT_BUS.register(new MekaToolFlamethrowerHandler());
         NeoForge.EVENT_BUS.register(new CounterattackHandler());
         NeoForge.EVENT_BUS.register(new ImpactWaveHandler());
         NeoForge.EVENT_BUS.register(new HyperArmorHandler());

@@ -14,11 +14,15 @@ import org.spongepowered.asm.mixin.injection.At;
 public abstract class MixinItemUseAnimation {
     @ModifyReturnValue(method = "getUseDuration", at = @At("RETURN"))
     private int moreMekaSuitModules$antimatterUseDuration(int original, ItemStack stack, LivingEntity entity) {
-        return IModuleHelper.INSTANCE.isEnabled(stack, MekaSuitMoreModules.MEKA_TOOL_ANTIMATTER_STRIKE_UNIT) ? 72_000 : original;
+        return IModuleHelper.INSTANCE.isEnabled(stack, MekaSuitMoreModules.MEKA_TOOL_ANTIMATTER_STRIKE_UNIT)
+                || IModuleHelper.INSTANCE.isEnabled(stack, MekaSuitMoreModules.MEKA_TOOL_FLAMETHROWER_UNIT)
+                ? 72_000 : original;
     }
 
     @ModifyReturnValue(method = "getUseAnimation", at = @At("RETURN"))
     private UseAnim moreMekaSuitModules$antimatterUseAnimation(UseAnim original, ItemStack stack) {
-        return IModuleHelper.INSTANCE.isEnabled(stack, MekaSuitMoreModules.MEKA_TOOL_ANTIMATTER_STRIKE_UNIT) ? UseAnim.BOW : original;
+        return IModuleHelper.INSTANCE.isEnabled(stack, MekaSuitMoreModules.MEKA_TOOL_ANTIMATTER_STRIKE_UNIT)
+                || IModuleHelper.INSTANCE.isEnabled(stack, MekaSuitMoreModules.MEKA_TOOL_FLAMETHROWER_UNIT)
+                ? UseAnim.BOW : original;
     }
 }

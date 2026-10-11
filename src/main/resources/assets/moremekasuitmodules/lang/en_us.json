@@ -104,5 +104,12 @@
   "item.moremekasuitmodules.module_hyper_armor_unit": "Hyper Armor Unit",
   "description.moremekasuitmodules.hyper_armor_unit": "Adds +15 armor, +5 armor toughness, 50% knockback resistance and Resistance III. Breaks blocks on high-speed impact.",
   "module.moremekasuitmodules.hyper_armor_unit": "Module: Hyper Armor Unit",
-  "module.moremekasuitmodules.hyper_armor_solid_hitbox": "Solid Hitbox"
+  "module.moremekasuitmodules.hyper_armor_solid_hitbox": "Solid Hitbox",
+  "description.moremekasuitmodules.meka_tool_flamethrower_unit": "Adds a three-mode flamethrower to the MekaTool. Requires the MekaTool Lava Tank module and consumes 10 mB of lava plus hydrogen per flame.",
+  "module.moremekasuitmodules.meka_tool_flamethrower_unit": "Module: MekaTool Flamethrower Unit",
+  "module.moremekasuitmodules.meka_tool_flamethrower_mode_hud": "Flamethrower mode: %1$s",
+  "module.moremekasuitmodules.flamethrower_mode": "Flamethrower mode",
+  "module.moremekasuitmodules.flamethrower_combat": "Combat",
+  "module.moremekasuitmodules.flamethrower_heat": "Heat",
+  "module.moremekasuitmodules.flamethrower_inferno": "Inferno"
 }

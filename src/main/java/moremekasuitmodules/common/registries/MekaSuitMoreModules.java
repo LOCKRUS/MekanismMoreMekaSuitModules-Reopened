@@ -13,6 +13,7 @@ import moremekasuitmodules.common.content.gear.mekanism.mekatool.ModuleMekaToolP
 import moremekasuitmodules.common.content.gear.mekanism.mekatool.ModuleMekaToolBlasterUnit;
 import moremekasuitmodules.common.content.gear.mekanism.mekatool.ModuleMekaToolAntimatterStrikeUnit;
 import moremekasuitmodules.common.content.gear.mekanism.mekatool.ModuleMekaToolLavaTankUnit;
+import moremekasuitmodules.common.content.gear.mekanism.mekatool.ModuleMekaToolFlamethrowerUnit;
 import moremekasuitmodules.common.content.gear.mekanism.mekasuit.ModuleCounterattackUnit;
 import moremekasuitmodules.common.content.gear.mekanism.mekasuit.ModuleWallClingUnit;
 import moremekasuitmodules.common.content.gear.mekanism.mekasuit.ModuleImpactWaveUnit;
@@ -208,6 +209,16 @@ public class MekaSuitMoreModules {
             ModuleMekaToolLavaTankUnit::new,
             () -> MekaSuitMoreModulesItem.MODULE_MEKA_TOOL_LAVA_TANK,
             builder -> builder.maxStackSize(5).disabledByDefault().exclusive(2));
+    // MekaTool flamethrower. It requires the separate Lava Tank module at runtime.
+    public static final ModuleRegistryObject<ModuleMekaToolFlamethrowerUnit> MEKA_TOOL_FLAMETHROWER_UNIT = MODULES.register(
+            "meka_tool_flamethrower_unit",
+            ModuleMekaToolFlamethrowerUnit::new,
+            () -> MekaSuitMoreModulesItem.MODULE_MEKA_TOOL_FLAMETHROWER,
+            builder -> builder.maxStackSize(1).disabledByDefault().handlesModeChange()
+                    .addConfig(ModuleEnumConfig.create(ModuleMekaToolFlamethrowerUnit.FLAME_MODE,
+                                    ModuleMekaToolFlamethrowerUnit.FlameMode.COMBAT),
+                            ModuleEnumConfig.codec(ModuleMekaToolFlamethrowerUnit.FlameMode.CODEC),
+                            ModuleEnumConfig.streamCodec(ModuleMekaToolFlamethrowerUnit.FlameMode.STREAM_CODEC)));
 
 
 }
