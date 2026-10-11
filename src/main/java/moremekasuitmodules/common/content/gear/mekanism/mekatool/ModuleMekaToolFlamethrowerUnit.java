@@ -59,7 +59,7 @@ public record ModuleMekaToolFlamethrowerUnit(FlameMode flameMode)
 
         FlameMode(String serializedName) {
             this.serializedName = serializedName.toLowerCase(Locale.ROOT);
-            this.label = TextComponentUtil.getString("flamethrower_mode." + this.serializedName);
+            this.label = TextComponentUtil.translate("module.moremekasuitmodules.flamethrower_mode." + this.serializedName);
         }
 
         public int lavaPerFlame() {
