@@ -69,4 +69,6 @@ public class MekaSuitMoreModulesItem {
     public static final ItemRegistryObject<Item> STARDUST = ITEMS.register("stardust", Rarity.RARE);
     // Star Thermite, crafted from Stardust, iron dust, salt and gunpowder.
     public static final ItemRegistryObject<Item> STAR_THERMITE = ITEMS.register("star_thermite", Rarity.RARE);
+    // Solipsismium-296 powder; its recipe will be added later.
+    public static final ItemRegistryObject<Item> SOLIPSISMIUM_296 = ITEMS.register("solipsismium_296", Rarity.RARE);
 }
