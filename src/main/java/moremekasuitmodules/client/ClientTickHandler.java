@@ -22,6 +22,7 @@ public class ClientTickHandler {
     private static int cameraShakeTicks;
     private static float cameraShakeIntensity;
     private static boolean ultraChargeSoundPlayed;
+    private static int antimatterCooldownSoundTicks;
 
     public static final int ANTIMATTER_CHARGE_DURATION = 72_000;
     public static final int ULTRA_CHARGE_TICKS = 20 * 15;
@@ -34,6 +35,7 @@ public class ClientTickHandler {
     @SubscribeEvent
     public void clientTick(ClientTickEvent.Post event) {
         updateAntimatterChargeSound();
+        updateAntimatterCooldownSound();
         if (cameraShakeTicks > 0) {
             cameraShakeTicks--;
             // Exponential decay reaches almost zero at the end of the ten-second window.
@@ -73,6 +75,26 @@ public class ClientTickHandler {
             player.playSound(SoundEvents.EXPERIENCE_ORB_PICKUP, 0.22F, 1.45F);
             ultraChargeSoundPlayed = true;
         }
+    }
+
+    private static void updateAntimatterCooldownSound() {
+        LocalPlayer player = minecraft.player;
+        ItemStack stack = player == null ? ItemStack.EMPTY : player.getMainHandItem();
+        boolean cooling = player != null
+                && stack.getItem() instanceof ItemMekaTool
+                && isAntimatterModuleEnabled(stack)
+                && player.getCooldowns().getCooldownPercent(stack.getItem(), 0.0F) > 0.0F;
+        if (!cooling) {
+            antimatterCooldownSoundTicks = 0;
+            return;
+        }
+        if (antimatterCooldownSoundTicks > 0) {
+            antimatterCooldownSoundTicks--;
+            return;
+        }
+        // Vanilla's lava-extinguish sound is the desired lava-on-water hiss.
+        player.playSound(SoundEvents.LAVA_EXTINGUISH, 0.18F, 0.9F);
+        antimatterCooldownSoundTicks = 12;
     }
 
     private static boolean isAntimatterModuleEnabled(ItemStack stack) {

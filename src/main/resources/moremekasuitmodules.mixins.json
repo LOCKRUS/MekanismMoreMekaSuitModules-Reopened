@@ -5,6 +5,7 @@
   "mixins": [
     "mekanism.MixinItemMekaSuitArmor",
     "mekanism.MixinItemMekaTool",
+    "mekanism.MixinTileEntityModificationStation",
     "minecraft.MixinEnchantedCountIncreaseFunction",
     "minecraft.MixinItemUseAnimation",
     "minecraft.MixinItemAntimatterStrike",

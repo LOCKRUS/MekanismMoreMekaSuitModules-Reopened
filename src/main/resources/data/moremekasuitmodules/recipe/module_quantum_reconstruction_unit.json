@@ -11,7 +11,7 @@
   ],
   "key": {
     "A": {
-      "item": "mekanism:pellet_antimatter"
+      "item": "minecraft:echo_shard"
     },
     "B": {
       "item": "mekanism:module_base"
@@ -20,10 +20,10 @@
       "item": "mekanism:teleportation_core"
     },
     "D": {
-      "item": "minecraft:echo_shard"
+      "item": "mekanism:teleportation_core"
     },
     "E": {
-      "tag": "c:alloys/ultimate"
+      "item": "moremekasuitmodules:alloy_otherworldly"
     }
   }
 }

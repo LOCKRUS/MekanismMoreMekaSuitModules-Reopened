@@ -4,6 +4,7 @@ import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.core.particles.DustParticleOptions;
 import net.minecraft.core.particles.DustColorTransitionOptions;
 import net.minecraft.core.BlockPos;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.nbt.CompoundTag;
@@ -11,6 +12,7 @@ import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraft.tags.BlockTags;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
@@ -218,7 +220,7 @@ public class AntimatterExplosiveOrbEntity extends AbstractHurtingProjectile {
             // Keep vanilla explosion visuals, while the custom pass below creates the exact
             // 100 x 100 hemispherical crater and can spare bedrock deterministically.
             level().explode(this, center.x, center.y, center.z, 8.0F, true, Level.ExplosionInteraction.NONE);
-            createUltraCrater(center, canGrief);
+            createUltraCraterAftermath(center, canGrief);
         } else {
             // Standard mode uses one custom spherical 20 x 20 blast rather than
             // many overlapping vanilla explosions. This is both deterministic and
@@ -244,8 +246,10 @@ public class AntimatterExplosiveOrbEntity extends AbstractHurtingProjectile {
 
         if (level() instanceof net.minecraft.server.level.ServerLevel serverLevel) {
             // Inspired by HBM NTM's staged nuclear visual language: flash, core, rings, plume.
-            serverLevel.playSound(null, center.x, center.y, center.z,
-                    SoundEvents.ENDER_DRAGON_GROWL, SoundSource.HOSTILE, 16.0F, 0.45F);
+            if (ultra) {
+                serverLevel.playSound(null, center.x, center.y, center.z,
+                        SoundEvents.ENDER_DRAGON_GROWL, SoundSource.HOSTILE, 16.0F, 0.45F);
+            }
             serverLevel.playSound(null, center.x, center.y, center.z,
                     SoundEvents.WARDEN_SONIC_BOOM, SoundSource.HOSTILE, 12.0F, 0.55F);
             serverLevel.playSound(null, center.x, center.y, center.z,
@@ -293,40 +297,70 @@ public class AntimatterExplosiveOrbEntity extends AbstractHurtingProjectile {
      * pass intentionally destroys without drops so an endgame shot cannot create
      * hundreds of thousands of item entities. Bedrock is the one absolute exception.
      */
-    private void createUltraCrater(Vec3 center, boolean canGrief) {
-        if (!(level() instanceof net.minecraft.server.level.ServerLevel)) {
-            return;
-        }
-        final int radius = 50;
+    private void createUltraCraterAftermath(Vec3 center, boolean canGrief) {
         final int centerX = (int) Math.floor(center.x);
         final int centerY = (int) Math.floor(center.y);
         final int centerZ = (int) Math.floor(center.z);
         if (canGrief) {
-            for (int dx = -radius; dx <= radius; dx++) {
-                for (int dz = -radius; dz <= radius; dz++) {
-                    int horizontalSquared = dx * dx + dz * dz;
-                    if (horizontalSquared > radius * radius) {
-                        continue;
-                    }
-                    int depth = (int) Math.floor(Math.sqrt(radius * radius - horizontalSquared));
-                    for (int dy = -depth; dy <= depth; dy++) {
-                        BlockPos pos = new BlockPos(centerX + dx, centerY + dy, centerZ + dz);
-                        var state = level().getBlockState(pos);
-                        if (state.is(Blocks.BEDROCK) || state.isAir()) {
-                            continue;
-                        }
-                        // No drops and no explosion recalculation: direct replacement
-                        // avoids the expensive per-block destroy event path while
-                        // preserving the bedrock exception.
-                        level().setBlock(pos, Blocks.AIR.defaultBlockState(), 2);
-                    }
-                }
-            }
+            // The first pass is intentionally monolithic: it is the original
+            // radius-50 (100-block diameter) destruction sphere.
+            createUltraDestructionSphere(centerX, centerY, centerZ, 50);
+            // Only after the crater is complete, process the larger shell. The
+            // extra 25 blocks preserve the scorched woodland ring outside it.
+            createUltraScorchSphere(centerX, centerY, centerZ, 75);
         }
         // Fire is a visual aftermath and must not disappear merely because the
         // world has mobGriefing disabled; block destruction remains gated above.
         createUltraLava(centerX, centerY, centerZ);
         createUltraFire(centerX, centerY, centerZ);
+    }
+
+    private void createUltraDestructionSphere(int centerX, int centerY, int centerZ, int radius) {
+        int radiusSquared = radius * radius;
+        for (int dx = -radius; dx <= radius; dx++) {
+            for (int dy = -radius; dy <= radius; dy++) {
+                int horizontal = radiusSquared - dx * dx - dy * dy;
+                if (horizontal < 0) {
+                    continue;
+                }
+                int dzLimit = (int) Math.sqrt(horizontal);
+                for (int dz = -dzLimit; dz <= dzLimit; dz++) {
+                    BlockPos pos = new BlockPos(centerX + dx, centerY + dy, centerZ + dz);
+                    var state = level().getBlockState(pos);
+                    if (!state.isAir() && !state.is(Blocks.BEDROCK)) {
+                        level().setBlock(pos, Blocks.AIR.defaultBlockState(), 2);
+                    }
+                }
+            }
+        }
+    }
+
+    private void createUltraScorchSphere(int centerX, int centerY, int centerZ, int radius) {
+        int radiusSquared = radius * radius;
+        for (int dx = -radius; dx <= radius; dx++) {
+            for (int dy = -radius; dy <= radius; dy++) {
+                int horizontal = radiusSquared - dx * dx - dy * dy;
+                if (horizontal < 0) {
+                    continue;
+                }
+                int dzLimit = (int) Math.sqrt(horizontal);
+                for (int dz = -dzLimit; dz <= dzLimit; dz++) {
+                    BlockPos pos = new BlockPos(centerX + dx, centerY + dy, centerZ + dz);
+                    var state = level().getBlockState(pos);
+                    if (state.is(BlockTags.LEAVES)) {
+                        level().setBlock(pos, Blocks.AIR.defaultBlockState(), 2);
+                    } else if (state.is(BlockTags.LOGS) || state.is(BlockTags.PLANKS)) {
+                        level().setBlock(pos,
+                                moremekasuitmodules.common.registries.MoreMekaSuitModulesBlocks.CHARRED_WOOD.get().defaultBlockState(),
+                                2);
+                    } else if (state.is(Blocks.GRASS_BLOCK)) {
+                        level().setBlock(pos,
+                                moremekasuitmodules.common.registries.MoreMekaSuitModulesBlocks.BURNT_GRASS.get().defaultBlockState(),
+                                2);
+                    }
+                }
+            }
+        }
     }
 
     /** Removes a radius-12 sphere: a 25 x 25 standard antimatter blast. */

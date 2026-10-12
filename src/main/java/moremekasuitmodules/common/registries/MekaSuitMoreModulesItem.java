@@ -5,6 +5,7 @@ import mekanism.common.registration.impl.ItemDeferredRegister;
 import mekanism.common.registration.impl.ItemRegistryObject;
 import moremekasuitmodules.common.MoreMekaModulesReopen;
 import moremekasuitmodules.common.item.StardustItem;
+import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Rarity;
 
@@ -75,4 +76,8 @@ public class MekaSuitMoreModulesItem {
     public static final ItemRegistryObject<Item> SOLIPSISMIUM_296 = ITEMS.register("solipsismium_296", Rarity.EPIC);
     // Otherworldly Alloy, created by infusing Atomic Alloy with Solipsismium.
     public static final ItemRegistryObject<Item> ALLOY_OTHERWORLDLY = ITEMS.register("alloy_otherworldly", Rarity.EPIC);
+    public static final ItemRegistryObject<Item> BURNT_GRASS = ITEMS.registerItem(
+            "burnt_grass", properties -> new BlockItem(MoreMekaSuitModulesBlocks.BURNT_GRASS.get(), properties));
+    public static final ItemRegistryObject<Item> CHARRED_WOOD = ITEMS.registerItem(
+            "charred_wood", properties -> new BlockItem(MoreMekaSuitModulesBlocks.CHARRED_WOOD.get(), properties));
 }

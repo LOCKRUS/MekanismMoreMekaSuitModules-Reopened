@@ -27,8 +27,8 @@ import net.neoforged.neoforge.fluids.capability.IFluidHandlerItem;
 public final class MekaToolBlasterHandler {
     private static final int ANTIMATTER_CHARGE_DURATION = 72_000;
     private static final int ULTRA_CHARGE_TICKS = 20 * 15;
-    private static final int STANDARD_COOLDOWN_TICKS = 20 * 15;
-    private static final int ULTRA_COOLDOWN_TICKS = 20 * 35;
+    private static final int STANDARD_COOLDOWN_TICKS = 20 * 10;
+    private static final int ULTRA_COOLDOWN_TICKS = 20 * 60;
     private static final long STANDARD_ENERGY_COST = 500_000_000L;
     private static final long ULTRA_ENERGY_COST = 2_000_000_000L;
 
@@ -51,7 +51,14 @@ public final class MekaToolBlasterHandler {
 
         IModule<ModuleMekaToolAntimatterStrikeUnit> antimatterModule = IModuleHelper.INSTANCE.getIfEnabled(
                 stack, MekaSuitMoreModules.MEKA_TOOL_ANTIMATTER_STRIKE_UNIT);
-        if (antimatterModule != null && AntimatterStrikeActivation.isActive(stack)) {
+        if (antimatterModule != null) {
+            if (!AntimatterStrikeActivation.isActive(stack)) {
+                // An installed but disabled module must not fall through to
+                // Mekanism's normal MekaTool use behavior or start charging.
+                event.setCanceled(true);
+                event.setCancellationResult(InteractionResult.FAIL);
+                return;
+            }
             beginAntimatterCharge(event, player, stack);
             return;
         }
@@ -99,6 +106,11 @@ public final class MekaToolBlasterHandler {
     }
 
     private void beginAntimatterCharge(PlayerInteractEvent.RightClickItem event, Player player, ItemStack stack) {
+        if (!AntimatterStrikeActivation.isActive(stack)) {
+            event.setCanceled(true);
+            event.setCancellationResult(InteractionResult.FAIL);
+            return;
+        }
         if (player.getCooldowns().isOnCooldown(stack.getItem())) {
             event.setCanceled(true);
             event.setCancellationResult(InteractionResult.CONSUME);
@@ -131,7 +143,13 @@ public final class MekaToolBlasterHandler {
         ItemStack stack = player.getItemInHand(event.getHand());
         IModule<ModuleMekaToolAntimatterStrikeUnit> module = IModuleHelper.INSTANCE.getIfEnabled(
                 stack, MekaSuitMoreModules.MEKA_TOOL_ANTIMATTER_STRIKE_UNIT);
-        if (module == null || !AntimatterStrikeActivation.isActive(stack)) {
+        if (module == null) {
+            return;
+        }
+        if (!AntimatterStrikeActivation.isActive(stack)) {
+            // Prevent the vanilla stop-use path from doing anything with a
+            // disabled antimatter module.
+            event.setCanceled(true);
             return;
         }
         event.setCanceled(true);
@@ -143,6 +161,9 @@ public final class MekaToolBlasterHandler {
     }
 
     private void fireAntimatterStrike(Player player, ItemStack stack, boolean ultra) {
+        if (!AntimatterStrikeActivation.isActive(stack)) {
+            return;
+        }
         // Stop can be emitted more than once while the client/server use state is
         // being reconciled. The cooldown is also the single-shot guard.
         if (player.getCooldowns().isOnCooldown(stack.getItem())) {

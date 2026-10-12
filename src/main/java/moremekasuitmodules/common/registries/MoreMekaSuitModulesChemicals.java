@@ -17,8 +17,8 @@ public final class MoreMekaSuitModulesChemicals {
      */
     public static final DeferredChemical<Chemical> SOLIPSISMIUM = CHEMICALS.register(
             "solipsismium", () -> new Chemical(ChemicalBuilder
-                    .builder(MoreMekaModulesReopen.rl("chemical/solipsismium"))
-                    .tint(0xE7C9FF)));
+                    .builder(MoreMekaModulesReopen.rl("infuse_type/solipsismium"))
+                    .tint(0xFFFFFF)));
 
     private MoreMekaSuitModulesChemicals() {
     }

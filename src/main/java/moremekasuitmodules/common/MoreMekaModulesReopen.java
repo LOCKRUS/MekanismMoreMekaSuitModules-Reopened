@@ -13,6 +13,7 @@ import moremekasuitmodules.common.registries.MoreMekaSuitModulesEntities;
 import moremekasuitmodules.common.registries.MoreMekaSuitModulesDataComponents;
 import moremekasuitmodules.common.registries.MoreMekaSuitModulesChemicals;
 import moremekasuitmodules.common.registries.MoreMekaSuitModulesSounds;
+import moremekasuitmodules.common.registries.MoreMekaSuitModulesBlocks;
 import moremekasuitmodules.common.content.gear.mekanism.mekatool.MekaToolBlasterHandler;
 import moremekasuitmodules.common.content.gear.mekanism.mekatool.MekaToolFlamethrowerHandler;
 import moremekasuitmodules.common.content.gear.mekanism.mekatool.MekaToolLavaHandler;
@@ -55,6 +56,7 @@ public class MoreMekaModulesReopen implements IModModule {
         MekaSuitMoreModulesItem.ITEMS.register(modEventBus);
         MoreMekaSuitModulesChemicals.CHEMICALS.register(modEventBus);
         MoreMekaSuitModulesSounds.SOUND_EVENTS.register(modEventBus);
+        MoreMekaSuitModulesBlocks.BLOCKS.register(modEventBus);
         MekaSuitMoreModules.MODULES.register(modEventBus);
         if (hooks.DraconicEvolutionLoaded.isLoaded()) {
 
