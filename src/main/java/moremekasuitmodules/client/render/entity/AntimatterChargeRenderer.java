@@ -46,6 +46,10 @@ public final class AntimatterChargeRenderer {
         // Match the in-flight renderer: Standard is 1.0 and a fully charged Ultra is 2.5.
         float orbScale = Mth.lerp(progress, 1.0F, 2.5F);
         poseStack.scale(orbScale, orbScale, orbScale);
+        // The baked entity model keeps its bone at y=21.5 model units for the
+        // normal entity renderer. Cancel that pivot here so the cube's center,
+        // rather than the bone origin, sits exactly at the MekaTool muzzle.
+        poseStack.translate(0.0D, -21.5D / 16.0D, 0.0D);
         model.setupChargeAnim(minecraft.level.getGameTime()
                 + event.getPartialTick().getGameTimeDeltaPartialTick(false));
         MultiBufferSource.BufferSource buffers = minecraft.renderBuffers().bufferSource();
