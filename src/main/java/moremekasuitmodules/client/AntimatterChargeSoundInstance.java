@@ -16,7 +16,7 @@ import net.minecraft.world.phys.Vec3;
 public final class AntimatterChargeSoundInstance extends AbstractTickableSoundInstance {
     private static final ResourceLocation FUSION_REACTOR_SOUND =
             ResourceLocation.fromNamespaceAndPath("mekanismgenerators", "tile.machine.fusion_reactor");
-    private static final float MAX_VOLUME = 1.1F;
+    private static final float MAX_VOLUME = 1.35F;
     private static final float FADE_SPEED = 0.16F;
 
     private float targetVolume;
@@ -26,7 +26,7 @@ public final class AntimatterChargeSoundInstance extends AbstractTickableSoundIn
     public AntimatterChargeSoundInstance(Vec3 position) {
         super(SoundEvent.createVariableRangeEvent(FUSION_REACTOR_SOUND), SoundSource.MASTER, RandomSource.create());
         this.looping = true;
-        this.volume = 0.025F;
+        this.volume = 0.04F;
         this.pitch = targetPitch;
         this.attenuation = Attenuation.NONE;
         this.relative = true;
@@ -37,7 +37,7 @@ public final class AntimatterChargeSoundInstance extends AbstractTickableSoundIn
         setPosition(position);
         float envelope = Mth.sin(Mth.PI * Mth.clamp(chargeProgress, 0.0F, 1.0F));
         // Keep a tiny audible bed at the first tick, then let the envelope rise.
-        targetVolume = 0.025F + MAX_VOLUME * envelope;
+        targetVolume = 0.04F + MAX_VOLUME * envelope;
         targetPitch = 0.68F + 0.28F * Mth.clamp(chargeProgress, 0.0F, 1.0F);
         fadingOut = false;
     }

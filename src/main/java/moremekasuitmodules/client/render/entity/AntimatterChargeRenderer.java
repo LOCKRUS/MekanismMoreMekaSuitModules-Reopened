@@ -37,14 +37,14 @@ public final class AntimatterChargeRenderer {
             model = new AntimatterExplosiveOrbModel(root);
         }
 
-        Vec3 origin = ClientTickHandler.mekaToolMuzzleOrigin(minecraft.player);
+        Vec3 origin = ClientTickHandler.mekaToolChargeOrigin(minecraft.player);
         Vec3 camera = event.getCamera().getPosition();
         PoseStack poseStack = event.getPoseStack();
         poseStack.pushPose();
         poseStack.translate(origin.x - camera.x, origin.y - camera.y, origin.z - camera.z);
 
-        // Match the in-flight renderer: Standard is 1.0 and a fully charged Ultra is 2.5.
-        float orbScale = Mth.lerp(progress, 1.0F, 2.5F);
+        // Keep the charge model readable without letting it fill the first-person view.
+        float orbScale = Mth.lerp(progress, 0.18F, 0.48F);
         poseStack.scale(orbScale, orbScale, orbScale);
         // The baked entity model keeps its bone at y=21.5 model units for the
         // normal entity renderer. Cancel that pivot here so the cube's center,

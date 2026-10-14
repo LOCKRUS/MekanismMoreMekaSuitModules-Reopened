@@ -141,6 +141,12 @@ public class ClientTickHandler {
         return mekaToolMuzzleOrigin(player, player.getViewVector(1.0F).normalize());
     }
 
+    /** A slightly forward offset keeps the first-person charging model clear of the camera. */
+    public static Vec3 mekaToolChargeOrigin(LocalPlayer player) {
+        Vec3 direction = player.getViewVector(1.0F).normalize();
+        return mekaToolMuzzleOrigin(player).add(direction.scale(0.45D));
+    }
+
     private static Vec3 mekaToolMuzzleOrigin(LocalPlayer player, Vec3 direction) {
         return player.getEyePosition().add(direction.scale(0.7D));
     }
