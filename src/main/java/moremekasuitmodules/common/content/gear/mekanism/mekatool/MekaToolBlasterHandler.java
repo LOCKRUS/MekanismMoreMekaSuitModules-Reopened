@@ -190,7 +190,8 @@ public final class MekaToolBlasterHandler {
         Vec3 direction = player.getViewVector(1.0F).normalize();
         AntimatterExplosiveOrbEntity orb = new AntimatterExplosiveOrbEntity(
                 MoreMekaSuitModulesEntities.ANTIMATTER_EXPLOSIVE_ORB.get(), player, direction, level, ultra);
-        Vec3 origin = player.getEyePosition().add(direction.scale(0.8));
+        // Keep the projectile origin aligned with the client muzzle flame origin.
+        Vec3 origin = player.getEyePosition().add(direction.scale(0.7));
         orb.setPos(origin.x, origin.y, origin.z);
         level.addFreshEntity(orb);
         level.playSound(null, origin.x, origin.y, origin.z,
