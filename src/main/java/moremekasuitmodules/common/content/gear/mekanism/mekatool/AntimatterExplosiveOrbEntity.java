@@ -30,6 +30,8 @@ public class AntimatterExplosiveOrbEntity extends AbstractHurtingProjectile {
     public static final float SPEED = 2.75F;
     public static final float EXPLOSION_POWER = 32.0F;
     private static final double DAMAGE_RADIUS = 40.0D;
+    // Ultra's damaging pressure wave is intentionally much larger than its crater.
+    private static final double ULTRA_DAMAGE_RADIUS = 150.0D;
     private static final float ENTITY_DAMAGE = 240.0F;
     private static final DustParticleOptions ANTIMATTER_PURPLE =
             new DustParticleOptions(new Vector3f(0.48F, 0.04F, 0.95F), 2.8F);
@@ -228,13 +230,20 @@ public class AntimatterExplosiveOrbEntity extends AbstractHurtingProjectile {
             level().explode(this, center.x, center.y, center.z, 4.0F, true, Level.ExplosionInteraction.NONE);
             createStandardSphere(center, canGrief);
         }
-        double damageRadius = ultra ? 75.0D : DAMAGE_RADIUS;
+        // The Ultra wave only damages entities; it does not expand the block-destruction
+        // sphere. Damage falls off quadratically, so targets near the impact are hit
+        // much harder than targets near the 150-block outer edge.
+        double damageRadius = ultra ? ULTRA_DAMAGE_RADIUS : DAMAGE_RADIUS;
         float maxDamage = ultra ? ENTITY_DAMAGE * 2.0F : ENTITY_DAMAGE;
         DamageSource source = level().damageSources().explosion(this, getOwner());
         for (Entity entity : level().getEntities(this, getBoundingBox().inflate(damageRadius),
                 entity -> entity instanceof LivingEntity && entity != getOwner())) {
             double distance = Math.max(1.0D, distanceTo(entity));
-            float damage = (float) (maxDamage * Math.max(0.15D, 1.0D - distance / damageRadius));
+            double falloff = Math.max(0.0D, 1.0D - distance / damageRadius);
+            float damage = (float) (maxDamage * falloff * falloff);
+            if (damage <= 0.0F) {
+                continue;
+            }
             entity.hurt(source, damage);
             if (entity instanceof LivingEntity living) {
                 // The pressure/sonic wave stuns nearby living targets for 10 seconds.
