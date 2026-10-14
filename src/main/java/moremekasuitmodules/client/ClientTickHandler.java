@@ -1,16 +1,21 @@
 package moremekasuitmodules.client;
 
+import mekanism.api.gear.IModule;
+import mekanism.api.gear.IModuleHelper;
 import mekanism.common.content.gear.IModuleContainerItem;
 import mekanism.common.item.gear.ItemMekaTool;
 import moremekasuitmodules.common.AntimatterStrikeActivation;
 import moremekasuitmodules.common.config.MoreModulesConfig;
+import moremekasuitmodules.common.content.gear.mekanism.mekatool.ModuleMekaToolFlamethrowerUnit;
 import moremekasuitmodules.common.registries.MekaSuitMoreModules;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.DeathScreen;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.sounds.SoundEvents;
+import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.phys.Vec3;
 import net.neoforged.neoforge.client.event.ScreenEvent;
 import net.neoforged.neoforge.client.event.ClientTickEvent;
 import net.neoforged.neoforge.client.event.ViewportEvent;
@@ -21,6 +26,13 @@ public class ClientTickHandler {
     public static Minecraft minecraft = Minecraft.getInstance();
     private static int cameraShakeTicks;
     private static float cameraShakeIntensity;
+    private static float recoilPitch;
+    private static float recoilYaw;
+    private static float recoilRoll;
+    private static int recoilTicks;
+    private static int steamCoolingTicks;
+    private static int steamCoolingTotal;
+    private static boolean steamCoolingUltra;
     private static boolean ultraChargeSoundPlayed;
     private static int antimatterCooldownSoundTicks;
 
@@ -30,6 +42,19 @@ public class ClientTickHandler {
     public static void triggerCameraShake(int duration, float intensity) {
         cameraShakeTicks = Math.max(cameraShakeTicks, Math.min(300, duration));
         cameraShakeIntensity = Math.max(cameraShakeIntensity, Math.min(0.85F, intensity));
+    }
+
+    public static void triggerOrbShot(boolean ultra) {
+        triggerCameraShake(ultra ? 12 : 8, ultra ? 0.20F : 0.075F);
+        recoilPitch = Math.max(recoilPitch, ultra ? 3.2F : 1.15F);
+        recoilYaw = (minecraft.level != null && minecraft.level.random.nextBoolean() ? 1 : -1)
+                * (ultra ? 0.65F : 0.22F);
+        recoilRoll = (minecraft.level != null && minecraft.level.random.nextBoolean() ? 1 : -1)
+                * (ultra ? 0.45F : 0.15F);
+        recoilTicks = Math.max(recoilTicks, ultra ? 12 : 8);
+        steamCoolingUltra = ultra;
+        steamCoolingTotal = ultra ? 32 : 20;
+        steamCoolingTicks = Math.max(steamCoolingTicks, steamCoolingTotal);
     }
 
     @SubscribeEvent
@@ -43,6 +68,21 @@ public class ClientTickHandler {
         } else {
             cameraShakeIntensity = 0;
         }
+        if (recoilTicks > 0) {
+            recoilTicks--;
+            recoilPitch *= 0.72F;
+            recoilYaw *= 0.70F;
+            recoilRoll *= 0.68F;
+        } else {
+            recoilPitch = 0;
+            recoilYaw = 0;
+            recoilRoll = 0;
+        }
+        if (steamCoolingTicks > 0) {
+            spawnCoolingSteam();
+            steamCoolingTicks--;
+        }
+        spawnFlamethrowerSteam();
     }
 
     public static float antimatterChargeProgress(ItemStack stack) {
@@ -117,6 +157,85 @@ public class ClientTickHandler {
         event.setYaw(event.getYaw() + yaw);
         event.setPitch(event.getPitch() + pitch);
         event.setRoll(event.getRoll() + roll);
+        event.setPitch(event.getPitch() - recoilPitch);
+        event.setYaw(event.getYaw() + recoilYaw);
+        event.setRoll(event.getRoll() + recoilRoll);
+    }
+
+    private static void spawnCoolingSteam() {
+        LocalPlayer player = minecraft.player;
+        if (player == null || minecraft.level == null || !(player.getMainHandItem().getItem() instanceof ItemMekaTool)) {
+            return;
+        }
+        Vec3 direction = player.getViewVector(1.0F).normalize();
+        Vec3 origin = player.getEyePosition().add(direction.scale(0.7D));
+        Vec3 side = direction.cross(new Vec3(0, 1, 0));
+        if (side.lengthSqr() < 0.001D) {
+            side = new Vec3(1, 0, 0);
+        } else {
+            side = side.normalize();
+        }
+        float progress = 1.0F - steamCoolingTicks / (float) steamCoolingTotal;
+        int puffs = steamCoolingUltra ? 2 : 1;
+        for (int i = 0; i < puffs; i++) {
+            double phase = (steamCoolingTotal - steamCoolingTicks) * 0.72D + i * Math.PI;
+            double spiral = Math.sin(phase) * (0.045D + progress * 0.08D);
+            Vec3 spawn = origin.add(side.scale(spiral)).add(0, 0.015D + progress * 0.045D, 0);
+            Vec3 velocity = direction.scale(0.018D + progress * 0.035D)
+                    .add(0, 0.028D + progress * 0.025D, 0)
+                    .add(side.scale(Math.cos(phase) * 0.012D));
+            minecraft.level.addParticle(ParticleTypes.CLOUD, spawn.x, spawn.y, spawn.z,
+                    velocity.x, velocity.y, velocity.z);
+        }
+        if (steamCoolingTicks % (steamCoolingUltra ? 2 : 3) == 0) {
+            minecraft.level.addParticle(ParticleTypes.CAMPFIRE_COSY_SMOKE, origin.x, origin.y, origin.z,
+                    direction.x * 0.025D, 0.045D + progress * 0.02D, direction.z * 0.025D);
+        }
+    }
+
+    private static void spawnFlamethrowerSteam() {
+        LocalPlayer player = minecraft.player;
+        if (player == null || minecraft.level == null || !player.isUsingItem()
+                || player.getUsedItemHand() != net.minecraft.world.InteractionHand.MAIN_HAND
+                || !(player.getMainHandItem().getItem() instanceof ItemMekaTool)) {
+            return;
+        }
+        ItemStack stack = player.getMainHandItem();
+        IModule<ModuleMekaToolFlamethrowerUnit> module = IModuleHelper.INSTANCE.getIfEnabled(
+                stack, MekaSuitMoreModules.MEKA_TOOL_FLAMETHROWER_UNIT);
+        if (module == null) {
+            return;
+        }
+
+        ModuleMekaToolFlamethrowerUnit.FlameMode mode = module.getCustomInstance().flameMode();
+        int puffs = switch (mode) {
+            case COMBAT -> 1;
+            case HEAT -> 1;
+            case INFERNO -> 2;
+        };
+        Vec3 direction = player.getViewVector(1.0F).normalize();
+        Vec3 origin = player.getEyePosition().add(direction.scale(0.7D));
+        Vec3 side = direction.cross(new Vec3(0, 1, 0));
+        if (side.lengthSqr() < 0.001D) {
+            side = new Vec3(1, 0, 0);
+        } else {
+            side = side.normalize();
+        }
+        long tick = minecraft.level.getGameTime();
+        for (int i = 0; i < puffs; i++) {
+            double phase = tick * 0.62D + i * 2.1D;
+            double curl = Math.sin(phase) * (0.025D + i * 0.01D);
+            Vec3 spawn = origin.add(direction.scale(0.04D + i * 0.04D))
+                    .add(side.scale(curl))
+                    .add(0, 0.012D + i * 0.012D, 0);
+            Vec3 velocity = direction.scale(0.025D + i * 0.01D)
+                    .add(0, 0.028D + i * 0.01D, 0)
+                    .add(side.scale(Math.cos(phase) * 0.009D));
+            minecraft.level.addParticle(ParticleTypes.SMOKE,
+                    spawn.x, spawn.y, spawn.z, velocity.x, velocity.y, velocity.z);
+        }
+        minecraft.level.addParticle(ParticleTypes.FLAME, origin.x, origin.y, origin.z,
+                direction.x * 0.08D, direction.y * 0.08D, direction.z * 0.08D);
     }
 
     @SubscribeEvent

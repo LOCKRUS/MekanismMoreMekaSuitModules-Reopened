@@ -22,6 +22,7 @@ import moremekasuitmodules.common.content.gear.mekanism.mekasuit.CounterattackHa
 import moremekasuitmodules.common.content.gear.mekanism.mekasuit.ImpactWaveHandler;
 import moremekasuitmodules.common.content.gear.mekanism.mekasuit.HyperArmorHandler;
 import moremekasuitmodules.common.network.AntimatterShockwavePayload;
+import moremekasuitmodules.common.network.AntimatterShotPayload;
 import net.minecraft.resources.ResourceLocation;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.ModContainer;
@@ -84,6 +85,10 @@ public class MoreMekaModulesReopen implements IModModule {
                 AntimatterShockwavePayload.TYPE,
                 AntimatterShockwavePayload.STREAM_CODEC,
                 AntimatterShockwavePayload::handle);
+        event.registrar("1").playToClient(
+                AntimatterShotPayload.TYPE,
+                AntimatterShotPayload.STREAM_CODEC,
+                AntimatterShotPayload::handle);
     }
 
     private void imcQueue(InterModEnqueueEvent event) {
