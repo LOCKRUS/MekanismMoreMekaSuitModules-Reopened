@@ -12,7 +12,7 @@ import net.minecraft.util.Mth;
 import net.minecraft.resources.ResourceLocation;
 
 public class AntimatterExplosiveOrbRenderer extends EntityRenderer<AntimatterExplosiveOrbEntity> {
-    private static final ResourceLocation TEXTURE = MoreMekaModulesReopen.rl("textures/entity/antimatter_explosive_orb.png");
+    public static final ResourceLocation TEXTURE = MoreMekaModulesReopen.rl("textures/entity/antimatter_explosive_orb.png");
     private final AntimatterExplosiveOrbModel model;
 
     public AntimatterExplosiveOrbRenderer(EntityRendererProvider.Context context) {

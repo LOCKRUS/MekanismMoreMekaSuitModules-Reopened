@@ -3,6 +3,7 @@ package moremekasuitmodules.client;
 import moremekasuitmodules.client.render.hud.MoreMekaSuitModulesHUD;
 import moremekasuitmodules.client.render.entity.AntimatterExplosiveOrbModel;
 import moremekasuitmodules.client.render.entity.AntimatterExplosiveOrbRenderer;
+import moremekasuitmodules.client.render.entity.AntimatterChargeRenderer;
 import moremekasuitmodules.common.MoreMekaModulesReopen;
 import moremekasuitmodules.common.content.gear.mekanism.mekatool.MekaToolLavaHandler;
 import moremekasuitmodules.common.registries.MoreMekaSuitModulesEntities;
@@ -13,6 +14,7 @@ import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
 import net.neoforged.neoforge.client.event.RegisterGuiLayersEvent;
 import net.neoforged.neoforge.client.event.EntityRenderersEvent;
+import net.neoforged.neoforge.client.event.RenderLevelStageEvent;
 import net.neoforged.neoforge.client.gui.VanillaGuiLayers;
 import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.event.entity.player.ItemTooltipEvent;
@@ -61,5 +63,10 @@ public class ClientRegistration {
     public static void registerOrbRenderer(EntityRenderersEvent.RegisterRenderers event) {
         event.registerEntityRenderer(MoreMekaSuitModulesEntities.ANTIMATTER_EXPLOSIVE_ORB.get(),
                 AntimatterExplosiveOrbRenderer::new);
+    }
+
+    @SubscribeEvent
+    public static void renderAntimatterCharge(RenderLevelStageEvent event) {
+        AntimatterChargeRenderer.render(event);
     }
 }

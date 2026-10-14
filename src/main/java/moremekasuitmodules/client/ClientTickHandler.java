@@ -13,8 +13,6 @@ import net.minecraft.client.gui.screens.DeathScreen;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.core.particles.ParticleTypes;
-import net.minecraft.core.particles.DustColorTransitionOptions;
-import net.minecraft.core.particles.DustParticleOptions;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.phys.Vec3;
@@ -22,7 +20,6 @@ import net.neoforged.neoforge.client.event.ScreenEvent;
 import net.neoforged.neoforge.client.event.ClientTickEvent;
 import net.neoforged.neoforge.client.event.ViewportEvent;
 import net.neoforged.bus.api.SubscribeEvent;
-import org.joml.Vector3f;
 
 public class ClientTickHandler {
 
@@ -40,15 +37,6 @@ public class ClientTickHandler {
     private static int antimatterCooldownSoundTicks;
     private static AntimatterChargeSoundInstance antimatterChargeSound;
 
-    private static final DustParticleOptions ANTIMATTER_CORE =
-            new DustParticleOptions(new Vector3f(0.48F, 0.04F, 0.95F), 1.0F);
-    private static final DustParticleOptions ANTIMATTER_HIGHLIGHT =
-            new DustParticleOptions(new Vector3f(0.92F, 0.82F, 1.0F), 0.72F);
-    private static final DustColorTransitionOptions ANTIMATTER_AURA =
-            new DustColorTransitionOptions(
-                    new Vector3f(0.72F, 0.32F, 1.0F),
-                    new Vector3f(0.28F, 0.04F, 0.62F),
-                    0.9F);
 
     public static final int ANTIMATTER_CHARGE_DURATION = 72_000;
     public static final int ULTRA_CHARGE_TICKS = 20 * 15;
@@ -96,7 +84,6 @@ public class ClientTickHandler {
             spawnCoolingSteam();
             steamCoolingTicks--;
         }
-        spawnAntimatterChargeOrb();
         spawnFlamethrowerSteam();
     }
 
@@ -156,67 +143,6 @@ public class ClientTickHandler {
 
     private static Vec3 mekaToolMuzzleOrigin(LocalPlayer player, Vec3 direction) {
         return player.getEyePosition().add(direction.scale(0.7D));
-    }
-
-    /**
-     * Renders a client-side charging core at the same muzzle point as the flamethrower
-     * flame. The two perpendicular rings rotate around the shot direction and grow
-     * from the Standard orb footprint to the Ultra orb footprint over 15 seconds.
-     */
-    private static void spawnAntimatterChargeOrb() {
-        LocalPlayer player = minecraft.player;
-        if (player == null || minecraft.level == null) {
-            return;
-        }
-        ItemStack stack = player.getMainHandItem();
-        if (!isAntimatterCharging(player, stack)) {
-            return;
-        }
-        float progress = antimatterChargeProgress(stack);
-        if (progress <= 0.0F) {
-            return;
-        }
-        Vec3 direction = player.getViewVector(1.0F).normalize();
-        Vec3 origin = mekaToolMuzzleOrigin(player, direction);
-        Vec3 side = direction.cross(new Vec3(0, 1, 0));
-        if (side.lengthSqr() < 0.001D) {
-            side = new Vec3(1, 0, 0);
-        } else {
-            side = side.normalize();
-        }
-        Vec3 up = side.cross(direction).normalize();
-        double phase = minecraft.level.getGameTime() * 0.34D;
-        double orbSize = 1.0D + progress * 1.5D;
-        double ringRadius = 0.14D + progress * 0.52D;
-        float coreScale = (float) (0.48D + progress * 0.9D);
-        float highlightScale = (float) (0.34D + progress * 0.62D);
-
-        minecraft.level.addParticle(ANTIMATTER_CORE, origin.x, origin.y, origin.z, 0, 0, 0);
-        minecraft.level.addParticle(ANTIMATTER_HIGHLIGHT, origin.x, origin.y, origin.z, 0, 0, 0);
-        for (int i = 0; i < 12; i++) {
-            double angle = phase + Math.PI * 2.0D * i / 12.0D;
-            Vec3 radial = side.scale(Math.cos(angle) * ringRadius)
-                    .add(up.scale(Math.sin(angle) * ringRadius));
-            Vec3 point = origin.add(radial);
-            minecraft.level.addParticle(
-                    new DustParticleOptions(new Vector3f(0.48F, 0.04F, 0.95F), coreScale),
-                    point.x, point.y, point.z, 0, 0, 0);
-            if ((i & 1) == 0) {
-                minecraft.level.addParticle(ParticleTypes.DRAGON_BREATH,
-                        point.x, point.y, point.z,
-                        -direction.x * 0.012D, -direction.y * 0.012D, -direction.z * 0.012D);
-            }
-        }
-        for (int i = 0; i < 5; i++) {
-            double angle = -phase * 1.7D + Math.PI * 2.0D * i / 5.0D;
-            double radius = ringRadius * (0.72D + i * 0.035D);
-            Vec3 radial = side.scale(Math.cos(angle) * radius)
-                    .add(up.scale(Math.sin(angle) * radius));
-            Vec3 point = origin.add(radial).add(direction.scale(Math.sin(angle * 2.0D) * 0.06D * orbSize));
-            minecraft.level.addParticle(ANTIMATTER_AURA,
-                    point.x, point.y, point.z,
-                    direction.x * 0.01D, direction.y * 0.01D, direction.z * 0.01D);
-        }
     }
 
     private static void updateAntimatterCooldownSound() {
