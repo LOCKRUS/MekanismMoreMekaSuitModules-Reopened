@@ -106,7 +106,7 @@
   "module.moremekasuitmodules.hyper_armor_unit": "Модуль: Гиперброня",
   "module.moremekasuitmodules.hyper_armor_solid_hitbox": "Твёрдый хитбокс",
   "description.moremekasuitmodules.meka_tool_flamethrower_unit": "Добавляет MekaTool огнемёт с тремя режимами. Требует модуль лавового бака MekaTool и расходует 10 мБ лавы и водород на каждый выстрел.",
-  "module.moremekasuitmodules.meka_tool_flamethrower_unit": "Модуль: огнемётный модуль MekaTool",
+  "module.moremekasuitmodules.meka_tool_flamethrower_unit": "Модуль: Огнемётный модуль MekaTool",
   "module.moremekasuitmodules.meka_tool_flamethrower_mode_hud": "Режим огнемёта: %1$s",
   "module.moremekasuitmodules.flamethrower_mode": "Режим огнемёта",
   "module.moremekasuitmodules.flamethrower_mode.combat": "Бой",

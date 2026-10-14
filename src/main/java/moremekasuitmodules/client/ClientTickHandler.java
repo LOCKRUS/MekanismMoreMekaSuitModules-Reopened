@@ -45,13 +45,13 @@ public class ClientTickHandler {
     }
 
     public static void triggerOrbShot(boolean ultra) {
-        triggerCameraShake(ultra ? 12 : 8, ultra ? 0.20F : 0.075F);
-        recoilPitch = Math.max(recoilPitch, ultra ? 3.2F : 1.15F);
+        triggerCameraShake(ultra ? 14 : 9, ultra ? 0.24F : 0.09F);
+        recoilPitch = Math.max(recoilPitch, ultra ? 3.8F : 1.45F);
         recoilYaw = (minecraft.level != null && minecraft.level.random.nextBoolean() ? 1 : -1)
-                * (ultra ? 0.65F : 0.22F);
+                * (ultra ? 0.78F : 0.28F);
         recoilRoll = (minecraft.level != null && minecraft.level.random.nextBoolean() ? 1 : -1)
-                * (ultra ? 0.45F : 0.15F);
-        recoilTicks = Math.max(recoilTicks, ultra ? 12 : 8);
+                * (ultra ? 0.54F : 0.19F);
+        recoilTicks = Math.max(recoilTicks, ultra ? 14 : 9);
         steamCoolingUltra = ultra;
         steamCoolingTotal = ultra ? 32 : 20;
         steamCoolingTicks = Math.max(steamCoolingTicks, steamCoolingTotal);
@@ -168,7 +168,7 @@ public class ClientTickHandler {
             return;
         }
         Vec3 direction = player.getViewVector(1.0F).normalize();
-        Vec3 origin = player.getEyePosition().add(direction.scale(0.7D));
+        Vec3 origin = player.getEyePosition().add(direction.scale(1.0D)).add(0, 0.16D, 0);
         Vec3 side = direction.cross(new Vec3(0, 1, 0));
         if (side.lengthSqr() < 0.001D) {
             side = new Vec3(1, 0, 0);
@@ -176,20 +176,15 @@ public class ClientTickHandler {
             side = side.normalize();
         }
         float progress = 1.0F - steamCoolingTicks / (float) steamCoolingTotal;
-        int puffs = steamCoolingUltra ? 2 : 1;
-        for (int i = 0; i < puffs; i++) {
-            double phase = (steamCoolingTotal - steamCoolingTicks) * 0.72D + i * Math.PI;
-            double spiral = Math.sin(phase) * (0.045D + progress * 0.08D);
-            Vec3 spawn = origin.add(side.scale(spiral)).add(0, 0.015D + progress * 0.045D, 0);
-            Vec3 velocity = direction.scale(0.018D + progress * 0.035D)
-                    .add(0, 0.028D + progress * 0.025D, 0)
-                    .add(side.scale(Math.cos(phase) * 0.012D));
-            minecraft.level.addParticle(ParticleTypes.CLOUD, spawn.x, spawn.y, spawn.z,
-                    velocity.x, velocity.y, velocity.z);
-        }
+        double phase = (steamCoolingTotal - steamCoolingTicks) * 0.72D;
+        double spiral = Math.sin(phase) * (0.045D + progress * 0.08D);
+        Vec3 spawn = origin.add(side.scale(spiral));
+        Vec3 velocity = direction.scale(0.022D + progress * 0.04D)
+                .add(0, 0.045D + progress * 0.02D, 0)
+                .add(side.scale(Math.cos(phase) * 0.012D));
         if (steamCoolingTicks % (steamCoolingUltra ? 2 : 3) == 0) {
-            minecraft.level.addParticle(ParticleTypes.CAMPFIRE_COSY_SMOKE, origin.x, origin.y, origin.z,
-                    direction.x * 0.025D, 0.045D + progress * 0.02D, direction.z * 0.025D);
+            minecraft.level.addParticle(ParticleTypes.CAMPFIRE_COSY_SMOKE, spawn.x, spawn.y, spawn.z,
+                    velocity.x, velocity.y, velocity.z);
         }
     }
 
