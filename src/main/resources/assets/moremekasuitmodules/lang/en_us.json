@@ -102,7 +102,7 @@
   "module.moremekasuitmodules.entity_display_name_color": "Name color",
   "module.moremekasuitmodules.entity_display_distance_color": "Distance color",
   "item.moremekasuitmodules.module_hyper_armor_unit": "Hyper Armor Unit",
-  "description.moremekasuitmodules.hyper_armor_unit": "Grants Resistance III and breaks blocks on high-speed impact.",
+  "description.moremekasuitmodules.hyper_armor_unit": "Grants Resistance III and breaks blocks on high-speed impact. The Solid Hitbox setting makes the player a full participant in entity collisions; it can be toggled in the module settings.",
   "module.moremekasuitmodules.hyper_armor_unit": "Module: Hyper Armor Unit",
   "module.moremekasuitmodules.hyper_armor_solid_hitbox": "Solid Hitbox",
   "description.moremekasuitmodules.meka_tool_flamethrower_unit": "Adds a three-mode flamethrower to the MekaTool. Requires the MekaTool Lava Tank module and consumes 10 mB of lava plus hydrogen per flame.",

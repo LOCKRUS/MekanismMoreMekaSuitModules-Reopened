@@ -102,7 +102,7 @@
   "module.moremekasuitmodules.entity_display_name_color": "Цвет имени",
   "module.moremekasuitmodules.entity_display_distance_color": "Цвет дистанции",
   "item.moremekasuitmodules.module_hyper_armor_unit": "Модуль гиперброни",
-  "description.moremekasuitmodules.hyper_armor_unit": "Даёт Resistance III и ломает блоки при высокоскоростном столкновении.",
+  "description.moremekasuitmodules.hyper_armor_unit": "Даёт Resistance III и ломает блоки при высокоскоростном столкновении. Настройка «Твёрдый хитбокс» делает игрока полноценным участником столкновений с сущностями; её можно включать и выключать в настройках модуля.",
   "module.moremekasuitmodules.hyper_armor_unit": "Модуль: Гиперброня",
   "module.moremekasuitmodules.hyper_armor_solid_hitbox": "Твёрдый хитбокс",
   "description.moremekasuitmodules.meka_tool_flamethrower_unit": "Добавляет MekaTool огнемёт с тремя режимами. Требует модуль лавового бака MekaTool и расходует 10 мБ лавы и водород на каждый выстрел.",
