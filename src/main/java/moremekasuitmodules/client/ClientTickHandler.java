@@ -170,10 +170,19 @@ public class ClientTickHandler {
         return mekaToolMuzzleOrigin(player, player.getViewVector(1.0F).normalize());
     }
 
-    /** A slightly forward offset keeps the first-person charging model clear of the camera. */
+    /** Places the charging orb just beyond and slightly above the visible MekaTool muzzle. */
     public static Vec3 mekaToolChargeOrigin(LocalPlayer player) {
         Vec3 direction = player.getViewVector(1.0F).normalize();
-        return MekaToolMuzzle.origin(player, direction).add(direction.scale(0.45D));
+        Vec3 right = direction.cross(new Vec3(0.0D, 1.0D, 0.0D));
+        if (right.lengthSqr() < 1.0E-6D) {
+            right = new Vec3(1.0D, 0.0D, 0.0D);
+        } else {
+            right = right.normalize();
+        }
+        Vec3 up = right.cross(direction).normalize();
+        return MekaToolMuzzle.origin(player, direction)
+                .add(direction.scale(0.20D))
+                .add(up.scale(0.10D));
     }
 
     private static Vec3 mekaToolMuzzleOrigin(LocalPlayer player, Vec3 direction) {
