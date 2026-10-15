@@ -15,6 +15,13 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(Entity.class)
 public abstract class MixinEntity {
+    @Inject(method = "isPushable", at = @At("HEAD"), cancellable = true)
+    private void moremekasuitmodules$hyperArmorHitbox(CallbackInfoReturnable<Boolean> cir) {
+        if (isSolidHyperArmorPlayer()) {
+            cir.setReturnValue(true);
+        }
+    }
+
     @Inject(method = "canBeCollidedWith", at = @At("HEAD"), cancellable = true)
     private void moremekasuitmodules$hyperArmorCollision(CallbackInfoReturnable<Boolean> cir) {
         if (isSolidHyperArmorPlayer()) {

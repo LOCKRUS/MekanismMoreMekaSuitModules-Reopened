@@ -12,8 +12,7 @@
     "minecraft.MixinDamageSource",
     "minecraft.MixinLevel",
     "minecraft.MixinMob",
-    "minecraft.MixinEntity",
-    "minecraft.MixinPlayer"
+    "minecraft.MixinEntity"
   ],
   "injectors": {
     "defaultRequire": 1
