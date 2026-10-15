@@ -45,7 +45,7 @@ public final class AntimatterChargeRenderer {
         poseStack.translate(origin.x - camera.x, origin.y - camera.y, origin.z - camera.z);
 
         // Keep the charge model readable without letting it fill the first-person view.
-        float orbScale = Mth.lerp(progress, 0.24F, 0.62F);
+        float orbScale = Mth.lerp(progress, 0.29F, 0.70F);
         poseStack.scale(orbScale, orbScale, orbScale);
         // The baked entity model keeps its bone at y=21.5 model units for the
         // normal entity renderer. Cancel that pivot here so the cube's center,

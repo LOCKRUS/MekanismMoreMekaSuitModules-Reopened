@@ -16,7 +16,7 @@ import net.minecraft.world.phys.Vec3;
 public final class AntimatterChargeSoundInstance extends AbstractTickableSoundInstance {
     private static final ResourceLocation FUSION_REACTOR_SOUND =
             ResourceLocation.fromNamespaceAndPath("mekanismgenerators", "tile.machine.fusion_reactor");
-    private static final float MAX_VOLUME = 1.35F;
+    private static final float MAX_VOLUME = 1.55F;
     private static final float FADE_SPEED = 0.16F;
 
     private float targetVolume;

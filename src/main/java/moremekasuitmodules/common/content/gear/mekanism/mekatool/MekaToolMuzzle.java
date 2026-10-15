@@ -7,7 +7,9 @@ import net.minecraft.world.phys.Vec3;
 public final class MekaToolMuzzle {
     private static final double FORWARD_OFFSET = 0.78D;
     private static final double RIGHT_OFFSET = 0.48D;
-    private static final double DOWN_OFFSET = 0.22D;
+    // The muzzle sits below the player's eye line on the visible MekaTool body.
+    // Keep this shared by projectiles, flame particles, and the charging orb.
+    private static final double DOWN_OFFSET = 0.52D;
 
     private MekaToolMuzzle() {
     }
