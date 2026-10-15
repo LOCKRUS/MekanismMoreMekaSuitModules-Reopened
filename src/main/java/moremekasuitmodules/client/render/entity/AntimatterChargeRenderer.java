@@ -28,10 +28,11 @@ public final class AntimatterChargeRenderer {
         if (minecraft.level == null || minecraft.player == null) {
             return;
         }
-        float progress = ClientTickHandler.antimatterChargeProgress(minecraft.player.getMainHandItem());
-        if (progress <= 0.0F) {
+        float alpha = ClientTickHandler.antimatterChargeAlpha(minecraft.player.getMainHandItem());
+        if (alpha <= 0.0F) {
             return;
         }
+        float progress = ClientTickHandler.antimatterChargeProgress(minecraft.player.getMainHandItem());
         if (model == null) {
             ModelPart root = minecraft.getEntityModels().bakeLayer(AntimatterExplosiveOrbModel.LAYER_LOCATION);
             model = new AntimatterExplosiveOrbModel(root);
@@ -44,7 +45,7 @@ public final class AntimatterChargeRenderer {
         poseStack.translate(origin.x - camera.x, origin.y - camera.y, origin.z - camera.z);
 
         // Keep the charge model readable without letting it fill the first-person view.
-        float orbScale = Mth.lerp(progress, 0.18F, 0.48F);
+        float orbScale = Mth.lerp(progress, 0.24F, 0.62F);
         poseStack.scale(orbScale, orbScale, orbScale);
         // The baked entity model keeps its bone at y=21.5 model units for the
         // normal entity renderer. Cancel that pivot here so the cube's center,
@@ -54,8 +55,9 @@ public final class AntimatterChargeRenderer {
                 + event.getPartialTick().getGameTimeDeltaPartialTick(false));
         MultiBufferSource.BufferSource buffers = minecraft.renderBuffers().bufferSource();
         VertexConsumer consumer = buffers.getBuffer(RenderType.entityTranslucent(AntimatterExplosiveOrbRenderer.TEXTURE));
+        int alphaByte = Mth.clamp((int) (alpha * 255.0F), 0, 255);
         model.renderToBuffer(poseStack, consumer, LightTexture.FULL_BRIGHT,
-                OverlayTexture.NO_OVERLAY, 0xFFFFFFFF);
+                OverlayTexture.NO_OVERLAY, (alphaByte << 24) | 0x00FFFFFF);
         buffers.endBatch(RenderType.entityTranslucent(AntimatterExplosiveOrbRenderer.TEXTURE));
         poseStack.popPose();
     }

@@ -29,6 +29,7 @@ import net.neoforged.neoforge.fluids.capability.IFluidHandlerItem;
 public final class MekaToolBlasterHandler {
     private static final int ANTIMATTER_CHARGE_DURATION = 72_000;
     private static final int ULTRA_CHARGE_TICKS = 20 * 15;
+    private static final int ANTIMATTER_CHARGE_START_TICKS = 60;
     private static final int STANDARD_COOLDOWN_TICKS = 20 * 10;
     private static final int ULTRA_COOLDOWN_TICKS = 20 * 60;
     private static final long STANDARD_ENERGY_COST = 500_000_000L;
@@ -102,7 +103,7 @@ public final class MekaToolBlasterHandler {
         Level level = player.level();
         Vec3 direction = player.getViewVector(1.0F).normalize();
         MekaToolBlasterFireball fireball = new MekaToolBlasterFireball(level, player, direction, mode.getExplosionPower());
-        Vec3 origin = player.getEyePosition().add(direction.scale(0.7));
+        Vec3 origin = MekaToolMuzzle.origin(player, direction);
         fireball.setPos(origin.x, origin.y, origin.z);
         level.addFreshEntity(fireball);
     }
@@ -156,9 +157,12 @@ public final class MekaToolBlasterHandler {
         }
         event.setCanceled(true);
         int heldTicks = Math.max(0, ANTIMATTER_CHARGE_DURATION - event.getDuration());
+        if (heldTicks < ANTIMATTER_CHARGE_START_TICKS) {
+            return;
+        }
         // One unified mode: release before 15 seconds fires Standard; holding for
         // at least 15 seconds automatically fires the Ultra strike.
-        boolean ultra = heldTicks >= ULTRA_CHARGE_TICKS;
+        boolean ultra = heldTicks - ANTIMATTER_CHARGE_START_TICKS >= ULTRA_CHARGE_TICKS;
         fireAntimatterStrike(player, stack, ultra);
     }
 
@@ -190,8 +194,8 @@ public final class MekaToolBlasterHandler {
         Vec3 direction = player.getViewVector(1.0F).normalize();
         AntimatterExplosiveOrbEntity orb = new AntimatterExplosiveOrbEntity(
                 MoreMekaSuitModulesEntities.ANTIMATTER_EXPLOSIVE_ORB.get(), player, direction, level, ultra);
-        // Keep the projectile origin aligned with the client muzzle flame origin.
-        Vec3 origin = player.getEyePosition().add(direction.scale(0.7));
+        // Launch from the right-hand MekaTool muzzle, not from the player's eyes.
+        Vec3 origin = MekaToolMuzzle.origin(player, direction);
         orb.setPos(origin.x, origin.y, origin.z);
         level.addFreshEntity(orb);
         level.playSound(null, origin.x, origin.y, origin.z,

@@ -23,9 +23,7 @@ public abstract class MixinItemUseAnimation {
 
     @ModifyReturnValue(method = "getUseAnimation", at = @At("RETURN"))
     private UseAnim moreMekaSuitModules$antimatterUseAnimation(UseAnim original, ItemStack stack) {
-        return ((AntimatterStrikeActivation.isActive(stack)
-                && IModuleHelper.INSTANCE.isEnabled(stack, MekaSuitMoreModules.MEKA_TOOL_ANTIMATTER_STRIKE_UNIT))
-                || IModuleHelper.INSTANCE.isEnabled(stack, MekaSuitMoreModules.MEKA_TOOL_FLAMETHROWER_UNIT))
+        return IModuleHelper.INSTANCE.isEnabled(stack, MekaSuitMoreModules.MEKA_TOOL_FLAMETHROWER_UNIT)
                 ? UseAnim.BOW : original;
     }
 }

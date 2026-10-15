@@ -39,7 +39,7 @@ displayURL = "https://github.com/LOCKRUS/MekanismMoreMekaSuitModules-Reopened/tr
 logoFile = "logo.png" #optional
 
 # A text field displayed in the mod UI
-#credits="" #optional
+credits = "Co-author: sddsd2332 (ARrain乐雪), original moremekasuit developer" #optional
 
 # A text field displayed in the mod UI
 authors = "${mod_authors}" #optional

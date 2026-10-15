@@ -128,6 +128,13 @@ public class AntimatterExplosiveOrbEntity extends AbstractHurtingProjectile {
         // Antimatter orbs cannot be redirected by external impulses.
     }
 
+    @Override
+    protected boolean canHitEntity(Entity target) {
+        // The muzzle is intentionally close to the player, so the owner must never
+        // be selected by projectile ray-tracing on the first tick.
+        return target != getOwner() && super.canHitEntity(target);
+    }
+
     private void restoreLockedVelocity() {
         if (lockedVelocity == null) {
             Vec3 movement = getDeltaMovement();

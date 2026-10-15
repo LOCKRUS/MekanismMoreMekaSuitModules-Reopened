@@ -81,7 +81,7 @@
   "module.moremekasuitmodules.counterattack_unit": "Модуль: Модуль контратаки",
   "module.moremekasuitmodules.counter_level_hud": "Уровень контратаки: %1$s",
   "module.moremekasuitmodules.counter_level": "Сила контратаки",
-  "description.moremekasuitmodules.meka_tool_antimatter_strike_unit": "Заряжается при удержании правой кнопки мыши. Отпустите раньше 15 секунд для стандартного удара; удерживайте 15 секунд для мощного Ультра-удара с огромным кратером.",
+  "description.moremekasuitmodules.meka_tool_antimatter_strike_unit": "Антиматериальный удар MekaTool: после 2 секунд удержания начинается запуск зарядки, через 2,5 секунды у дула плавно появляется орб. После его появления начинается 15-секундный заряд: отпустите раньше для стандартного удара, удерживайте полные 15 секунд для мощного Ультра-удара с огромным кратером. Для активации модуля выбросьте его и подвергните взрыву.",
   "module.moremekasuitmodules.meka_tool_antimatter_strike_unit": "Модуль: Модуль антиматериального удара MekaTool",
   "module.moremekasuitmodules.wall_cling_unit": "Модуль: Модуль прилипания к стенам",
   "description.moremekasuitmodules.wall_cling_unit": "Позволяет цепляться за стены и взбираться вверх при удержании прыжка. При приседании удерживает позицию. Использует энергию MekaSuit.",

@@ -6,13 +6,16 @@ import mekanism.common.content.gear.IModuleContainerItem;
 import mekanism.common.item.gear.ItemMekaTool;
 import moremekasuitmodules.common.AntimatterStrikeActivation;
 import moremekasuitmodules.common.config.MoreModulesConfig;
+import moremekasuitmodules.common.content.gear.mekanism.mekatool.MekaToolMuzzle;
 import moremekasuitmodules.common.content.gear.mekanism.mekatool.ModuleMekaToolFlamethrowerUnit;
 import moremekasuitmodules.common.registries.MekaSuitMoreModules;
+import moremekasuitmodules.common.registries.MoreMekaSuitModulesSounds;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.DeathScreen;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.util.Mth;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.phys.Vec3;
@@ -34,11 +37,15 @@ public class ClientTickHandler {
     private static int steamCoolingTotal;
     private static boolean steamCoolingUltra;
     private static boolean ultraChargeSoundPlayed;
+    private static boolean chargeStartSoundPlayed;
     private static int antimatterCooldownSoundTicks;
     private static AntimatterChargeSoundInstance antimatterChargeSound;
 
 
     public static final int ANTIMATTER_CHARGE_DURATION = 72_000;
+    public static final int ANTIMATTER_START_SOUND_TICKS = 40;
+    public static final int ANTIMATTER_ORB_APPEAR_TICKS = 50;
+    public static final int ANTIMATTER_CHARGE_START_TICKS = 60;
     public static final int ULTRA_CHARGE_TICKS = 20 * 15;
 
     public static void triggerCameraShake(int duration, float intensity) {
@@ -96,7 +103,20 @@ public class ClientTickHandler {
             return 0.0F;
         }
         int heldTicks = Math.max(0, ANTIMATTER_CHARGE_DURATION - player.getUseItemRemainingTicks());
-        return Math.min(1.0F, heldTicks / (float) ULTRA_CHARGE_TICKS);
+        int chargeTicks = Math.max(0, heldTicks - ANTIMATTER_CHARGE_START_TICKS);
+        return Math.min(1.0F, chargeTicks / (float) ULTRA_CHARGE_TICKS);
+    }
+
+    public static float antimatterChargeAlpha(ItemStack stack) {
+        LocalPlayer player = minecraft.player;
+        if (player == null || !(stack.getItem() instanceof ItemMekaTool)
+                || !player.isUsingItem() || player.getUseItem().getItem() != stack.getItem()
+                || player.getMainHandItem().getItem() != stack.getItem()
+                || !isAntimatterModuleEnabled(stack)) {
+            return 0.0F;
+        }
+        int heldTicks = Math.max(0, ANTIMATTER_CHARGE_DURATION - player.getUseItemRemainingTicks());
+        return Mth.clamp((heldTicks - ANTIMATTER_ORB_APPEAR_TICKS) / 10.0F, 0.0F, 1.0F);
     }
 
     public static boolean isAntimatterChargeReady(ItemStack stack) {
@@ -109,12 +129,21 @@ public class ClientTickHandler {
         boolean charging = player != null && isAntimatterCharging(player, stack);
         if (!charging) {
             ultraChargeSoundPlayed = false;
+            chargeStartSoundPlayed = false;
             if (antimatterChargeSound != null) {
                 antimatterChargeSound.fadeOut(player == null ? Vec3.ZERO : mekaToolMuzzleOrigin(player));
                 if (antimatterChargeSound.isStopped()) {
                     antimatterChargeSound = null;
                 }
             }
+            return;
+        }
+        int heldTicks = Math.max(0, ANTIMATTER_CHARGE_DURATION - player.getUseItemRemainingTicks());
+        if (!chargeStartSoundPlayed && heldTicks >= ANTIMATTER_START_SOUND_TICKS) {
+            player.playSound(MoreMekaSuitModulesSounds.ANTIMATTER_CHARGE_START.get(), 0.32F, 1.0F);
+            chargeStartSoundPlayed = true;
+        }
+        if (heldTicks < ANTIMATTER_ORB_APPEAR_TICKS) {
             return;
         }
         float progress = antimatterChargeProgress(stack);
@@ -144,11 +173,11 @@ public class ClientTickHandler {
     /** A slightly forward offset keeps the first-person charging model clear of the camera. */
     public static Vec3 mekaToolChargeOrigin(LocalPlayer player) {
         Vec3 direction = player.getViewVector(1.0F).normalize();
-        return mekaToolMuzzleOrigin(player).add(direction.scale(0.45D));
+        return MekaToolMuzzle.origin(player, direction).add(direction.scale(0.45D));
     }
 
     private static Vec3 mekaToolMuzzleOrigin(LocalPlayer player, Vec3 direction) {
-        return player.getEyePosition().add(direction.scale(0.7D));
+        return MekaToolMuzzle.origin(player, direction);
     }
 
     private static void updateAntimatterCooldownSound() {

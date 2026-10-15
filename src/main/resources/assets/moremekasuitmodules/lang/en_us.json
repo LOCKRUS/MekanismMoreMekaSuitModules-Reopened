@@ -81,7 +81,7 @@
   "module.moremekasuitmodules.counterattack_unit": "Module: Counterattack Unit",
   "module.moremekasuitmodules.counter_level_hud": "Counterattack level: %1$s",
   "module.moremekasuitmodules.counter_level": "Counterattack strength",
-  "description.moremekasuitmodules.meka_tool_antimatter_strike_unit": "Charges while holding right click. Release before 15 seconds for a standard strike; hold for 15 seconds to fire the Ultra strike with a massive crater.",
+  "description.moremekasuitmodules.meka_tool_antimatter_strike_unit": "MekaTool antimatter strike: after holding for 2 seconds, charging begins; after 2.5 seconds, an orb smoothly materializes at the muzzle. Once it has appeared, a 15-second charge begins: release earlier for a Standard strike, or hold the full 15 seconds for a powerful Ultra strike with a massive crater. Activate this module by dropping it and exposing it to an explosion.",
   "module.moremekasuitmodules.meka_tool_antimatter_strike_unit": "Module: MekaTool Antimatter Strike Unit",
   "module.moremekasuitmodules.wall_cling_unit": "Module: Wall Cling Unit",
   "description.moremekasuitmodules.wall_cling_unit": "Clings to walls and climbs while holding jump. Sneak to hold position. Uses MekaSuit energy.",
