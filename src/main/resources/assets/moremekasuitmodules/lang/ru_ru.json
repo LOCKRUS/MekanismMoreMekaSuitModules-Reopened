@@ -117,9 +117,12 @@
   "item.moremekasuitmodules.solipsismium_296": "Порошок солипсизмия-296",
   "chemical.moremekasuitmodules.solipsismium": "Солипсизмий",
   "item.moremekasuitmodules.alloy_otherworldly": "Потусторонний сплав",
-  "item.moremekasuitmodules.hyperbolic_control_circuit": "Гиперболическая схема управления"
-  ,"item.moremekasuitmodules.antimatter_strike_disabled": "Отключен"
-  ,"item.moremekasuitmodules.antimatter_strike_active": "Активен"
-  ,"block.moremekasuitmodules.burnt_grass": "Сгоревший дёрн"
-  ,"block.moremekasuitmodules.charred_wood": "Обугленная древесина"
+  "item.moremekasuitmodules.hyperbolic_control_circuit": "Гиперболическая схема управления",
+  "item.moremekasuitmodules.antimatter_strike_disabled": "Отключен",
+  "item.moremekasuitmodules.antimatter_strike_active": "Активен",
+  "block.moremekasuitmodules.burnt_grass": "Сгоревший дёрн",
+  "block.moremekasuitmodules.charred_wood": "Обугленная древесина",
+  "description.moremekasuitmodules.capacity_amplification_unit": "Умножает ёмкость энергии элемента MekaSuit или MekaTool, в который установлен, в 10 раз.",
+  "module.moremekasuitmodules.capacity_amplification_unit": "Модуль: Усилитель ёмкости",
+  "item.moremekasuitmodules.module_capacity_amplification_unit": "Усилитель ёмкости"
 }

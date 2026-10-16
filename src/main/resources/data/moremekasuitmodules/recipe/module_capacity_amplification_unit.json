@@ -1,0 +1,33 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    "SHS",
+    "AEA",
+    "CIC"
+  ],
+  "key": {
+    "S": {
+      "item": "moremekasuitmodules:star_thermite"
+    },
+    "H": {
+      "item": "moremekasuitmodules:hyperbolic_control_circuit"
+    },
+    "A": {
+      "item": "mekanism:pellet_antimatter"
+    },
+    "E": {
+      "item": "mekanism:module_energy"
+    },
+    "C": {
+      "item": "mekanism:ultimate_energy_cube"
+    },
+    "I": {
+      "item": "mekanism:ultimate_induction_cell"
+    }
+  },
+  "result": {
+    "count": 1,
+    "id": "moremekasuitmodules:module_capacity_amplification_unit"
+  }
+}

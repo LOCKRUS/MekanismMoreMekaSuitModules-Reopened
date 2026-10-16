@@ -76,6 +76,10 @@ public class MekaSuitMoreModules {
             "hyper_armor_unit", ModuleHyperArmorUnit::new, () -> MekaSuitMoreModulesItem.MODULE_HYPER_ARMOR,
             builder -> builder.maxStackSize(1).disabledByDefault().handlesModeChange()
                     .addConfig(ModuleBooleanConfig.create(ModuleHyperArmorUnit.SOLID_HITBOX, true)));
+    // Multiplies the energy capacity of the MekaSuit or MekaTool containing it by ten.
+    public static final ModuleRegistryObject<?> CAPACITY_AMPLIFICATION_UNIT = MODULES.registerMarker(
+            "capacity_amplification_unit", () -> MekaSuitMoreModulesItem.MODULE_CAPACITY_AMPLIFICATION,
+            builder -> builder.maxStackSize(1));
     // Показывает рамки, имена, дистанцию и здоровье живых существ на экране.
     public static final ModuleRegistryObject<ModuleEntityDisplayBoxUnit> ENTITY_DISPLAY_BOX_UNIT = MODULES.register(
             "entity_display_box_unit", ModuleEntityDisplayBoxUnit::new, () -> MekaSuitMoreModulesItem.MODULE_ENTITY_DISPLAY_BOX,
