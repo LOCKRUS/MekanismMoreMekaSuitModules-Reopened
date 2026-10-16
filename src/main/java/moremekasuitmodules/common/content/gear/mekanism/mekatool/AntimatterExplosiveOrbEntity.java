@@ -35,6 +35,10 @@ public class AntimatterExplosiveOrbEntity extends AbstractHurtingProjectile {
     private static final float ENTITY_DAMAGE = 240.0F;
     private static final DustParticleOptions ANTIMATTER_PURPLE =
             new DustParticleOptions(new Vector3f(0.48F, 0.04F, 0.95F), 2.8F);
+    private static final DustParticleOptions ANTIMATTER_ELECTRON =
+            new DustParticleOptions(new Vector3f(0.48F, 0.04F, 0.95F), 0.82F);
+    private static final DustParticleOptions ANTIMATTER_ULTRA_ELECTRON =
+            new DustParticleOptions(new Vector3f(0.48F, 0.04F, 0.95F), 1.25F);
     private static final DustParticleOptions ANTIMATTER_WHITE =
             new DustParticleOptions(new Vector3f(0.92F, 0.82F, 1.0F), 2.0F);
     private static final DustColorTransitionOptions ANTIMATTER_TRAIL =
@@ -172,7 +176,7 @@ public class AntimatterExplosiveOrbEntity extends AbstractHurtingProjectile {
         int electronCount = ultra ? 3 : 2;
         double orbitRadius = ultra ? 0.95D : 0.58D;
         double angularSpeed = ultra ? 0.58D : 0.34D;
-        float electronScale = ultra ? 1.25F : 0.82F;
+        DustParticleOptions electronParticle = ultra ? ANTIMATTER_ULTRA_ELECTRON : ANTIMATTER_ELECTRON;
         double phase = (tickCount + random.nextFloat()) * angularSpeed;
         Vec3 center = position();
 
@@ -184,7 +188,7 @@ public class AntimatterExplosiveOrbEntity extends AbstractHurtingProjectile {
 
             // The dense purple point is the electron itself.
             level().addParticle(
-                    new DustParticleOptions(new Vector3f(0.48F, 0.04F, 0.95F), electronScale),
+                    electronParticle,
                     electron.x, electron.y, electron.z, 0.0D, 0.0D, 0.0D);
 
             // A translucent dragon-breath particle and a fading color dust

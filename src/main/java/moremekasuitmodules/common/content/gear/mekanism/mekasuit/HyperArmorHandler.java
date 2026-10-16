@@ -9,6 +9,7 @@ import net.minecraft.world.phys.Vec3;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.item.ItemStack;
+import net.neoforged.neoforge.event.entity.player.PlayerEvent;
 import net.neoforged.neoforge.event.tick.PlayerTickEvent;
 import net.neoforged.bus.api.SubscribeEvent;
 import java.util.HashMap;
@@ -28,6 +29,13 @@ public final class HyperArmorHandler {
     }
 
     @SubscribeEvent
+    public void onPlayerLoggedOut(PlayerEvent.PlayerLoggedOutEvent event) {
+        UUID uuid = event.getEntity().getUUID();
+        PREVIOUS_MOTION.remove(uuid);
+        COOLDOWN.remove(uuid);
+    }
+
+    @SubscribeEvent
     public void onPlayerTickPost(PlayerTickEvent.Post event) {
         if (!(event.getEntity() instanceof ServerPlayer player)) {
             return;
@@ -40,7 +48,8 @@ public final class HyperArmorHandler {
             return;
         }
         IModule<ModuleHyperArmorUnit> module = IModuleHelper.INSTANCE.getIfEnabled(chest, MekaSuitMoreModules.HYPER_ARMOR_UNIT);
-        if (module == null || PREVIOUS_MOTION.getOrDefault(player.getUUID(), Vec3.ZERO).lengthSqr() < MIN_SPEED_SQUARED) {
+        Vec3 motion = PREVIOUS_MOTION.getOrDefault(player.getUUID(), Vec3.ZERO);
+        if (module == null || motion.lengthSqr() < MIN_SPEED_SQUARED) {
             return;
         }
         int cooldown = COOLDOWN.getOrDefault(player.getUUID(), 0);
@@ -48,13 +57,12 @@ public final class HyperArmorHandler {
             COOLDOWN.put(player.getUUID(), cooldown - 1);
             return;
         }
-        Vec3 motion = PREVIOUS_MOTION.getOrDefault(player.getUUID(), Vec3.ZERO);
         double horizontal = Math.sqrt(motion.x * motion.x + motion.z * motion.z);
         if (horizontal < 0.05D) {
             return;
         }
         int broken = 0;
-        int reach = Math.min(3, Math.max(1, (int) Math.sqrt(PREVIOUS_MOTION.get(player.getUUID()).lengthSqr())));
+        int reach = Math.min(3, Math.max(1, (int) Math.sqrt(motion.lengthSqr())));
         for (int distance = 0; distance < reach; distance++) {
             double x = player.getX() + motion.x / horizontal * (0.8D + distance);
             double z = player.getZ() + motion.z / horizontal * (0.8D + distance);

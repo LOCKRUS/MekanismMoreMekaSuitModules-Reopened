@@ -13,6 +13,7 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.phys.AABB;
+import net.neoforged.neoforge.event.entity.player.PlayerEvent;
 import net.neoforged.bus.api.EventPriority;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.neoforge.event.entity.living.LivingFallEvent;
@@ -28,6 +29,11 @@ public final class ImpactWaveHandler {
     private static final Map<UUID, FallTracker> FALL_TRACKERS = new HashMap<>();
     private static final DustParticleOptions SHOCKWAVE_PARTICLE =
             new DustParticleOptions(new Vector3f(0.20F, 0.85F, 1.0F), 1.5F);
+
+    @SubscribeEvent
+    public void onPlayerLoggedOut(PlayerEvent.PlayerLoggedOutEvent event) {
+        FALL_TRACKERS.remove(event.getEntity().getUUID());
+    }
 
     // Mekanism and flight-related modules may cancel fall damage before the
     // wave handler sees it. The original 1.12.2 implementation explicitly

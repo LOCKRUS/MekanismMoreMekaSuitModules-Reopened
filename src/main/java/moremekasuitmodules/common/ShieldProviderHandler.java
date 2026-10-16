@@ -134,8 +134,21 @@ public class ShieldProviderHandler {
     @SubscribeEvent
     public void onPlayerTick(PlayerTickEvent.Pre event) {
         Player player = event.getEntity();
+        if (player.level().isClientSide() || !hasEnabledShieldModule(player)) {
+            return;
+        }
         ArmorSummery summery = new ArmorSummery().getSummery(player);
         tickShield(summery, player);
+    }
+
+    private static boolean hasEnabledShieldModule(Player player) {
+        for (ItemStack stack : player.getInventory().armor) {
+            if (stack.getItem() instanceof IModuleContainerItem item
+                    && item.isModuleEnabled(stack, MekaSuitMoreModules.ENERGY_SHIELD_UNIT)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     public static void tickShield(ArmorSummery summery, Player player) {

@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    " S ",
+    "OCO",
+    " S "
+  ],
+  "key": {
+    "S": {
+      "item": "moremekasuitmodules:solipsismium_296"
+    },
+    "O": {
+      "item": "moremekasuitmodules:alloy_otherworldly"
+    },
+    "C": {
+      "item": "mekanism:ultimate_control_circuit"
+    }
+  },
+  "result": {
+    "count": 2,
+    "id": "moremekasuitmodules:hyperbolic_control_circuit"
+  }
+}

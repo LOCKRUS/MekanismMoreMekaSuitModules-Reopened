@@ -301,7 +301,8 @@ public class ClientTickHandler {
             minecraft.level.addParticle(ParticleTypes.SMOKE,
                     spawn.x, spawn.y, spawn.z, velocity.x, velocity.y, velocity.z);
         }
-        minecraft.level.addParticle(ParticleTypes.FLAME, origin.x, origin.y, origin.z,
+        Vec3 flameOrigin = origin.add(direction.scale(0.18D)).add(side.cross(direction).normalize().scale(0.10D));
+        minecraft.level.addParticle(ParticleTypes.FLAME, flameOrigin.x, flameOrigin.y, flameOrigin.z,
                 direction.x * 0.08D, direction.y * 0.08D, direction.z * 0.08D);
     }
 

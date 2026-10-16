@@ -76,6 +76,8 @@ public class MekaSuitMoreModulesItem {
     public static final ItemRegistryObject<Item> SOLIPSISMIUM_296 = ITEMS.register("solipsismium_296", Rarity.EPIC);
     // Otherworldly Alloy, created by infusing Atomic Alloy with Solipsismium.
     public static final ItemRegistryObject<Item> ALLOY_OTHERWORLDLY = ITEMS.register("alloy_otherworldly", Rarity.EPIC);
+    // Hyperbolic chip, an enhanced ultimate control circuit.
+    public static final ItemRegistryObject<Item> HYPERBOLIC_CONTROL_CIRCUIT = ITEMS.register("hyperbolic_control_circuit", Rarity.EPIC);
     public static final ItemRegistryObject<Item> BURNT_GRASS = ITEMS.registerItem(
             "burnt_grass", properties -> new BlockItem(MoreMekaSuitModulesBlocks.BURNT_GRASS.get(), properties));
     public static final ItemRegistryObject<Item> CHARRED_WOOD = ITEMS.registerItem(

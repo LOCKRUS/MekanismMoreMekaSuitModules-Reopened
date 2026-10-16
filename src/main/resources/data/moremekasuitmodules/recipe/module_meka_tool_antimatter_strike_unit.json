@@ -2,13 +2,13 @@
   "type": "minecraft:crafting_shaped",
   "category": "misc",
   "pattern": [
-    "OLO",
+    "HLH",
     "IAI",
     "SLS"
   ],
   "key": {
-    "O": {
-      "item": "moremekasuitmodules:alloy_otherworldly"
+    "H": {
+      "item": "moremekasuitmodules:hyperbolic_control_circuit"
     },
     "L": {
       "item": "mekanism:supercharged_coil"
