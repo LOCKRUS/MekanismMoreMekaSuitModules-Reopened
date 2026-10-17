@@ -17,7 +17,7 @@
       "item": "mekanism:pellet_antimatter"
     },
     "E": {
-      "item": "mekanism:module_energy"
+      "item": "mekanism:energy_unit"
     },
     "C": {
       "item": "mekanism:ultimate_energy_cube"
