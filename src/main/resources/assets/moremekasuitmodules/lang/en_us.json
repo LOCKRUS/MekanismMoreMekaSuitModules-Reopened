@@ -122,7 +122,7 @@
   "item.moremekasuitmodules.antimatter_strike_active": "Active",
   "block.moremekasuitmodules.burnt_grass": "Burnt Grass",
   "block.moremekasuitmodules.charred_wood": "Charred Wood",
-  "description.moremekasuitmodules.capacity_amplification_unit": "Multiplies the energy capacity of the MekaSuit or MekaTool it is installed in by 10.",
+  "description.moremekasuitmodules.capacity_amplification_unit": "Multiplies the energy capacity of any MekaSuit armor piece or MekaTool it is installed in by 10.",
   "module.moremekasuitmodules.capacity_amplification_unit": "Module: Capacity Amplification Unit",
   "item.moremekasuitmodules.module_capacity_amplification_unit": "Capacity Amplification Unit"
 }

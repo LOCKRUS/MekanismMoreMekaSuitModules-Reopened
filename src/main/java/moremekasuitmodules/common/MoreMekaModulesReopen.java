@@ -102,7 +102,8 @@ public class MoreMekaModulesReopen implements IModModule {
                 MekaSuitMoreModules.COUNTERATTACK_UNIT,
                 MekaSuitMoreModules.ENERGY_SHIELD_UNIT,
                 MekaSuitMoreModules.POWER_ENHANCEMENT_UNIT,
-                MekaSuitMoreModules.HP_BOOTS_UNIT
+                MekaSuitMoreModules.HP_BOOTS_UNIT,
+                MekaSuitMoreModules.CAPACITY_AMPLIFICATION_UNIT
         );
         MekanismIMC.addMekaSuitBootsModules(
                 MekaSuitMoreModules.WALL_CLING_UNIT,
@@ -130,7 +131,8 @@ public class MoreMekaModulesReopen implements IModModule {
                 MekaSuitMoreModules.MEKA_TOOL_BLASTER_UNIT,
                 MekaSuitMoreModules.MEKA_TOOL_ANTIMATTER_STRIKE_UNIT,
                 MekaSuitMoreModules.MEKA_TOOL_LAVA_TANK_UNIT,
-                MekaSuitMoreModules.MEKA_TOOL_FLAMETHROWER_UNIT);
+                MekaSuitMoreModules.MEKA_TOOL_FLAMETHROWER_UNIT,
+                MekaSuitMoreModules.CAPACITY_AMPLIFICATION_UNIT);
         //meka护腿
 
         //meka靴子

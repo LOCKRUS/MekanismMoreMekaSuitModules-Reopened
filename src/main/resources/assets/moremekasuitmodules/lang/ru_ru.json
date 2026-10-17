@@ -122,7 +122,7 @@
   "item.moremekasuitmodules.antimatter_strike_active": "Активен",
   "block.moremekasuitmodules.burnt_grass": "Сгоревший дёрн",
   "block.moremekasuitmodules.charred_wood": "Обугленная древесина",
-  "description.moremekasuitmodules.capacity_amplification_unit": "Умножает ёмкость энергии элемента MekaSuit или MekaTool, в который установлен, в 10 раз.",
+  "description.moremekasuitmodules.capacity_amplification_unit": "Умножает ёмкость энергии любого элемента брони MekaSuit или MekaTool, в который установлен, в 10 раз.",
   "module.moremekasuitmodules.capacity_amplification_unit": "Модуль: Усилитель ёмкости",
   "item.moremekasuitmodules.module_capacity_amplification_unit": "Усилитель ёмкости"
 }
