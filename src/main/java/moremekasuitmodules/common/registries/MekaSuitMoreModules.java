@@ -51,9 +51,9 @@ public class MekaSuitMoreModules {
             () -> MekaSuitMoreModulesItem.MODULE_COUNTERATTACK,
             builder -> builder.maxStackSize(ModuleCounterattackUnit.MAX_MODULES_PER_ARMOR).disabledByDefault()
                     .addInstalledCountConfig(
-                            installed -> ModuleEnumConfig.createBounded(ModuleCounterattackUnit.COUNTER_LEVEL, ModuleCounterattackUnit.CounterLevel.LOW, Math.max(1, Math.min(ModuleCounterattackUnit.CounterLevel.values().length, (installed + 1) / 2))),
-                            installed -> ModuleEnumConfig.codec(ModuleCounterattackUnit.CounterLevel.CODEC, ModuleCounterattackUnit.CounterLevel.class, Math.max(1, Math.min(ModuleCounterattackUnit.CounterLevel.values().length, (installed + 1) / 2))),
-                            installed -> ModuleEnumConfig.streamCodec(ModuleCounterattackUnit.CounterLevel.STREAM_CODEC, ModuleCounterattackUnit.CounterLevel.class, Math.max(1, Math.min(ModuleCounterattackUnit.CounterLevel.values().length, (installed + 1) / 2)))
+                            installed -> ModuleEnumConfig.createBounded(ModuleCounterattackUnit.COUNTER_LEVEL, ModuleCounterattackUnit.CounterLevel.LOW, Math.max(2, Math.min(ModuleCounterattackUnit.CounterLevel.values().length, (installed + 1) / 2))),
+                            installed -> ModuleEnumConfig.codec(ModuleCounterattackUnit.CounterLevel.CODEC, ModuleCounterattackUnit.CounterLevel.class, Math.max(2, Math.min(ModuleCounterattackUnit.CounterLevel.values().length, (installed + 1) / 2))),
+                            installed -> ModuleEnumConfig.streamCodec(ModuleCounterattackUnit.CounterLevel.STREAM_CODEC, ModuleCounterattackUnit.CounterLevel.class, Math.max(2, Math.min(ModuleCounterattackUnit.CounterLevel.values().length, (installed + 1) / 2)))
                     ));
     // Wall climbing and impact-wave modules are installed on MekaSuit boots.
     public static final ModuleRegistryObject<ModuleWallClingUnit> WALL_CLING_UNIT = MODULES.register(

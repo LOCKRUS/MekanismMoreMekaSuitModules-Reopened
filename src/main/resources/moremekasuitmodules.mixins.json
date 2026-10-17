@@ -3,6 +3,7 @@
   "package": "moremekasuitmodules.mixin",
   "compatibilityLevel": "JAVA_21",
   "mixins": [
+    "mekanism.ComponentBackedContainerAccessor",
     "mekanism.MixinComponentBackedEnergyContainer",
     "mekanism.MixinItemMekaSuitArmor",
     "mekanism.MixinItemMekaTool",

@@ -131,8 +131,8 @@
     {
       "consume": true,
       "ingredient": {
-      "item": "draconicevolution:item_chaotic_large_shield_capacity"
-        }
+        "item": "draconicevolution:item_chaotic_large_shield_capacity"
+      }
     },
     {
       "consume": true,
@@ -298,5 +298,11 @@
     }
   ],
   "techLevel": "chaotic",
-  "totalEnergy": 20000000000
+  "totalEnergy": 20000000000,
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:mod_loaded",
+      "modid": "draconicevolution"
+    }
+  ]
 }
